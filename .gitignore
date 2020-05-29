@@ -1,0 +1,4 @@
+build/
+*.filelist
+old/
+*.bmp
