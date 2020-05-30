@@ -6,7 +6,7 @@
   40 ; GNU General Public License
 
   50 LET %s=%REG 7&3:RUN AT 2
-  60 ON ERROR RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:STOP:ON ERROR:ERASE
+  60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ON ERROR:STOP:REM ERASE
   70 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER 7:BORDER 7:INK 0:CLS
   80 OPEN # 6,"w>22,1,1,32,4":PRINT #6;AT 0,0;">> knlauncher v0.1 >> (c) kounch 2020":CLOSE # 6
   90 LET x=USR 5808:LOAD "c:/nextzxos/usr0.bin"CODE 32768
@@ -75,7 +75,7 @@
 
 1500 ; Mode PI Audio (USR 0) obtained from tapload.bas and tzxload.bas
 1510 GO SUB %5400:CLOSE # 4:OPEN # 4,a$
-1520 LET a$=INKEY$ #4+INKEY$ #4+INKEY$ #4:LET %z=CODE INKEY$ #4
+1520 LET l$=INKEY$ #4+INKEY$ #4+INKEY$ #4:LET %z=CODE INKEY$ #4
 1530 FOR %a=0 TO 15:CLOSE # %a:NEXT %a:DIM o(1):LET o(1)=%z:SAVE "m:kl99.tmp"DATA o()
 1540 GO SUB %5600:GO SUB %5500:CLEAR:LOAD "m:kl99.tmp"DATA o():LET z=o(1)
 1550 SPECTRUM:POKE 32768,z:LET x=USR 32769
@@ -117,7 +117,7 @@
 
 5395 ; Get 8.3 Filename from a$ (find a$ in current dir)
 5400 IF LEN (a$)<13 THEN RETURN
-5410 DIM d$(40):OPEN # 2,"v>d$":CAT -a$:CLOSE # 2:LET a$=d$(1 TO 12)
+5410 DIM d$(255):OPEN # 2,"v>d$":CAT -a$:CLOSE # 2:LET a$=d$(1 TO 12)
 5490 RETURN
 
 5495 ; Mode 128k obtained from tapload.bas
