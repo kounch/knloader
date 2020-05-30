@@ -212,6 +212,6 @@
 6390 LET pag=0:LET pos=0:RETURN
 
 6995 ; Default Config
-7000 LET tinta=0:LET papel=7:LET %p=7:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
+7000 LET tinta=0:LET papel=7:LET %p=8:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
 7010 LET covers=1
 7090 RETURN
