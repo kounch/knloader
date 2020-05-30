@@ -6,7 +6,7 @@
   40 ; GNU General Public License
 
   50 LET %s=%REG 7&3:RUN AT 3
-  60 REM ON ERROR RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ON ERROR:STOP:REM ERASE
+  60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ON ERROR:STOP:REM ERASE
   70 GO SUB %7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
   90 PRINT AT 5,15;"> knloader v0.1 <":PRINT AT 8,17;"© kounch 2020"
@@ -78,7 +78,7 @@
  940 PRINT AT 17,0;"File:": PRINT AT 18,1;x$(pos)
  950 LET a$=x$(pos):GO SUB %5300:LET l$=a$:LET a$=w$(pos):GO SUB %5300
  960 LET c$=y$+"/"+a$:LET a$=l$:GO SUB %5400
- 970 CD c$:DIM d$(maxpath):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
+ 970 CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
  980 IF d$(1 TO 14)="No files found" THEN GO TO %1300
  990 REM PAUSE 0
 
