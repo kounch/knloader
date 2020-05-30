@@ -5,7 +5,7 @@
   30 ; it and/or modify it under the terms of the
   40 ; GNU General Public License
 
-  50 LET %s=%REG 7&3:RUN AT 2
+  50 LET %s=%REG 7&3:RUN AT 3
   60 REM ON ERROR RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ON ERROR:STOP:REM ERASE
   70 GO SUB %7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
@@ -27,8 +27,7 @@
  310 PRINT #6;AT prv,0;OVER 1;"                        ":PRINT #6;AT pos,0;OVER 1;INVERSE 1;"                        "
  320 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN LET %d=1:GO TO %360
  330 LET %k=0:IF %d=0 THEN GO TO %320
- 340 LET a$=b$(pos):GO SUB %5300
- 350 GO SUB %4500:LET %d=0
+ 340 GO SUB %4500:LET %d=0
  360 IF J=0 AND K$="" THEN GO TO %320
  370 IF J=IN 31 OR K$=INKEY$  THEN IF %k=1 THEN GO TO %440
  380 IF J<>IN 31 AND K$<>INKEY$ THEN LET %k=0:GO TO %430
@@ -103,7 +102,7 @@
 3096 ;-------------
 
 4495 ; Cover Data
-4500 LET mode=o(pos)
+4500 LET mode=o(pos):LET a$=b$(pos):GO SUB %5300
 4510 IF mode=0 THEN LET m$="3DOS"
 4520 IF mode=1 THEN LET m$="TAP"
 4530 IF mode=2 THEN LET m$="TZX (fast)"
@@ -131,18 +130,20 @@
 4790 CLOSE # 5:RETURN
 
 4795 ; Image Data (Cover)
-4800 LET l$=a$((LEN a$-2) TO LEN a$)
-4810 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
-4820 IF l$="SCR" OR l$="scr" THEN PRINT #6; CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6; CHR$ 3;
-4830 IF l$="SLR" OR l$="slr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,0:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
-4840 IF l$="SHR" OR l$="shr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,1:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
-4850 IF l$="SHC" OR l$="shc" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,2:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
-4860 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
+4800 LET l$=a$:LET a$=w$(pos):GO SUB %5300:LET c$=y$+"/"+a$+"/"+l$
+4810 LET l$=l$((LEN l$-2) TO LEN l$)
+4820 LET a$=c$
+4830 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
+4840 IF l$="SCR" OR l$="scr" THEN PRINT #6; CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6; CHR$ 3;
+4850 IF l$="SLR" OR l$="slr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,0:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
+4860 IF l$="SHR" OR l$="shr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,1:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
+4870 IF l$="SHC" OR l$="shc" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,2:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
+4880 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
 4890 RETURN
 
 4995 ; Load Cache
 5000 ON ERROR GO SUB %6000:ON ERROR
-5010 RUN AT 3:DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
+5010 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
 5020 LOAD "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$()
 5030 LOAD "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
 5040 LOAD "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$()
@@ -150,7 +151,7 @@
 5060 LOAD "/tmp/knloader/bcch"+STR$ pag+".tmp"DATA b$()
 5070 DIM p(2):LOAD "/tmp/knloader/cache.tmp"DATA p():LET maxpag=p(1):LET maxpos=p(2)
 5080 DIM o$(1,maxpath*2):LOAD "/tmp/knloader/ycch.tmp" DATA o$() :LET a$=o$(1):GO SUB %5300:LET y$=a$
-5090 RUN AT 2:RETURN
+5090 RETURN
 
 5095 ; Load Options
 5100 ON ERROR GO SUB %5200:ON ERROR
@@ -176,7 +177,7 @@
 6000 ON ERROR GO TO %6010:ON ERROR
 6005 MKDIR "/tmp/knloader"
 6010 ON ERROR PRINT "Cache Build Error!!":ERROR  TO e,l:PRINT e,l:PAUSE 0:ON ERROR:STOP
-6020 RUN AT 3:LET n=0:LET f=0:LET fp=1:LET pag=0
+6020 LET n=0:LET f=0:LET fp=1:LET pag=0
 6030 PRINT AT 14,0;:COPY "knloader.bdt" TO "m:":;Copy to RAMDisk
 6040 OPEN # 4,"m:knloader.bdt":DIM #4 TO %f:LET lf=%f
 6050 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
@@ -208,7 +209,7 @@
 6290 DIM p(2):LET p(1)=maxpag:LET p(2)=maxpos
 6300 SAVE "/tmp/knloader/cache.tmp"DATA p()
 6310 DIM o$(1,maxpath*2):LET o$(1)=y$:SAVE "/tmp/knloader/ycch.tmp" DATA o$() 
-6390 RUN AT 2:LET pag=0:LET pos=0:RETURN
+6390 LET pag=0:LET pos=0:RETURN
 
 6995 ; Default Config
 7000 LET tinta=0:LET papel=7:LET %p=7:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
