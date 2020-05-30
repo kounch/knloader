@@ -6,7 +6,7 @@
   40 ; GNU General Public License
 
   50 LET %s=%REG 7&3:RUN AT 2
-  60 REM ON ERROR RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ON ERROR:STOP:REM ERASE
+  60 ON ERROR RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:STOP:ON ERROR:ERASE
   70 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER 7:BORDER 7:INK 0:CLS
   80 OPEN # 6,"w>22,1,1,32,4":PRINT #6;AT 0,0;">> knlauncher v0.1 >> (c) kounch 2020":CLOSE # 6
   90 LET x=USR 5808:LOAD "c:/nextzxos/usr0.bin"CODE 32768
@@ -155,7 +155,7 @@
 5800 DATA 44100,45000,46406,47250,48825,50400,51975,42525
 
 5995 ; Error with Pi
-6000 CLS:PRINT AT 1,2;INK 2;PAPER 6;FLASH 1;" Error communicating with  Pi "
+6000 CLS:PRINT AT 1,1;INK 6;PAPER 2;" Error: Can't connect with Pi "
 6010 LET %r=%r-1:IF %r>0 THEN PRINT AT 4,1;"Please, wait for a few seconds":PRINT AT 6,2;"Then press any key to retry"
 6020 LET J=IN 31:LET K$=INKEY$:IF K$="" AND J=0 THEN GO TO %6020
 6030 IF %r>0 THEN GO TO %5610
