@@ -229,8 +229,8 @@
 6080 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
 6090 LET l$="":LET lp=1:IF n>0 THEN LET z$(n)="":LET o(n)=0:LET x$(n)="":LET b$(n)=""
 6100 LET fp=fp+1:IF fp>lf THEN GO TO %6300
-6110 NEXT #4 TO b:LET c$=CHR$ b
-6120 IF b=10 OR b=13 THEN GO TO %6140
+6110 NEXT #4 TO b:LET c$=CHR$ b:IF b=13 THEN GO TO 6100
+6120 IF b=10 THEN GO TO %6140
 6130 IF c$<>"," THEN LET l$=l$+c$:GO TO %6100
 6140 PRINT AT 20,12;"BUILDING CACHE:";INT (100*fp/lf);"%"
 6150 IF n=0 THEN LET y$=l$:GO TO %6210
