@@ -130,7 +130,7 @@ Starting from line 2, each line must have the following format:
 
 This program creates a preferences file named `opts.tmp` inside the same folder where `knloader.bas` is installed.
 
-It also creates a variable number of cache files insidde `/tmp/knloader`. This is necessary to speed up the program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
+It also creates a variable number of cache files inside `/tmp/knloader`. This is necessary to speed up the program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
 
 <<<
 

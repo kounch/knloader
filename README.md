@@ -74,7 +74,7 @@ The file must be a full ZX Spectrum Next screen image file. It can be in SCR, SL
 
 The program creates a preferences file named `opts.tmp` inside the same folder where `knloader.bas` is installed.
 
-It also creates a variable number of cache files insidde `/tmp/knloader`. This is necessary to speed up the program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
+It also creates a variable number of cache files inside `/tmp/knloader`. This is necessary to speed up the program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
 
 For all other operations, temporary files are created in the RAM disk.
 
