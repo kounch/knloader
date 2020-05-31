@@ -46,10 +46,10 @@
  540 IF K$="7" OR K$=CHR$ (11) OR J=8 THEN GO TO %845
  550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:ERASE "/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
  560 IF K$="X" OR K$="x" THEN FOR %a=0 TO 15:CLOSE # %a:NEXT %a:RUN AT %s:ERASE
- 570 IF K$="C" OR K$="c" OR J=32 THEN LET prev=pos:LET covers=1-covers:GO TO %210
- 580 IF K$="O" OR K$="o" THEN REM SaveOptions>>>`xc3IMPLEMENTED<<<
- 590 IF K$="E" OR K$="e" THEN REM EditOptions>>>`xc3IMPLEMENTED<<<
- 600 IF K$="H" OR K$="h" THEN REM ShowHelp>>>`xc3IMPLEMENTED<<<
+ 570 IF K$="C" OR K$="c" OR J=32 THEN LET prev=pos:LET covers=1-covers:GO TO %4300
+ 580 IF K$="O" OR K$="o" THEN REM Save Options>>>NOT IMPLEMENTED<<<
+ 590 IF K$="E" OR K$="e" THEN REM Edit Options>>>NOT IMPLEMENTED<<<
+ 600 IF K$="H" OR K$="h" THEN REM Show Help>>>NOT IMPLEMENTED<<<
  690 GO TO %320
 
  695 ; Input LEFT
@@ -110,6 +110,13 @@
 
 3095 ; SUBROUTINES
 3096 ;-------------
+
+4295 ; Show Cover Status
+4300 LET a$="ON ":IF covers=0 THEN LET a$="OFF"
+4310 PRINT AT 7,16;INK 7;PAPER 1;"             "
+4320 PRINT AT 8,16;INK 7;PAPER 1;" Covers: ";a$;" "
+4330 PRINT AT 9,16;INK 7;PAPER 1;"             "
+4340 PAUSE 30:GO TO %210
 
 4495 ; Cover Data
 4500 LET mode=o(pos):LET a$=b$(pos):GO SUB %5300
