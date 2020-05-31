@@ -2,3 +2,4 @@ build/
 *.filelist
 old/
 *.bmp
+releases/
