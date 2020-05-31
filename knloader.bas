@@ -141,11 +141,12 @@
 
 4695 ; Text Data
 4700 LAYER 2,0:LAYER 0
-4710 OPEN # 5,"w>1,14,22,17,4"
-4720 PRINT #5;INK papel;PAPER tinta;CHR$ 14:REM Clean Widow
-4730 PRINT #5;AT 1,0;"FILE: ";z$(pos)
-4740 PRINT #5;AT 4,0;"MODE: ";m$
-4750 PRINT #5;AT 6,0;"NAME: ";x$(pos)
+4720 OPEN # 5,"w>0,12,24,20,4":PRINT #5;INK papel;PAPER tinta;CHR$ 14:CLOSE # 5
+4730 OPEN # 5,"w>1,13,22,18,4":PRINT #5;INK papel;PAPER tinta;CHR$ 14
+4740 PRINT #5;AT 3,1;"NAME: ";z$(pos)
+4750 PRINT #5;AT 5,1;"MODE: ";m$
+4760 PRINT #5; AT 9,1;"FILE: "
+4770 PRINT #5;AT 11,0;x$(pos)
 4790 CLOSE # 5:RETURN
 
 4795 ; Image Data (Cover)
