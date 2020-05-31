@@ -243,7 +243,14 @@
 6590 PAUSE 0:STOP
 
 6995 ; Default Config
-7000 LET tinta=0:LET papel=7:LET %p=8:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
-7010 LET covers=1:DIM d$(255):OPEN # 2,"v>d$":PWD #2:CLOSE # 2
-7020 LET a$=d$:GO SUB %5300:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
-7090 RETURN
+7000 ON ERROR ERASE
+7010 LET tinta=0:LET papel=7:LET %p=8:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
+7020 LET covers=1:DIM d$(255):OPEN # 2,"v>d$":PWD #2:CLOSE # 2
+7030 LET a$=d$:GO SUB %5300:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
+7040 DIM d$(255):OPEN # 2,"v>d$":.NEXTVER -v:CLOSE # 2:LET a=VAL(d$):GO SUB %5300:PRINT a
+7050 IF a>2.05 THEN RETURN
+7060 CLS:PRINT AT 5,3;INK 6;PAPER 2;" ERROR:  NextZXOS Too Old "
+7070 PRINT AT 8,1;"Please upgrade the distribution"
+7080 PRINT AT 9,0;"in your SD Card to version ";BRIGHT 1;"1.3.2"
+7090 PRINT AT 10,0;"or later."
+7100 PAUSE 0:STOP
