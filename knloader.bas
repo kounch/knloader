@@ -128,6 +128,8 @@
 4630 IF mode=12 THEN LET m$="TZX (USR 0)"
 4640 IF mode=13 THEN LET m$="TAP (PI Audio - Next)"
 4650 IF mode=14 THEN LET m$="TZX (Next)"
+4660 IF mode=15 THEN LET m$="NEX"
+4670 IF mode=16 THEN LET m$="Snapshot"
 4690 IF a$<>" " AND covers=1 THEN GO TO %4800
 
 4695 ; Text Data
