@@ -25,7 +25,7 @@ This program is not a replacement for the incoportaded Browser, nor offers any o
 
 === Download
 
-A ZIP file with the latest version is available following https://github.com/kounch/vscode_zx/releases/latest[this link]
+A ZIP file with the latest version is available following https://github.com/kounch/knloader/releases/latest[this link]
 
 === Software Requirements
 
