@@ -9,7 +9,7 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ON ERROR:STOP:REM ERASE
   70 GO SUB %7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,15;"> knloader v0.1 <":PRINT AT 8,17;"© kounch 2020"
+  90 PRINT AT 5,15;"> knloader  v0.1 <":PRINT AT 8,17;"© kounch  2020":PRINT AT 16,16;"Press H for help"
 
   95 ; Load Menu Items
  100 GO SUB %5000:; Load Cache
@@ -39,17 +39,17 @@
  440 BEEP 0.008,-20
 
  495 ; Menu Control Input
- 500 IF CODE K$=13 OR J=16 THEN GO TO %895
- 510 IF K$="5" OR K$=CHR$ (8) OR J=2 THEN GO TO %695
- 520 IF K$="8" OR K$=CHR$ (9) OR J=1 THEN GO TO %755
- 530 IF K$="6" OR K$=CHR$ (10) OR J=4 THEN GO TO %795
- 540 IF K$="7" OR K$=CHR$ (11) OR J=8 THEN GO TO %845
+ 500 IF K$="0" OR K$=CHR$(13) OR J=16 THEN GO TO %895
+ 510 IF K$="5" OR K$=CHR$(8) OR J=2 THEN GO TO %695
+ 520 IF K$="8" OR K$=CHR$(9) OR J=1 THEN GO TO %755
+ 530 IF K$="6" OR K$=CHR$(10) OR J=4 THEN GO TO %795
+ 540 IF K$="7" OR K$=CHR$(11) OR J=8 THEN GO TO %845
  550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:ERASE "/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
  560 IF K$="X" OR K$="x" THEN FOR %a=0 TO 15:CLOSE # %a:NEXT %a:RUN AT %s:ERASE
- 570 IF K$="C" OR K$="c" OR J=32 THEN LET prev=pos:LET covers=1-covers:GO TO %4300
+ 570 IF K$="C" OR K$="c" OR J=32 THEN LET prev=pos:LET covers=1-covers:GO TO %1400
  580 IF K$="O" OR K$="o" THEN REM Save Options>>>NOT IMPLEMENTED<<<
  590 IF K$="E" OR K$="e" THEN REM Edit Options>>>NOT IMPLEMENTED<<<
- 600 IF K$="H" OR K$="h" THEN REM Show Help>>>NOT IMPLEMENTED<<<
+ 600 IF K$="H" OR K$="h" THEN LET prev=pos:GO TO %1500
  690 GO TO %320
 
  695 ; Input LEFT
@@ -108,15 +108,30 @@
 1350 LET J=IN 31:LET K$=INKEY$:IF J=0 AND K$="" THEN GO TO %1350
 1360 LET prev=pos:CLS:GO TO %200
 
+1395 ; Show Cover Status
+1400 LET a$="ON ":IF covers=0 THEN LET a$="OFF"
+1410 PRINT AT 6,16;"             "
+1420 PRINT AT 7,16;" Covers: ";a$;" "
+1430 PRINT AT 8,16;"             "
+1440 PAUSE 30:GO TO %210
+
+1495 ; Help Window
+1500 OPEN # 5,"w>1,1,22,30,4":PRINT #5;INK papel;PAPER tinta;CHR$ 14:CLOSE # 5
+1510 OPEN # 5,"w>2,2,20,28,4":PRINT #5;INK tinta;PAPER papel;CHR$ 14
+1520 PRINT #5;AT 1,23;"- HELP -"
+1530 PRINT #5;AT 3,1;"Use cursor keys or joystick (kempston) to move"
+1540 PRINT #5;AT 5,1;"ENTER, 0 or joystick button to launch selected program"
+1550 PRINT #5;AT 7,1;"Press R to rebuild the cache from DBT file"
+1560 PRINT #5;AT 9,1;"Press C or joystick secondary to hide/show images"
+1570 PRINT #5;AT 13,1;"Press X to exit"
+1580 PRINT #5;AT 15,1;"Press H to show this help"
+1590 PRINT #5;AT 19,5;"Press any key or button to close this window"
+1600 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN GO TO %1600
+1610 LET J=IN 31:LET K$= INKEY$:IF J=0 AND K$="" THEN GO TO %1610
+1620 CLOSE # 5:GO TO %210
+
 3095 ; SUBROUTINES
 3096 ;-------------
-
-4295 ; Show Cover Status
-4300 LET a$="ON ":IF covers=0 THEN LET a$="OFF"
-4310 PRINT AT 7,16;INK 7;PAPER 1;"             "
-4320 PRINT AT 8,16;INK 7;PAPER 1;" Covers: ";a$;" "
-4330 PRINT AT 9,16;INK 7;PAPER 1;"             "
-4340 PAUSE 30:GO TO %210
 
 4495 ; Cover Data
 4500 LET mode=o(pos):LET a$=b$(pos):GO SUB %5300
