@@ -22,9 +22,9 @@ A ZIP file with the latest version is available following [this link](https://gi
 
 ### Installation
 
-- Create `knloader.bdt` file (see the included manual for instructions).
+- Create manually `knloader.bdt` file using the text editor of your choice. See the included manual (PDF or GDE) for instructions.
 
-- Copy `knloader.bas`, `knlauncher` and `knloader.bdt` to any place in your SD card.
+- Copy together `knloader.bas`, `knlauncher` and the new `knloader.bdt` file to any place in your SD card.
 
 #### Use
 
