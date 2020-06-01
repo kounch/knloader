@@ -1,6 +1,6 @@
 @title knloader Manual
 @author kounch
-@version 1.0
+@version 0.2
 @copyright Copyright (C)2020 kounch
 @date 2020/05/31
 
@@ -12,7 +12,7 @@
 
 @{c}knloader Manual
 
-@{c}Version 0.1
+@{c}Version 0.2
 
 @{h1}
 
@@ -112,9 +112,11 @@ https://www.specnext.com/latestdistro/
 @{r}knloader Manual
 @{c}@{h1}Installation
 
-Create knloader.bdt file (see below for more instructions).
+Create manually `knloader.bdt` file using the text editor of your choice (see
+below for more instructions).
 
-Copy knloader.bas, knlauncher and knloader.bdt to your SD card.
+Copy together `knloader.bas`, `knlauncher` and the new `knloader.bdt` file to
+any place in your SD card.
 
 @-------------------------------------------------------------------------------
 @node USE
@@ -157,7 +159,10 @@ Press @{b}H@{ub} to show some help.
 
 The main database is stored in a text file (ANSI encoding).
 
-The first line must be the base path where to start looking for programs
+All paths in the database file must use @{i}/@{ui} (slash) as separator for directories.
+Using @{i}\@{ui} (backslash) is not supported.
+
+The first line has to be the base path where to start looking for programs
 (for example: /games). It's length cannot exceed 128 characters.
 
 Starting from line 2, each line must have the following format:
@@ -190,11 +195,48 @@ one of these:
 @{b}Directory@{ub}: Subdirectory where file (optionally) and image file are
 located (maximum 64 characters)
 
-@{b}File@{ub}: Name of the file to execute (maximum 64 characters)
+@{b}File@{ub}: Name of the file to execute (maximum 64 characters). IfMode 8
+(DSK Custom Boot) is selected, it must have the name of both the DSK file and
+the file to load inside the disk image, separated by ":" (e.g.
+@{i}Bounder.dsk:BOUNDER.BAS@{ui}).
 
 @{b}Image File@{ub}: (Optional) Name (maximum 64 characters) of a full screen
 image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2
 or BMP format.
+
+
+@{b}@{i}Notes@{ui}@{ub}:
+
+* All TZX (fast) modes run at 14Mhz. Once the program is loaded, you can get
+back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.
+* Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive @{i}A:@{ui} and execute
+@{i}LOAD "*"@{ui}.
+* Mode 8 (DSK Custom Boot) will mount the DSK file at drive @{i}A:@{ui} and
+execute @{i}LOAD "diskfile"@{ui}, where @{i}diskfile@{ui} is obtained from the @{i}File@{ui}
+field.
+
+@{b}@{i}Example@{ui}@{ub}:
+
+This is an example of a small database file:
+@{i}
+/all/Games
+Albatrossity,1,,Albatrossity.tap
+Alter Ego,4,Alter Ego,Alter Ego.tap
+Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
+Amaurote,2,Amaurote,Amaurote.tzx
+Aquanoids,5,Aquanoids,Aquanoids.tzx
+Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
+Astronut,16,../Next/,Astronut.snx
+Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,Barbarian.bmp
+Batty,9,Batty,Batty.tap,
+Bounder,8,Bounder,Bounder.dsk:BOUNDER.BAS
+@{ui}
+
+So, using this example, when you choose "Barbarian: The Ultimat" in the user
+interface, the program will try to load
+@{c}@{i}/all/Games/Barbarian/3DOS/BARB.BAS@{ui}
+and it will also try to show the image located at
+@{c}@{i}/all/Games/Barbarian/3DOS/Barbarian.bmp@{ui}.
 
 @-------------------------------------------------------------------------------
 @node NOTES

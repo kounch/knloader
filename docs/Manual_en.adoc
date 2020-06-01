@@ -1,5 +1,7 @@
-= knloader
+= knloader English Manual
 :author: kounch
+:revnumber: 0.2.0
+:doctype: book
 :email: kounch@users.noreply.github.com
 :Revision:  1.0
 :description: English Manual for knloader
@@ -19,8 +21,6 @@ This a set of NextBASIC programs which you can configure to remember, and then u
 
 This program is not a replacement for the incoportaded Browser, nor offers any other function than to launch other programs.
 
-<<<
-
 == Requirements
 
 === Download
@@ -31,15 +31,11 @@ A ZIP file with the latest version is available following https://github.com/kou
 
 - *NextZXOS (version 1.3.2)*. Docs, downloads, etc. [here](https://www.specnext.com/latestdistro/)
 
-<<<
-
 == Installation
 
-Create `knloader.bdt` file (see below for more instructions).
+Create manually `knloader.bdt` file using the text editor of your choice (see below for more instructions).
 
-Copy `knloader.bas`, `knlauncher` and `knloader.bdt` to any place in your SD card.
-
-<<<
+Copy together `knloader.bas`, `knlauncher` and the new `knloader.bdt` file to any place in your SD card.
 
 == Use
 
@@ -48,28 +44,24 @@ Use the browser or command line to navigate to the folder where `knloader.bas`, 
 On first run, cache files will be created from the data inside database file `knloader.bdt`. This has to be done only once, or after any changes are made to the database file.
 
 [.text-center] 
-image::FirstBoot.png[] 
-
-<<<
+image::FirstBoot.png[pdfwidth=70%]
 
 The main interface shows a list of the programs found in the database file.
 
 [.text-center] 
-image::CoverOff.png[]
+image::CoverOff.png[pdfwidth=70%]
 
 <<<
 
 You can use the cursor keys or a joystick (Kempston or MD) to move and select the program that you want to load. Then, press `ENTER`, `0` or the joystick button to launch.
 
 [.text-center] 
-image::LoadDetails.png[]
-
-<<<
+image::LoadDetails.png[pdfwidth=70%]
 
 After a brief period of time, the program should load using the desired mode.
 
 [.text-center] 
-image::knlauncher.png[]
+image::knlauncher.png[pdfwidth=70%]
 
 <<<
 
@@ -78,23 +70,28 @@ If you have made a change to the database file, press R to rebuild the cache.
 Press C or the joystick secondary button (in MD mode) to hide/show images.
 
 [.text-center] 
-image::CoverOn.png[]
+image::CoverOn.png[pdfwidth=70%]
 
 Press X to exit the program.
 
 Press H to show some help.
 
-<<<
-
 == Database file format
 
-The main database is stored in a text file (ANSI encoding).
+The main database is stored in a text file (ANSI encoding), named `knloader.bdt`, and which has to be in the same directory where `knloader.bas` is in the SD card. At this moment, you have to create manually the database file.
 
-The first line must be the base path where to start looking for programs (for example: `/games`). It's length cannot exceed 128 characters.
+All paths in the database file must use `/` (slash) as separator for directories. Using `\` (backslash) is not supported.
+
+The first line has to be the base path where to start looking for programs (for example: `/games`). It's length cannot exceed 128 characters.
 
 Starting from line 2, each line must have the following format:
 
-`Program Name`,`Loading Mode`,`<Directory>`,`File`,`<Image File>`
+[source]
+----
+Program Name,Loading Mode,<Directory>,File,<Image File>
+----
+
+Where each of the fields between ',' are as follows:
 
 *`Program Name`*: Name to show in the interface (maximum 22 characters)
 
@@ -118,11 +115,62 @@ Starting from line 2, each line must have the following format:
     15 - NEX
     16 - Snapshot
 
-*`Directory`*: Subdirectory where file (optionally) and image file are located (maximum 64 characters)
+[NOTE]
+====
+All TZX (fast) modes run at 14Mhz. Once the program is loaded, you can get back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.
 
-*`File`*: Name of the file to execute (maximum 64 characters)
+Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive `A:` and execute `LOAD "*"`
+
+Mode 8 (DSK Custom Boot) will mount the DSK file at drive `A:` and execute `LOAD "diskfile"`, where `diskfile` is obtained from the `File` field
+====
+
+<<<
+
+*`Directory`*: (Optional) Subdirectory where file (optionally) and image file are located (maximum 64 characters)
+
+*`File`*: Name of the file to execute (maximum 64 characters). If Mode 8 (DSK Custom Boot) is selected, it must have the name of both the DSK file and the file to load inside the disk image, separated by `:` (e.g. `Bounder.dsk:BOUNDER.BAS`)
 
 *`Image File`*: (Optional) Name (maximum 64 characters) of a full screen image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2 or BMP format.
+
+=== Examples
+
+This are all valid lines:
+
+[source]
+----
+Albatrossity,1,,Albatrossity.tap
+
+Alter Ego,4,Alter Ego,Alter Ego.tap
+
+Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
+
+Astronut,16,../Next/,Astronut.snx
+----
+
+But these are not:
+
+[source]
+----
+Albatrossity,,,Albatrossity.tap
+----
+
+(missing Load Mode Code)
+
+[source]
+----
+,1,,Albatrossity.tap
+----
+
+(missing Name)
+
+[source]
+----
+Albatrossity,1,,
+----
+
+(Missing File)
+
+<<<
 
 This is an example of a small database file:
 
@@ -141,16 +189,13 @@ Batty,9,Batty,Batty.tap,
 Bounder,8,Bounder,Bounder.dsk:BOUNDER.BAS
 ----
 
-
-<<<
+So, using this example, when you choose `Barbarian: The Ultimat` in the user interface, the program will try to load `/all/Games/Barbarian/3DOS/BARB.BAS`, and it will also try to show the image located at `/all/Games/Barbarian/3DOS/Barbarian.bmp`.
 
 == Notes
 
 This program creates a preferences file named `opts.tmp` inside the same folder where `knloader.bas` is installed.
 
 It also creates a variable number of cache files inside `/tmp/knloader`. This is necessary to speed up the program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
-
-<<<
 
 == Copyright
 
