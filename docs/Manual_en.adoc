@@ -35,7 +35,7 @@ A ZIP file with the latest version is available following https://github.com/kou
 
 Create manually `knloader.bdt` file using the text editor of your choice (see below for more instructions).
 
-Copy together `knloader.bas`, `knlauncher` and the new `knloader.bdt` file to any place in your SD card.
+Copy together `knloader.bas`, `knlauncher`, `knzml` and the new `knloader.bdt` file to any place in your SD card.
 
 == Use
 

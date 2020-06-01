@@ -6,7 +6,7 @@
   40 ; GNU General Public License
 
   50 LET %s=%REG 7&3:RUN AT 3
-  60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ON ERROR:ERASE
+  60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 GO SUB %7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
   90 PRINT AT 5,14;"> knloader  v0.2 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
@@ -153,6 +153,7 @@
 4650 IF mode=14 THEN LET m$="TZX (Next)"
 4660 IF mode=15 THEN LET m$="NEX"
 4670 IF mode=16 THEN LET m$="Snapshot"
+4680 IF mode=17 THEN LET m$="Z-Machine Program"
 4690 IF a$<>" " AND covers=1 THEN GO TO %4800
 
 4695 ; Text Data
@@ -228,11 +229,11 @@
 6070 OPEN # 4,"m:knloader.bdt":DIM #4 TO %f:LET lf=%f
 6080 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
 6090 LET l$="":LET lp=1:IF n>0 THEN LET z$(n)="":LET o(n)=0:LET x$(n)="":LET b$(n)=""
-6100 LET fp=fp+1:IF fp>lf THEN GO TO %6300
-6110 NEXT #4 TO b:LET c$=CHR$ b:IF b=13 THEN GO TO 6100
+6100 LET fp=fp+1:IF fp>lf+1 THEN GO TO %6140
+6110 NEXT #4 TO b:LET c$=CHR$ b:IF b=13 THEN GO TO %6100
 6120 IF b=10 THEN GO TO %6140
 6130 IF c$<>"," THEN LET l$=l$+c$:GO TO %6100
-6140 PRINT AT 20,12;"BUILDING CACHE:";INT (100*fp/lf);"%"
+6140 PRINT AT 20,12;"BUILDING CACHE:";INT (100*fp/lf);"%":IF l$="" AND lp=1 THEN LET n=n-1:GO TO %6300
 6150 IF n=0 THEN LET y$=l$:GO TO %6210
 6160 IF lp=1 THEN LET z$(n)=l$
 6170 IF lp=2 THEN LET o(n)=VAL (l$)

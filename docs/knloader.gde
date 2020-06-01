@@ -112,11 +112,11 @@ https://www.specnext.com/latestdistro/
 @{r}knloader Manual
 @{c}@{h1}Installation
 
-Create manually `knloader.bdt` file using the text editor of your choice (see
+Create manually @{i}knloader.bdt@{ui} file using the text editor of your choice (see
 below for more instructions).
 
-Copy together `knloader.bas`, `knlauncher` and the new `knloader.bdt` file to
-any place in your SD card.
+Copy together @{i}knloader.bas@{ui}, @{i}knlauncher@{ui}, @{i}knzml@{ui} and the new @{i}knloader.bdt@{ui}
+file to any place in your SD card.
 
 @-------------------------------------------------------------------------------
 @node USE
@@ -136,7 +136,7 @@ the database file.
 The main interface shows a list of the programs found in the database file.
 
 You can use the cursor keys or a joystick (Kempston or MD) to move and select
-the program that you want to load. Then, press @{b}ENTER@{b}, @{b}0@{ub} or the joystick button
+the program that you want to load. Then, press @{b}ENTER@{ub}, @{b}0@{ub} or the joystick button
 to launch.
 
 After a brief period of time, the program should load using the desired mode.

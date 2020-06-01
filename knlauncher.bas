@@ -6,15 +6,16 @@
   40 ; GNU General Public License
 
   50 LET %s=%REG 7&3:RUN AT 2
-  60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ON ERROR:ERASE
+  60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER 7:BORDER 7:INK 0:CLS
   80 OPEN # 6,"w>22,1,1,32,4":PRINT #6;AT 0,0;">> knlauncher v0.2 >> (c) kounch 2020":CLOSE # 6
   90 LET x=USR 5808:LOAD "c:/nextzxos/usr0.bin"CODE 32768
 
  200 ; Load Options
- 210 LOAD "m:klo.tmp"DATA o()
- 220 LOAD "m:kls.tmp"DATA o$()
-
+ 210 DIM o$(255):OPEN # 2,"v>o$":PWD #2:CLOSE # 2
+ 220 LET a$=o$:GO SUB %5200:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
+ 230 LOAD "m:klo.tmp"DATA o()
+ 240 LOAD "m:kls.tmp"DATA o$()
  250 mode=o(1)
  260 LET a$=o$(1):GO SUB %5200:LET y$=a$
  270 LET a$=o$(2):GO SUB %5200:LET c$=a$
@@ -43,6 +44,7 @@
  490 IF mode=14 THEN LET t$="tzx":GO TO %1700:;TZX (Next)
  500 IF mode=15 THEN GO TO %1800:;NEX
  510 IF mode=16 THEN GO TO %1900:;Snapshot
+ 530 IF mode=17 THEN GO TO %2000:;Z-Machine Program
 
  590 STOP
 
@@ -105,6 +107,13 @@
 1920 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:RUN AT %s:CLEAR
 1930 LOAD "m:kl99.tmp"DATA o$():LET a$=o$(1):CLS:SPECTRUM a$
 1990 STOP
+
+2000 ; Z-Machine Program
+2010 GO SUB %5400:DIM o$(1,LEN y$+LEN a$+1):LET o$(1)=y$+"/"+a$:SAVE "m:kl99.tmp"DATA o$()
+2020 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR
+2030 RUN AT 2:LOAD q$:CD p$
+2040 CLEAR:LOAD "knzml"
+2090 STOP
 
 4995 ; SUBROUTINES
 
