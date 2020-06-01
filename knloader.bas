@@ -74,9 +74,9 @@
  900 CLOSE # 6:CLS:BORDER 1:ON ERROR GO TO %1300:ON ERROR
  910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2020"
  920 PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
- 930 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos)
- 940 PRINT AT 17,0;"File:": PRINT AT 18,1;x$(pos)
- 950 LET a$=x$(pos):GO SUB %5300:LET l$=a$:LET a$=w$(pos):GO SUB %5300
+ 930 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:": PRINT AT 18,1;x$(pos)
+ 940 LET a$=x$(pos):GO SUB %5300:LET l$=a$:LET a$=w$(pos):GO SUB %5300
+ 950 IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
  960 LET c$=y$:IF a$<>" " THEN LET c$=y$+"/"+a$
  970 LET a$=l$:GO SUB %5400:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
  980 IF d$(1 TO 14)="No files found" THEN GO TO %1300
@@ -84,8 +84,9 @@
 
  995 ; Save Loader Options
 1000 LET mode=o(pos)
-1010 LET a$=w$(pos):GO SUB %5300:LET c$=a$
-1020 LET a$=x$(pos):GO SUB %5300
+1010 LET a$=w$(pos):GO SUB %5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
+1020 LET c$=a$
+1030 LET a$=x$(pos):GO SUB %5300
 
 1050 DIM o(1):DIM o$(3,maxpath)
 1060 LET o(1)=mode
@@ -165,9 +166,9 @@
 4790 CLOSE # 5:RETURN
 
 4795 ; Image Data (Cover)
-4800 LET l$=a$:LET a$=w$(pos):GO SUB %5300:LET c$=y$+"/"+a$+"/"+l$
-4810 LET l$=l$((LEN l$-2) TO LEN l$)
-4820 LET a$=c$
+4800 LET l$=a$:LET a$=w$(pos):GO SUB %5300
+4810 IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
+4820 LET c$=y$+"/"+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
 4830 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
 4840 IF l$="SCR" OR l$="scr" THEN PRINT #6; CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6; CHR$ 3;
 4850 IF l$="SLR" OR l$="slr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,0:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
@@ -179,13 +180,12 @@
 4995 ; Load Cache
 5000 ON ERROR GO SUB %6000:ON ERROR
 5010 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
-5020 LOAD "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$()
-5030 LOAD "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
-5040 LOAD "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$()
-5050 LOAD "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
-5060 LOAD "/tmp/knloader/bcch"+STR$ pag+".tmp"DATA b$()
-5070 DIM p(2):LOAD "/tmp/knloader/cache.tmp"DATA p():LET maxpag=p(1):LET maxpos=p(2)
-5080 DIM o$(1,maxpath*2):LOAD "/tmp/knloader/ycch.tmp" DATA o$():LET a$=o$(1):GO SUB %5300:LET y$=a$
+5020 LOAD "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$():LOAD "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
+5030 LOAD "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$():LOAD "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
+5040 LOAD "/tmp/knloader/bcch"+STR$ pag+".tmp"DATA b$()
+5050 DIM p(2):LOAD "/tmp/knloader/cache.tmp"DATA p():LET maxpag=p(1):LET maxpos=p(2)
+5060 DIM o$(1,maxpath*2):LOAD "/tmp/knloader/ycch.tmp" DATA o$():LET a$=o$(1):GO SUB %5300:LET y$=a$
+5070 IF y$(LEN y$ TO LEN y$)="/" AND LEN y$>1 THEN LET y$=y$(1 TO LEN y$-1)
 5090 RETURN
 
 5095 ; Load Options
