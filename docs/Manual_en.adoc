@@ -124,6 +124,24 @@ Starting from line 2, each line must have the following format:
 
 *`Image File`*: (Optional) Name (maximum 64 characters) of a full screen image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2 or BMP format.
 
+This is an example of a small database file:
+
+[source]
+----
+/all/Games
+Albatrossity,1,,Albatrossity.tap
+Alter Ego,4,Alter Ego,Alter Ego.tap
+Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
+Amaurote,2,Amaurote,Amaurote.tzx
+Aquanoids,5,Aquanoids,Aquanoids.tzx
+Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
+Astronut,16,../Next/,Astronut.snx
+Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,Barbarian.bmp
+Batty,9,Batty,Batty.tap,
+Bounder,8,Bounder,Bounder.dsk:BOUNDER.BAS
+----
+
+
 <<<
 
 == Notes

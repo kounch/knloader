@@ -20,7 +20,8 @@
  270 LET a$=o$(2):GO SUB %5200:LET c$=a$
  280 LET a$=o$(3):GO SUB %5200
 
- 300 LET y$=y$+"/"+c$:CD y$
+ 300 IF c$<>" " THEN LET y$=y$+"/"+c$
+ 310 CD y$
 
  320 PRINT AT 1,1;a$
 

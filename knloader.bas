@@ -77,8 +77,8 @@
  930 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos)
  940 PRINT AT 17,0;"File:": PRINT AT 18,1;x$(pos)
  950 LET a$=x$(pos):GO SUB %5300:LET l$=a$:LET a$=w$(pos):GO SUB %5300
- 960 LET c$=y$+"/"+a$:LET a$=l$:GO SUB %5400
- 970 CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
+ 960 LET c$=y$:IF a$<>" " THEN LET c$=y$+"/"+a$
+ 970 LET a$=l$:GO SUB %5400:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
  980 IF d$(1 TO 14)="No files found" THEN GO TO %1300
  990 REM PAUSE 0
 
