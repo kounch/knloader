@@ -204,8 +204,8 @@
 5240 RETURN
 
 5295 ; Strip Spaces from a$
-5300 LET m=1:FOR n=1 TO LEN (a$):IF a$(n TO n)<>" " THEN LET m=n
-5310 NEXT n
+5300 LET m=1:FOR p=1 TO LEN (a$):IF a$(p TO p)<>" " THEN LET m=p
+5310 NEXT p
 5320 LET a$=a$(1 TO m)
 5330 RETURN
 
@@ -224,33 +224,34 @@
 6020 ON ERROR GO TO %6040:ON ERROR
 6030 MKDIR "/tmp/knloader"
 6040 ON ERROR PRINT "Cache Build Error!!":ERROR  TO e,l:PRINT e,l:PAUSE 0:ON ERROR:STOP
-6050 LET n=0:LET f=0:LET fp=1:LET pag=0
+6050 LET n=0:LET f=0:LET fp=0:LET pag=0
 6060 PRINT AT 14,0;:COPY "knloader.bdt" TO "m:":;Copy to RAMDisk
 6070 OPEN # 4,"m:knloader.bdt":DIM #4 TO %f:LET lf=%f
 6080 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
 6090 LET l$="":LET lp=1:IF n>0 THEN LET z$(n)="":LET o(n)=0:LET x$(n)="":LET b$(n)=""
-6100 LET fp=fp+1:IF fp>lf+1 THEN GO TO %6140
+6100 LET fp=fp+1:IF fp>lf THEN GO TO %6140
 6110 NEXT #4 TO b:LET c$=CHR$ b:IF b=13 THEN GO TO %6100
 6120 IF b=10 THEN GO TO %6140
 6130 IF c$<>"," THEN LET l$=l$+c$:GO TO %6100
 6140 PRINT AT 20,12;"BUILDING CACHE:";INT (100*fp/lf);"%"
 6150 IF n=0 THEN LET y$=l$:GO TO %6210
-6160 IF lp=1 THEN LET z$(n)=l$:IF l$="" THEN LET n=n-1:GO TO %6300
+6160 IF lp=1 THEN LET z$(n)=l$:IF l$="" AND fp<=lf THEN GO TO %6100:;Omit blank lines
 6170 IF lp=2 THEN LET o(n)=VAL (l$)
 6180 IF lp=3 THEN LET w$(n)=l$
 6190 IF lp=4 THEN LET x$(n)=l$
 6200 IF lp=5 THEN LET b$(n)=l$
 6210 LET l$="":IF c$="," THEN LET lp=lp+1:GO TO %6100
+6220 IF fp>lf THEN GO TO %6300
 6290 IF b=10 OR b=13 THEN LET n=n+1:IF n<23 THEN GO TO %6090
 
 6295 ;Save cache
-6300 SAVE "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$()
-6310 SAVE "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
-6320 SAVE "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$()
-6330 SAVE "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
+6300 LET a$=z$(n):GO SUB %5300:IF a$=" " THEN LET n=n-1:;Remove blank line from ending
+6310 REM PRINT AT 20,0;"Page: "+STR$ pag:PAUSE 0
+6320 SAVE "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$():SAVE "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
+6330 SAVE "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$():SAVE "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
 6340 SAVE "/tmp/knloader/bcch"+STR$ pag+".tmp"DATA b$()
-6350 REM PRINT AT 20,0;"Page: "+STR$ pag:PAUSE 0
-6360 IF (b=10 OR b=13) AND fp<=lf THEN LET pag=pag+1:LET n=1:GO TO %6080
+
+6360 IF (b=10 OR b=13) AND fp<lf THEN LET pag=pag+1:LET n=1:GO TO %6080
 6370 CLOSE # 4:PRINT AT 20,12;"                       "
 6380 LET maxpag=pag:LET maxpos=n
 6390 DIM p(2):LET p(1)=maxpag:LET p(2)=maxpos
