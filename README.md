@@ -28,7 +28,7 @@ A ZIP file with the latest version is available following [this link](https://gi
 
 #### Use
 
-Use the browser or command line to navigate to the folder where `knloader.bas`, `knlauncher` and `knloader.bdt` are. Load `knloader.bas`.
+Use the browser or command line to navigate to the folder where `knloader.bas`, `knlauncher`, `knzml` and `knloader.bdt` are. Load `knloader.bas`.
 
 On first run, cache files will be created from the data inside database file `knloader.bdt`. This has to be done only once, or after any changes are made to the database file.
 

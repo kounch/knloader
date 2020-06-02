@@ -127,7 +127,7 @@ file to any place in your SD card.
 @{c}@{h1}Use
 
 Use the browser or command line to navigate to the folder where knloader.bas,
-knlauncher and knloader.bdt are. Load "knloader.bas".
+knlauncher, knzml and knloader.bdt are. Load "knloader.bas".
 
 On first run, cache files will be created from the data inside database file
 knloader.bdt. This has to be done only once, or after any changes are made to
