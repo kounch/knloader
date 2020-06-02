@@ -245,7 +245,7 @@
 6290 IF b=10 OR b=13 THEN LET n=n+1:IF n<23 THEN GO TO %6090
 
 6295 ;Save cache
-6300 LET a$=z$(n):GO SUB %5300:IF a$=" " THEN LET n=n-1:;Remove blank line from ending
+6300 IF n<23 THEN LET a$=z$(n):GO SUB %5300:IF a$=" " THEN LET n=n-1:;Remove blank line from ending
 6310 REM PRINT AT 20,0;"Page: "+STR$ pag:PAUSE 0
 6320 SAVE "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$():SAVE "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
 6330 SAVE "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$():SAVE "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
