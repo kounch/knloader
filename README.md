@@ -65,6 +65,7 @@ At the moment, the loading mode can be one of these (TZX and Pi audio modes requ
     14 - TZX (Next)
     15 - NEX
     16 - Snapshot (Z80, SNX, SNA, etc.)
+    17 - Z-Machine Program
 
 - **What formats are supported for the images?**
 

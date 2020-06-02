@@ -114,6 +114,7 @@ Where each of the fields between ',' are as follows:
     14 - TZX (Next)
     15 - NEX
     16 - Snapshot
+    17 - Z-Machine Program
 
 [NOTE]
 ====
@@ -187,6 +188,7 @@ Astronut,16,../Next/,Astronut.snx
 Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,Barbarian.bmp
 Batty,9,Batty,Batty.tap,
 Bounder,8,Bounder,Bounder.dsk:BOUNDER.BAS
+Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3
 ----
 
 So, using this example, when you choose `Barbarian: The Ultimat` in the user interface, the program will try to load `/all/Games/Barbarian/3DOS/BARB.BAS`, and it will also try to show the image located at `/all/Games/Barbarian/3DOS/Barbarian.bmp`.

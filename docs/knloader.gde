@@ -191,6 +191,7 @@ one of these:
     14 - TZX (Next)
     15 - NEX
     16 - Snapshot
+    17 - Z-Machine Program
 
 @{b}Directory@{ub}: Subdirectory where file (optionally) and image file are
 located (maximum 64 characters)
@@ -230,6 +231,7 @@ Astronut,16,../Next/,Astronut.snx
 Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,Barbarian.bmp
 Batty,9,Batty,Batty.tap,
 Bounder,8,Bounder,Bounder.dsk:BOUNDER.BAS
+Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3
 @{ui}
 
 So, using this example, when you choose "Barbarian: The Ultimat" in the user
