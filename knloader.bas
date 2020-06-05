@@ -44,7 +44,7 @@
  520 IF K$="8" OR K$=CHR$(9) OR J=1 THEN GO TO %755
  530 IF K$="6" OR K$=CHR$(10) OR J=4 THEN GO TO %795
  540 IF K$="7" OR K$=CHR$(11) OR J=8 THEN GO TO %845
- 550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:ERASE "/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
+ 550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:PRINT AT 10,12;"ERASING...":ERASE "/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
  560 IF K$="X" OR K$="x" THEN FOR %a=0 TO 15:CLOSE # %a:NEXT %a:RUN AT %s:ERASE
  570 IF K$="C" OR K$="c" OR J=32 THEN LET prev=pos:LET covers=1-covers:GO TO %1400
  580 IF K$="O" OR K$="o" THEN REM Save Options>>>NOT IMPLEMENTED<<<
