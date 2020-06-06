@@ -48,7 +48,7 @@ You can use the cursor keys or a joystick (Kempston or MD) to move and select th
 
 At the moment, the loading mode can be one of these (TZX and Pi audio modes require an accelerated Next to function properly):
 
-    0  - 3DOS
+    0  - 3DOS (Next)
     1  - TAP
     2  - TZX (fast)
     3  - DSK (AUTOBOOT)
@@ -66,6 +66,7 @@ At the moment, the loading mode can be one of these (TZX and Pi audio modes requ
     15 - NEX
     16 - Snapshot (Z80, SNX, SNA, etc.)
     17 - Z-Machine Program
+    18 - 3DOS
 
 - **What formats are supported for the images?**
 

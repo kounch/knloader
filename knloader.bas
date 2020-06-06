@@ -27,7 +27,7 @@
  310 PRINT #6;AT prv,0;OVER 1;"                        ":PRINT #6;AT pos,0;OVER 1;INVERSE 1;"                        "
  320 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN LET %d=1:GO TO %360
  330 LET %k=0:IF %d=0 THEN GO TO %320
- 340 GO SUB %4500:LET %d=0
+ 340 GO SUB %4000:LET %d=0
  360 IF J=0 AND K$="" THEN GO TO %320
  370 IF J=IN 31 OR K$=INKEY$  THEN IF %k=1 THEN GO TO %440
  380 IF J<>IN 31 AND K$<>INKEY$ THEN LET %k=0:GO TO %430
@@ -134,49 +134,50 @@
 3095 ; SUBROUTINES
 3096 ;-------------
 
-4495 ; Cover Data
-4500 LET mode=o(pos):LET a$=b$(pos):GO SUB %5300
-4510 IF mode=0 THEN LET m$="3DOS"
-4520 IF mode=1 THEN LET m$="TAP"
-4530 IF mode=2 THEN LET m$="TZX (fast)"
-4540 IF mode=3 THEN LET m$="DSK (AUTOBOOT)"
-4550 IF mode=4 THEN LET m$="TAP (USR 0)"
-4560 IF mode=5 THEN LET m$="TZX (USR0 - Fast)"
-4570 IF mode=6 THEN LET m$="TAP (Next)"
-4580 IF mode=7 THEN LET m$="TZX (Next - Fast)"
-4590 IF mode=8 THEN LET m$="DSK (Custom Boot)"
-4600 IF mode=9 THEN LET m$="TAP (PI Audio)"
-4610 IF mode=10 THEN LET m$="TZX"
-4620 IF mode=11 THEN LET m$="TAP (USR 0 - PI Audio)"
-4630 IF mode=12 THEN LET m$="TZX (USR 0)"
-4640 IF mode=13 THEN LET m$="TAP (PI Audio - Next)"
-4650 IF mode=14 THEN LET m$="TZX (Next)"
-4660 IF mode=15 THEN LET m$="NEX"
-4670 IF mode=16 THEN LET m$="Snapshot"
-4680 IF mode=17 THEN LET m$="Z-Machine Program"
-4690 IF a$<>" " AND covers=1 THEN GO TO %4800
+3995 ; Cover Data
+4000 LET mode=o(pos):LET a$=b$(pos):GO SUB %5300
+4010 IF mode=0 THEN LET m$="3DOS (Next)"
+4020 IF mode=1 THEN LET m$="TAP"
+4030 IF mode=2 THEN LET m$="TZX (fast)"
+4040 IF mode=3 THEN LET m$="DSK (AUTOBOOT)"
+4050 IF mode=4 THEN LET m$="TAP (USR 0)"
+4060 IF mode=5 THEN LET m$="TZX (USR0 - Fast)"
+4070 IF mode=6 THEN LET m$="TAP (Next)"
+4080 IF mode=7 THEN LET m$="TZX (Next - Fast)"
+4090 IF mode=8 THEN LET m$="DSK (Custom Boot)"
+4100 IF mode=9 THEN LET m$="TAP (PI Audio)"
+4110 IF mode=10 THEN LET m$="TZX"
+4120 IF mode=11 THEN LET m$="TAP (USR 0 - PI Audio)"
+4130 IF mode=12 THEN LET m$="TZX (USR 0)"
+4140 IF mode=13 THEN LET m$="TAP (PI Audio - Next)"
+4150 IF mode=14 THEN LET m$="TZX (Next)"
+4160 IF mode=15 THEN LET m$="NEX"
+4170 IF mode=16 THEN LET m$="Snapshot"
+4180 IF mode=17 THEN LET m$="Z-Machine Program"
+4190 IF mode=18 THEN LET m$="3DOS (128K)"
+4390 IF a$<>" " AND covers=1 THEN GO TO %4500
 
-4695 ; Text Data
-4700 LAYER 2,0:LAYER 0
-4720 OPEN # 5,"w>0,12,24,20,4":PRINT #5;INK papel;PAPER tinta;CHR$ 14:CLOSE # 5
-4730 OPEN # 5,"w>1,13,22,18,4":PRINT #5;INK papel;PAPER tinta;CHR$ 14
-4740 PRINT #5;AT 3,1;"NAME: ";z$(pos)
-4750 PRINT #5;AT 5,1;"MODE: ";m$
-4760 PRINT #5; AT 9,1;"FILE: "
-4770 PRINT #5;AT 11,0;x$(pos)
-4790 CLOSE # 5:RETURN
+4395 ; Text Data
+4400 LAYER 2,0:LAYER 0
+4420 OPEN # 5,"w>0,12,24,20,4":PRINT #5;INK papel;PAPER tinta;CHR$ 14:CLOSE # 5
+4430 OPEN # 5,"w>1,13,22,18,4":PRINT #5;INK papel;PAPER tinta;CHR$ 14
+4440 PRINT #5;AT 3,1;"NAME: ";z$(pos)
+4450 PRINT #5;AT 5,1;"MODE: ";m$
+4460 PRINT #5; AT 9,1;"FILE: "
+4470 PRINT #5;AT 11,0;x$(pos)
+4490 CLOSE # 5:RETURN
 
-4795 ; Image Data (Cover)
-4800 LET l$=a$:LET a$=w$(pos):GO SUB %5300
-4810 IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
-4820 LET c$=y$+"/"+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
-4830 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
-4840 IF l$="SCR" OR l$="scr" THEN PRINT #6; CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6; CHR$ 3;
-4850 IF l$="SLR" OR l$="slr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,0:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
-4860 IF l$="SHR" OR l$="shr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,1:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
-4870 IF l$="SHC" OR l$="shc" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,2:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
-4880 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
-4890 RETURN
+4495 ; Image Data (Cover)
+4500 LET l$=a$:LET a$=w$(pos):GO SUB %5300
+4510 IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
+4520 LET c$=y$+"/"+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
+4530 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
+4540 IF l$="SCR" OR l$="scr" THEN PRINT #6; CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6; CHR$ 3;
+4550 IF l$="SLR" OR l$="slr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,0:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
+4560 IF l$="SHR" OR l$="shr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,1:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
+4570 IF l$="SHC" OR l$="shc" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,2:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3;
+4580 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
+4590 RETURN
 
 4995 ; Load Cache
 5000 ON ERROR GO SUB %6000:ON ERROR

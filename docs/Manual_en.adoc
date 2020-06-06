@@ -107,7 +107,7 @@ Where each of the fields between ',' are as follows:
 
 === Loading Mode Reference Codes
 
-    0  - 3DOS
+    0  - 3DOS (Next)
     1  - TAP
     2  - TZX (fast)
     3  - DSK (AUTOBOOT)
@@ -125,6 +125,7 @@ Where each of the fields between ',' are as follows:
     15 - NEX (Next)
     16 - Snapshot
     17 - Z-Machine Program (Next)
+    18 - 3DOS
 
 [NOTE]
 ====
