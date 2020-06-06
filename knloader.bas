@@ -29,13 +29,13 @@
  330 LET %k=0:IF %d=0 THEN GO TO %320
  340 GO SUB %4000:LET %d=0
  360 IF J=0 AND K$="" THEN GO TO %320
- 370 IF J=IN 31 OR K$=INKEY$  THEN IF %k=1 THEN GO TO %440
+ 370 IF J=IN 31 OR K$=INKEY$ THEN IF %k=1 THEN GO TO %440
  380 IF J<>IN 31 AND K$<>INKEY$ THEN LET %k=0:GO TO %430
  390 IF K$<>"6" AND K$<>CHR$(10) AND J<>4 AND K$<>"7" AND K$<>CHR$(11) AND J<>8 THEN GO TO %430
  400 LET %t=PEEK 23672:LET kr=1
  410 LET %r=256+PEEK 23672:LET %r=%(r-t) MOD 255
  420 IF %r<p THEN GO TO %410
- 430 IF J=IN 31 OR K$=INKEY$  THEN LET %k=1
+ 430 IF J=IN 31 OR K$=INKEY$ THEN LET %k=1
  440 BEEP 0.008,-20
 
  495 ; Menu Control Input
@@ -254,7 +254,7 @@
 
 6360 IF (b=10 OR b=13) AND fp<lf THEN LET pag=pag+1:LET n=1:GO TO %6080
 6370 CLOSE # 4:PRINT AT 20,12;"                       "
-6380 LET maxpag=pag:LET maxpos=n
+6380 LET maxpag=pag:LET maxpos=n:IF maxpos=23 THEN LET maxpos=22
 6390 DIM p(2):LET p(1)=maxpag:LET p(2)=maxpos
 6400 SAVE "/tmp/knloader/cache.tmp"DATA p()
 6410 DIM o$(1,maxpath*2):LET o$(1)=y$:SAVE "/tmp/knloader/ycch.tmp" DATA o$() 
