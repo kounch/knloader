@@ -208,6 +208,8 @@ or BMP format.
 
 @{b}@{i}Notes@{ui}@{ub}:
 
+* Unless stated otherwise (e.g. on modes 6,7), all modes set the ZX Spectrum
+Next in 128K mode, disabling Next special hardware.
 * All TZX (fast) modes run at 14Mhz. Once the program is loaded, you can get
 back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.
 * Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive @{i}A:@{ui} and execute

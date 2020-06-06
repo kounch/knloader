@@ -95,7 +95,17 @@ Where each of the fields between ',' are as follows:
 
 *`Program Name`*: Name to show in the interface (maximum 22 characters)
 
-*`Loading Mode`*: A number indicating how to load the program file. Must be one of these:
+*`Loading Mode`*: A number indicating how to load the program file. See the Table below
+
+*`Directory`*: (Optional) Subdirectory where file (optionally) and image file are located (maximum 64 characters)
+
+*`File`*: Name of the file to execute (maximum 64 characters). If Mode 8 (DSK Custom Boot) is selected, it must have the name of both the DSK file and the file to load inside the disk image, separated by `:` (e.g. `Bounder.dsk:BOUNDER.BAS`)
+
+*`Image File`*: (Optional) Name (maximum 64 characters) of a full screen image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2 or BMP format.
+
+<<<
+
+=== Loading Mode Reference Codes
 
     0  - 3DOS
     1  - TAP
@@ -112,12 +122,14 @@ Where each of the fields between ',' are as follows:
     12 - TZX (USR 0)
     13 - TAP (PI Audio - Next)
     14 - TZX (Next)
-    15 - NEX
+    15 - NEX (Next)
     16 - Snapshot
-    17 - Z-Machine Program
+    17 - Z-Machine Program (Next)
 
 [NOTE]
 ====
+Unless stated otherwise (e.g. on modes 6,7), all modes set the ZX Spectrum Next in 128K mode, disabling Next special hardware.
+
 All TZX (fast) modes run at 14Mhz. Once the program is loaded, you can get back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.
 
 Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive `A:` and execute `LOAD "*"`
@@ -126,12 +138,6 @@ Mode 8 (DSK Custom Boot) will mount the DSK file at drive `A:` and execute `LOAD
 ====
 
 <<<
-
-*`Directory`*: (Optional) Subdirectory where file (optionally) and image file are located (maximum 64 characters)
-
-*`File`*: Name of the file to execute (maximum 64 characters). If Mode 8 (DSK Custom Boot) is selected, it must have the name of both the DSK file and the file to load inside the disk image, separated by `:` (e.g. `Bounder.dsk:BOUNDER.BAS`)
-
-*`Image File`*: (Optional) Name (maximum 64 characters) of a full screen image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2 or BMP format.
 
 === Examples
 
