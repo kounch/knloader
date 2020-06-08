@@ -230,7 +230,7 @@
 
 6080 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
 6090 LET lp=1:LET cn=1:IF n>0 THEN LET z$(n)="":LET o(n)=0:LET x$(n)="":LET b$(n)=""
-6100 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:LET %f=%f+c+1
+6100 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:LET %f=%f+c+1:IF %c=0 THEN LET n=n-1:GO TO 6240
 6110 IF n=0 THEN LET y$=m$:GO TO 6240
 6120 FOR %a=1 TO %c:LET ln=%a:LET c$=m$(ln TO ln):LET %b=CODE c$
 6130 IF %b=13 THEN GO TO 6210
