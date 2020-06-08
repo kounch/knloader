@@ -7,13 +7,13 @@
 
   50 LET %s=%REG 7&3:RUN AT 3
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
-  70 GO SUB %7000:; Load Defaults
+  70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
   90 PRINT AT 5,14;"> knloader  v0.4 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
 
   95 ; Load Menu Items
- 100 GO SUB %5000:; Load Cache
- 110 GO SUB %5100:; Load Options
+ 100 GO SUB 5000:; Load Cache
+ 110 GO SUB 5100:; Load Options
  120 LET pos=1
 
  195 ; Draw Menu Text
@@ -25,68 +25,68 @@
 
  300 LET prv=1:LET %k=0:LET J=0:LET K$="":LET %d=1
  310 PRINT #6;AT prv,0;OVER 1;"                        ":PRINT #6;AT pos,0;OVER 1;INVERSE 1;"                        "
- 320 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN LET %d=1:GO TO %360
- 330 LET %k=0:IF %d=0 THEN GO TO %320
- 340 GO SUB %4000:LET %d=0
- 360 IF J=0 AND K$="" THEN GO TO %320
- 370 IF J=IN 31 OR K$=INKEY$ THEN IF %k=1 THEN GO TO %440
- 380 IF J<>IN 31 AND K$<>INKEY$ THEN LET %k=0:GO TO %430
- 390 IF K$<>"6" AND K$<>CHR$(10) AND J<>4 AND K$<>"7" AND K$<>CHR$(11) AND J<>8 THEN GO TO %430
+ 320 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN LET %d=1:GO TO 360
+ 330 LET %k=0:IF %d=0 THEN GO TO 320
+ 340 GO SUB 4000:LET %d=0
+ 360 IF J=0 AND K$="" THEN GO TO 320
+ 370 IF J=IN 31 OR K$=INKEY$ THEN IF %k=1 THEN GO TO 440
+ 380 IF J<>IN 31 AND K$<>INKEY$ THEN LET %k=0:GO TO 430
+ 390 IF K$<>"6" AND K$<>CHR$(10) AND J<>4 AND K$<>"7" AND K$<>CHR$(11) AND J<>8 THEN GO TO 430
  400 LET %t=PEEK 23672:LET kr=1
  410 LET %r=256+PEEK 23672:LET %r=%(r-t) MOD 255
- 420 IF %r<p THEN GO TO %410
+ 420 IF %r<p THEN GO TO 410
  430 IF J=IN 31 OR K$=INKEY$ THEN LET %k=1
  440 BEEP 0.008,-20
 
  495 ; Menu Control Input
- 500 IF K$="0" OR K$=CHR$(13) OR J=16 THEN GO TO %895
- 510 IF K$="5" OR K$=CHR$(8) OR J=2 THEN GO TO %695
- 520 IF K$="8" OR K$=CHR$(9) OR J=1 THEN GO TO %755
- 530 IF K$="6" OR K$=CHR$(10) OR J=4 THEN GO TO %795
- 540 IF K$="7" OR K$=CHR$(11) OR J=8 THEN GO TO %845
+ 500 IF K$="0" OR K$=CHR$(13) OR J=16 THEN GO TO 895
+ 510 IF K$="5" OR K$=CHR$(8) OR J=2 THEN GO TO 695
+ 520 IF K$="8" OR K$=CHR$(9) OR J=1 THEN GO TO 755
+ 530 IF K$="6" OR K$=CHR$(10) OR J=4 THEN GO TO 795
+ 540 IF K$="7" OR K$=CHR$(11) OR J=8 THEN GO TO 845
  550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:PRINT AT 10,12;"ERASING...":ERASE "/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
  560 IF K$="X" OR K$="x" THEN FOR %a=0 TO 15:CLOSE # %a:NEXT %a:RUN AT %s:ERASE
- 570 IF K$="C" OR K$="c" OR J=32 THEN LET prev=pos:LET covers=1-covers:GO TO %1400
+ 570 IF K$="C" OR K$="c" OR J=32 THEN LET prev=pos:LET covers=1-covers:GO TO 1400
  580 IF K$="O" OR K$="o" THEN REM Save Options>>>NOT IMPLEMENTED<<<
  590 IF K$="E" OR K$="e" THEN REM Edit Options>>>NOT IMPLEMENTED<<<
- 600 IF K$="H" OR K$="h" THEN LET prev=pos:GO TO %1500
- 690 GO TO %320
+ 600 IF K$="H" OR K$="h" THEN LET prev=pos:GO TO 1500
+ 690 GO TO 320
 
  695 ; Input LEFT
- 700 LET prv=pos:IF pag>0 THEN LET pag=pag-1:LET pos=1:GO SUB %5000:GO TO %210
- 750 GO TO %320
+ 700 LET prv=pos:IF pag>0 THEN LET pag=pag-1:LET pos=1:GO SUB 5000:GO TO 210
+ 750 GO TO 320
  755 ; Input RIGHT
- 760 LET prv=pos:IF pag<maxpag THEN LET pag=pag+1:LET pos=1:GO SUB %5000:GO TO %210
- 790 GO TO %320
+ 760 LET prv=pos:IF pag<maxpag THEN LET pag=pag+1:LET pos=1:GO SUB 5000:GO TO 210
+ 790 GO TO 320
  795 ; Input DOWN
  800 LET prv=pos
- 810 IF pag<maxpag AND pos=22 THEN LET pag=pag+1:LET pos=1:GO SUB %5000:GO TO %210
+ 810 IF pag<maxpag AND pos=22 THEN LET pag=pag+1:LET pos=1:GO SUB 5000:GO TO 210
  820 IF pag<maxpag AND pos<22 THEN LET pos=pos+1
  830 IF pag=maxpag AND pos<maxpos THEN LET pos=pos+1
- 840 GO TO %310
+ 840 GO TO 310
  845 ; Input UP
  850 LET prv=pos
- 860 IF pag>0 AND pos=1 THEN LET pag=pag-1:LET pos=22:GO SUB %5000:GO TO %210
+ 860 IF pag>0 AND pos=1 THEN LET pag=pag-1:LET pos=22:GO SUB 5000:GO TO 210
  870 IF pos>1 THEN LET pos=pos-1
- 880 GO TO %310
+ 880 GO TO 310
 
  895 ; Prepare to Launch Program
- 900 CLOSE # 6:CLS:BORDER 1:ON ERROR GO TO %1300:ON ERROR
+ 900 CLOSE # 6:CLS:BORDER 1:ON ERROR GO TO 1300:ON ERROR
  910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2020"
  920 PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
  930 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:":PRINT AT 18,1;x$(pos)
- 940 LET a$=x$(pos):GO SUB %5300:LET l$=a$:LET a$=w$(pos):GO SUB %5300
+ 940 LET a$=x$(pos):GO SUB 5300:LET l$=a$:LET a$=w$(pos):GO SUB 5300
  950 IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
  960 LET c$=y$:IF a$<>" " THEN LET c$=y$+"/"+a$
- 970 LET a$=l$:GO SUB %5400:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
- 980 IF d$(1 TO 14)="No files found" THEN GO TO %1300
+ 970 LET a$=l$:GO SUB 5400:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
+ 980 IF d$(1 TO 14)="No files found" THEN GO TO 1300
  990 REM PAUSE 0
 
  995 ; Save Loader Options
 1000 LET mode=o(pos)
-1010 LET a$=w$(pos):GO SUB %5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
+1010 LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
 1020 LET c$=a$
-1030 LET a$=x$(pos):GO SUB %5300
+1030 LET a$=x$(pos):GO SUB 5300
 
 1050 DIM o(1):DIM o$(3,maxpath)
 1060 LET o(1)=mode
@@ -105,16 +105,16 @@
 1310 PRINT AT 7,5;INK 6;PAPER 2;"                      "
 1320 PRINT AT 8,5;INK 6;PAPER 2;" ERROR:File Not Found "
 1330 PRINT AT 9,5;INK 6;PAPER 2;"                      "
-1340 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN GO TO %1340
-1350 LET J=IN 31:LET K$=INKEY$:IF J=0 AND K$="" THEN GO TO %1350
-1360 LET prev=pos:CLS:GO TO %200
+1340 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN GO TO 1340
+1350 LET J=IN 31:LET K$=INKEY$:IF J=0 AND K$="" THEN GO TO 1350
+1360 LET prev=pos:CLS:GO TO 200
 
 1395 ; Show Cover Status
 1400 LET a$="ON ":IF covers=0 THEN LET a$="OFF"
 1410 PRINT AT 6,16;"             "
 1420 PRINT AT 7,16;" Covers: ";a$;" "
 1430 PRINT AT 8,16;"             "
-1440 PAUSE 30:GO TO %210
+1440 PAUSE 30:GO TO 210
 
 1495 ; Help Window
 1500 OPEN # 5,"w>1,1,22,30,4":PRINT #5;INK papel;PAPER tinta;CHR$ 14:CLOSE # 5
@@ -127,15 +127,15 @@
 1570 PRINT #5;AT 13,1;"Press X to exit"
 1580 PRINT #5;AT 15,1;"Press H to show this help"
 1590 PRINT #5;AT 19,5;"Press any key or button to close this window"
-1600 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN GO TO %1600
-1610 LET J=IN 31:LET K$=INKEY$:IF J=0 AND K$="" THEN GO TO %1610
-1620 CLOSE # 5:GO TO %210
+1600 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN GO TO 1600
+1610 LET J=IN 31:LET K$=INKEY$:IF J=0 AND K$="" THEN GO TO 1610
+1620 CLOSE # 5:GO TO 210
 
 3095 ; SUBROUTINES
 3096 ;-------------
 
 3995 ; Cover Data
-4000 LET mode=o(pos):LET a$=b$(pos):GO SUB %5300
+4000 LET mode=o(pos):LET a$=b$(pos):GO SUB 5300
 4010 IF mode=0 THEN LET m$="3DOS (Next)"
 4020 IF mode=1 THEN LET m$="TAP"
 4030 IF mode=2 THEN LET m$="TZX (fast)"
@@ -155,7 +155,7 @@
 4170 IF mode=16 THEN LET m$="Snapshot"
 4180 IF mode=17 THEN LET m$="Z-Machine Program"
 4190 IF mode=18 THEN LET m$="3DOS (128K)"
-4390 IF a$<>" " AND covers=1 THEN GO TO %4500
+4390 IF a$<>" " AND covers=1 THEN GO TO 4500
 
 4395 ; Text Data
 4400 LAYER 2,0:LAYER 0
@@ -168,7 +168,7 @@
 4490 CLOSE # 5:RETURN
 
 4495 ; Image Data (Cover)
-4500 LET l$=a$:LET a$=w$(pos):GO SUB %5300
+4500 LET l$=a$:LET a$=w$(pos):GO SUB 5300
 4510 IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
 4520 LET c$=y$+"/"+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
 4530 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3;
@@ -180,18 +180,18 @@
 4590 RETURN
 
 4995 ; Load Cache
-5000 ON ERROR GO SUB %6000:ON ERROR
+5000 ON ERROR GO SUB 6000:ON ERROR
 5010 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
 5020 LOAD "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$():LOAD "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
 5030 LOAD "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$():LOAD "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
 5040 LOAD "/tmp/knloader/bcch"+STR$ pag+".tmp"DATA b$()
 5050 DIM p(2):LOAD "/tmp/knloader/cache.tmp"DATA p():LET maxpag=p(1):LET maxpos=p(2)
-5060 DIM o$(1,maxpath*2):LOAD "/tmp/knloader/ycch.tmp" DATA o$():LET a$=o$(1):GO SUB %5300:LET y$=a$
+5060 DIM o$(1,maxpath*2):LOAD "/tmp/knloader/ycch.tmp" DATA o$():LET a$=o$(1):GO SUB 5300:LET y$=a$
 5070 IF y$(LEN y$ TO LEN y$)="/" AND LEN y$>1 THEN LET y$=y$(1 TO LEN y$-1)
 5090 RETURN
 
 5095 ; Load Options
-5100 ON ERROR GO SUB %5200:ON ERROR
+5100 ON ERROR GO SUB 5200:ON ERROR
 5110 DIM p(4)
 5120 LOAD "opts.tmp"DATA p()
 5130 LET tinta=p(1):LET papel=p(2):LET %p=p(3):covers=p(4)
@@ -213,9 +213,9 @@
 5395 ; Split a$ into a$ and l$, using ":"
 5400 LET v=1:FOR x=1 TO LEN a$:IF a$(x TO x)=":" THEN LET v=x
 5410 NEXT x:LET l$=""
-5420 IF a$(v TO v)<>":" THEN GO TO %5490
-5430 IF v=LEN a$ THEN GO TO %5450
-5440 LET l$=a$(v+1 TO LEN a$):IF v=1 THEN LET a$="":GO TO %5490
+5420 IF a$(v TO v)<>":" THEN GO TO 5490
+5430 IF v=LEN a$ THEN GO TO 5450
+5440 LET l$=a$(v+1 TO LEN a$):IF v=1 THEN LET a$="":GO TO 5490
 5450 LET a$=a$(1 TO v-1)
 5490 RETURN
 
@@ -274,8 +274,8 @@
 7000 ON ERROR ERASE
 7010 LET tinta=0:LET papel=7:LET %p=8:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
 7020 LET covers=1:DIM d$(255):OPEN # 2,"v>d$":PWD #2:CLOSE # 2
-7030 LET a$=d$:GO SUB %5300:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
-7040 DIM d$(255):OPEN # 2,"v>d$":.NEXTVER -v:CLOSE # 2:LET a=VAL(d$):GO SUB %5300:PRINT a
+7030 LET a$=d$:GO SUB 5300:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
+7040 DIM d$(255):OPEN # 2,"v>d$":.NEXTVER -v:CLOSE # 2:LET a=VAL(d$):GO SUB 5300:PRINT a
 7050 IF a>2.05 THEN RETURN
 7060 CLS:PRINT AT 5,3;INK 6;PAPER 2;" ERROR:  NextZXOS Too Old "
 7070 PRINT AT 8,1;"Please upgrade the distribution"

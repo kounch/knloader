@@ -13,13 +13,13 @@
 
  200 ; Load Options
  210 DIM o$(255):OPEN # 2,"v>o$":PWD #2:CLOSE # 2
- 220 LET a$=o$:GO SUB %5200:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
+ 220 LET a$=o$:GO SUB 5200:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
  230 LOAD "m:klo.tmp"DATA o()
  240 LOAD "m:kls.tmp"DATA o$()
  250 mode=o(1)
- 260 LET a$=o$(1):GO SUB %5200:LET y$=a$
- 270 LET a$=o$(2):GO SUB %5200:LET c$=a$
- 280 LET a$=o$(3):GO SUB %5200
+ 260 LET a$=o$(1):GO SUB 5200:LET y$=a$
+ 270 LET a$=o$(2):GO SUB 5200:LET c$=a$
+ 280 LET a$=o$(3):GO SUB 5200
 
  300 IF c$<>" " THEN LET y$=y$+"/"+c$
  310 CD y$
@@ -27,98 +27,98 @@
  320 PRINT AT 1,1;a$
 
  345 ; Select Mode
- 350 IF mode=0 THEN GO TO %1000:;3DOS (Next)
- 360 IF mode=1 THEN GO TO %1100:;TAP (128K)
- 370 IF mode=2 THEN LET %s=2:LET t$="tzx":GO TO %1200:;TZX (Fast)
- 380 IF mode=3 THEN LET a$=a$+":*":GO TO %1300:;DSK (AUTOBOOT)
- 390 IF mode=4 THEN GO TO %1400:;TAP (USR 0)
- 400 IF mode=5 THEN LET %s=2:LET t$="tzx":GO TO %1500:;TZX (USR0 - Fast)
- 410 IF mode=6 THEN GO TO %1600:;TAP (Next)
- 420 IF mode=7 THEN LET %s=2:LET t$="tzx":GO TO %1700:;TZX (Next - Fast)
- 430 IF mode=8 THEN GO TO %1300:;DSK (Custom Boot)
- 440 IF mode=9 THEN LET t$="tap":GO TO %1200:;TAP (PI Audio)
- 450 IF mode=10 THEN LET t$="tzx":GO TO %1200:;TZX
- 460 IF mode=11 THEN LET t$="tap":GO TO %1500:;TAP (USR 0 - PI Audio)
- 470 IF mode=12 THEN LET t$="tzx":GO TO %1500:;TZX (USR 0)
- 480 IF mode=13 THEN LET t$="tap":GO TO %1700:;TAP (PI Audio - Next)
- 490 IF mode=14 THEN LET t$="tzx":GO TO %1700:;TZX (Next)
- 500 IF mode=15 THEN GO TO %1800:;NEX
- 510 IF mode=16 THEN GO TO %1900:;Snapshot
- 530 IF mode=17 THEN GO TO %2000:;Z-Machine Program
- 540 IF mode=18 THEN GO TO %2100:;3DOS (128K)
+ 350 IF mode=0 THEN GO TO 1000:;3DOS (Next)
+ 360 IF mode=1 THEN GO TO 1100:;TAP (128K)
+ 370 IF mode=2 THEN LET %s=2:LET t$="tzx":GO TO 1200:;TZX (Fast)
+ 380 IF mode=3 THEN LET a$=a$+":*":GO TO 1300:;DSK (AUTOBOOT)
+ 390 IF mode=4 THEN GO TO 1400:;TAP (USR 0)
+ 400 IF mode=5 THEN LET %s=2:LET t$="tzx":GO TO 1500:;TZX (USR0 - Fast)
+ 410 IF mode=6 THEN GO TO 1600:;TAP (Next)
+ 420 IF mode=7 THEN LET %s=2:LET t$="tzx":GO TO 1700:;TZX (Next - Fast)
+ 430 IF mode=8 THEN GO TO 1300:;DSK (Custom Boot)
+ 440 IF mode=9 THEN LET t$="tap":GO TO 1200:;TAP (PI Audio)
+ 450 IF mode=10 THEN LET t$="tzx":GO TO 1200:;TZX
+ 460 IF mode=11 THEN LET t$="tap":GO TO 1500:;TAP (USR 0 - PI Audio)
+ 470 IF mode=12 THEN LET t$="tzx":GO TO 1500:;TZX (USR 0)
+ 480 IF mode=13 THEN LET t$="tap":GO TO 1700:;TAP (PI Audio - Next)
+ 490 IF mode=14 THEN LET t$="tzx":GO TO 1700:;TZX (Next)
+ 500 IF mode=15 THEN GO TO 1800:;NEX
+ 510 IF mode=16 THEN GO TO 1900:;Snapshot
+ 530 IF mode=17 THEN GO TO 2000:;Z-Machine Program
+ 540 IF mode=18 THEN GO TO 2100:;3DOS (128K)
 
  590 PRINT "ERROR: Unknown Mode":PAUSE 0:STOP
 
 1000 ; Mode 3DOS (Next)
-1010 GO SUB %5400:DIM o$(1,LEN a$):LET o$(1)=a$:SAVE "m:kl99.tmp"DATA o$()
+1010 GO SUB 5400:DIM o$(1,LEN a$):LET o$(1)=a$:SAVE "m:kl99.tmp"DATA o$()
 1020 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:RUN AT %s:CLEAR
 1030 LOAD "m:kl99.tmp"DATA o$():LET a$=o$(1):LOAD a$
 1090 STOP
 
 1100 ; Mode TAP (128K)
-1110 GO SUB %5400:.$ tapein a$:GO SUB %5500:CLEAR:SPECTRUM LOAD
+1110 GO SUB 5400:.$ tapein a$:GO SUB 5500:CLEAR:SPECTRUM LOAD
 1190 STOP
 
 1200 ; Mode PI Audio (128K)
-1210 GO SUB %5400:GO SUB %5600:GO SUB %5500:CLEAR:SPECTRUM LOAD
+1210 GO SUB 5400:GO SUB 5600:GO SUB 5500:CLEAR:SPECTRUM LOAD
 1290 STOP
 
 1300 ; Mode DSK obtained from mounter.bas
-1310 GO SUB %5300:DIM o$(1,LEN d$):LET o$(1)=d$:SAVE "m:kl99.tmp" DATA o$()
-1315 GO SUB %5400:GO SUB %5500
+1310 GO SUB 5300:DIM o$(1,LEN d$):LET o$(1)=d$:SAVE "m:kl99.tmp" DATA o$()
+1315 GO SUB 5400:GO SUB 5500
 1320 MOVE "A:"OUT:MOVE "A:" IN a$
 1330 CLEAR:CD "A:":LOAD "m:kl99.tmp"DATA o$():LET a$=o$(1)
 1340 REG %$82,%REG $82&$fe:CLS:LOAD a$
 1390 STOP
 
 1400 ; Mode TAP (USR 0) obtained from tapload.bas
-1410 GO SUB %5400:.$ tapein a$
-1420 GO SUB %5500:CLEAR:SPECTRUM:POKE 32768,0:LET x=USR 32769
-1430 REM GO SUB %5500:SPECTRUM:POKE 32768,0:LET x=USR 32769:;LOAD "" CODE
+1410 GO SUB 5400:.$ tapein a$
+1420 GO SUB 5500:CLEAR:SPECTRUM:POKE 32768,0:LET x=USR 32769
+1430 REM GO SUB 5500:SPECTRUM:POKE 32768,0:LET x=USR 32769:;LOAD "" CODE
 1490 STOP
 
 1500 ; Mode PI Audio (USR 0) obtained from tapload.bas and tzxload.bas
-1510 GO SUB %5400:GO SUB %5600:GO SUB %5500
+1510 GO SUB 5400:GO SUB 5600:GO SUB 5500
 1520 CLEAR:SPECTRUM:POKE 32768,0:LET x=USR 32769
 1530 REM SPECTRUM:POKE 32768,1:LET x=USR 32769:;LOAD "" CODE
 1590 STOP
 
 1600 ; Mode TAP (Next)
-1610 GO SUB %5400:.$ tapein a$
+1610 GO SUB 5400:.$ tapein a$
 1620 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:RUN AT %s:CLEAR
 1630 DPOKE %$5c76,0:LOAD "t:":POKE 33792,0:CLEAR USR 33793
 1640 REM DPOKE %$5c76,0:LOAD "t:":POKE 33792,1:CLEAR USR 33793:;LOAD "" CODE
 1690 STOP
 
 1700 ; Mode PI Audio (Next)
-1710 GO SUB %5400: GO SUB %5600
+1710 GO SUB 5400: GO SUB 5600
 1720 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:RUN AT %s:CLEAR
 1730 DPOKE %$5c76,0:LOAD "t:":POKE 33792,0:CLEAR USR 33793
 1740 REM DPOKE %$5c76,0:LOAD "t:"POKE 33792,1:CLEAR USR 33793:;LOAD "" CODE
 1790 STOP
 
 1800 ; Mode NEX
-1810 GO SUB %5400:DIM o$(1,LEN a$):LET o$(1)=a$:SAVE "m:kl99.tmp"DATA o$()
+1810 GO SUB 5400:DIM o$(1,LEN a$):LET o$(1)=a$:SAVE "m:kl99.tmp"DATA o$()
 1820 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:RUN AT %s:CLEAR
 1830 LOAD "m:kl99.tmp"DATA o$():LET a$=o$(1):.$ nexload a$
 1890 STOP
 
 1900 ; Mode Snapshot
-1910 GO SUB %5400:DIM o$(1,LEN a$):LET o$(1)=a$:SAVE "m:kl99.tmp"DATA o$()
+1910 GO SUB 5400:DIM o$(1,LEN a$):LET o$(1)=a$:SAVE "m:kl99.tmp"DATA o$()
 1920 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:RUN AT %s:CLEAR
 1930 LOAD "m:kl99.tmp"DATA o$():LET a$=o$(1):CLS:SPECTRUM a$
 1990 STOP
 
 2000 ; Z-Machine Program
-2010 GO SUB %5400:DIM o$(1,LEN y$+LEN a$+1):LET o$(1)=y$+"/"+a$:SAVE "m:kl99.tmp"DATA o$()
+2010 GO SUB 5400:DIM o$(1,LEN y$+LEN a$+1):LET o$(1)=y$+"/"+a$:SAVE "m:kl99.tmp"DATA o$()
 2020 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR
 2030 RUN AT 2:LOAD q$:CD p$
 2040 CLEAR:LOAD "knzml"
 2090 STOP
 
 2100 ; Mode 3DOS (128K)
-2110 GO SUB %5400:DIM o$(1,LEN a$):LET o$(1)=a$:SAVE "m:kl99.tmp"DATA o$()
-2120 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:RUN AT %s:GO SUB %5500:CLEAR
+2110 GO SUB 5400:DIM o$(1,LEN a$):LET o$(1)=a$:SAVE "m:kl99.tmp"DATA o$()
+2120 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:RUN AT %s:GO SUB 5500:CLEAR
 2130 LOAD "m:kl99.tmp"DATA o$():LET a$=o$(1):LOAD a$
 2190 STOP
 
@@ -133,9 +133,9 @@
 5295 ; Split a$ into a$ and d$, using ":"
 5300 LET v=1:FOR x=1 TO LEN a$:IF a$(x TO x)=":" THEN LET v=x
 5310 NEXT x:LET d$=""
-5320 IF a$(v TO v)<>":" THEN GO TO %5390
-5330 IF v=LEN a$ THEN GO TO %5350
-5340 LET d$=a$(v+1 TO LEN a$):IF v=1 THEN LET a$="":GO TO %5390
+5320 IF a$(v TO v)<>":" THEN GO TO 5390
+5330 IF v=LEN a$ THEN GO TO 5350
+5340 LET d$=a$(v+1 TO LEN a$):IF v=1 THEN LET a$="":GO TO 5390
 5350 LET a$=a$(1 TO v-1)
 5390 RETURN
 
@@ -159,7 +159,7 @@
 5600 LET %r=3
 5610 .tapein -c
 5620 OUT 5434,64:OUT 9275,162:OUT 9531,211:.pisend -q:PAUSE 5:CLS
-5630 IF %REG 127=0 THEN GO TO %6000
+5630 IF %REG 127=0 THEN GO TO 6000
 5640 .$ pisend a$
 5650 IF t$="tzx" THEN PAUSE 100:LET g$="-c printf ""\x14\x57\x03\xAE\x06\x08\x00\x00\x02\x00\x00\xFF\xFF"" > /ram/tzxfix.bin ; cat """+a$+""" /ram/tzxfix.bin > /ram/file.tzx"
 5660 IF t$="tap" THEN PAUSE 100:LET g$="-c printf ""\x02\x00\xAA\x55"" > /ram/tapfix.bin ; cat """+a$+""" /ram/tapfix.bin > /ram/file.tap"
@@ -181,6 +181,6 @@
 5995 ; Error with Pi
 6000 CLS:PRINT AT 1,1;INK 6;PAPER 2;" Error: Can't connect with Pi "
 6010 LET %r=%r-1:IF %r>0 THEN PRINT AT 4,1;"Please, wait for a few seconds":PRINT AT 6,2;"Then press any key to retry"
-6020 LET J=IN 31:LET K$=INKEY$:IF K$="" AND J=0 THEN GO TO %6020
-6030 IF %r>0 THEN GO TO %5610
+6020 LET J=IN 31:LET K$=INKEY$:IF K$="" AND J=0 THEN GO TO 6020
+6030 IF %r>0 THEN GO TO 5610
 6040 STOP
