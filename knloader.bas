@@ -74,7 +74,7 @@
  900 CLOSE # 6:CLS:BORDER 1:ON ERROR GO TO %1300:ON ERROR
  910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2020"
  920 PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
- 930 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:": PRINT AT 18,1;x$(pos)
+ 930 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:":PRINT AT 18,1;x$(pos)
  940 LET a$=x$(pos):GO SUB %5300:LET l$=a$:LET a$=w$(pos):GO SUB %5300
  950 IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
  960 LET c$=y$:IF a$<>" " THEN LET c$=y$+"/"+a$
@@ -128,7 +128,7 @@
 1580 PRINT #5;AT 15,1;"Press H to show this help"
 1590 PRINT #5;AT 19,5;"Press any key or button to close this window"
 1600 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN GO TO %1600
-1610 LET J=IN 31:LET K$= INKEY$:IF J=0 AND K$="" THEN GO TO %1610
+1610 LET J=IN 31:LET K$=INKEY$:IF J=0 AND K$="" THEN GO TO %1610
 1620 CLOSE # 5:GO TO %210
 
 3095 ; SUBROUTINES
@@ -221,44 +221,44 @@
 
 5995 ; Build Cache
 6000 DIM d$(40):OPEN # 2,"v>d$":CAT "knloader.bdt":CLOSE # 2
-6010 IF d$(1 TO 14) = "No files found" THEN GO TO %6500
-6020 ON ERROR GO TO %6040:ON ERROR
+6010 IF d$(1 TO 14)="No files found" THEN GO TO 6500
+6020 ON ERROR GO TO 6040:ON ERROR
 6030 MKDIR "/tmp/knloader"
 6040 ON ERROR PRINT "Cache Build Error!!":ERROR  TO e,l:PRINT e,l:PAUSE 0:ON ERROR:STOP
-6050 LET n=0:LET f=0:LET fp=0:LET pag=0
-6060 PRINT AT 14,0;:COPY "knloader.bdt" TO "m:":;Copy to RAMDisk
-6070 OPEN # 4,"m:knloader.bdt":DIM #4 TO %f:LET lf=%f
+6050 LET n=0:LET f=0:LET %f=0:LET pag=0:PRINT AT 20,12;"BUILDING CACHE: 0%"
+6060 OPEN # 4,"knloader.bdt":DIM #4 TO %g:CLOSE # 4:BANK 12 ERASE 10:LOAD "knloader.bdt" BANK 12
+
 6080 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
-6090 LET l$="":LET lp=1:IF n>0 THEN LET z$(n)="":LET o(n)=0:LET x$(n)="":LET b$(n)=""
-6100 LET fp=fp+1:IF fp>lf THEN GO TO %6140
-6110 NEXT #4 TO b:LET c$=CHR$ b:IF b=13 THEN GO TO %6100
-6120 IF b=10 THEN GO TO %6140
-6130 IF c$<>"," THEN LET l$=l$+c$:GO TO %6100
-6140 PRINT AT 20,12;"BUILDING CACHE:";INT (100*fp/lf);"%"
-6150 IF n=0 THEN LET y$=l$:GO TO %6210
-6160 IF lp=1 THEN LET z$(n)=l$:IF l$="" AND fp<=lf THEN GO TO %6100:;Omit blank lines
-6170 IF lp=2 THEN LET o(n)=VAL (l$)
+6090 LET lp=1:LET cn=1:IF n>0 THEN LET z$(n)="":LET o(n)=0:LET x$(n)="":LET b$(n)=""
+6100 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:LET %f=%f+c+1
+6110 IF n=0 THEN LET y$=m$:GO TO 6240
+6120 FOR %a=1 TO %c:LET ln=%a:LET c$=m$(ln TO ln):LET %b=CODE c$
+6130 IF %b=13 THEN GO TO 6210
+6140 IF c$<>"," THEN GO TO 6210
+6150 LET l$="":IF ln>cn THEN LET l$=m$(cn TO ln-1):LET cn=ln+1
+6160 IF lp=1 THEN LET z$(n)=l$:IF l$="" THEN IF %f<=g THEN GO TO 6100
+6170 IF lp=2 THEN LET o(n)=VAL(l$)
 6180 IF lp=3 THEN LET w$(n)=l$
 6190 IF lp=4 THEN LET x$(n)=l$
-6200 IF lp=5 THEN LET b$(n)=l$
-6210 LET l$="":IF c$="," THEN LET lp=lp+1:GO TO %6100
-6220 IF fp>lf THEN GO TO %6300
-6290 IF b=10 OR b=13 THEN LET n=n+1:IF n<23 THEN GO TO %6090
+6200 LET lp=lp+1
+6210 NEXT %a:IF ln<=cn THEN GO TO 6240
+6220 LET l$=m$(cn TO ln):IF lp=4 THEN LET x$(n)=l$
+6230 IF lp=5 THEN LET b$(n)=l$
+6240 IF %f>=g THEN GO TO 6300
+6250 LET n=n+1:IF n<23 THEN GO TO 6090
 
 6295 ;Save cache
-6300 IF n<23 THEN LET a$=z$(n):GO SUB %5300:IF a$=" " THEN LET n=n-1:;Remove blank line from ending
-6310 REM PRINT AT 20,0;"Page: "+STR$ pag:PAUSE 0
+6300 IF n<23 THEN LET a$=z$(n):GO SUB 5300:IF a$=" " THEN LET n=n-1
 6320 SAVE "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$():SAVE "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
 6330 SAVE "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$():SAVE "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
 6340 SAVE "/tmp/knloader/bcch"+STR$ pag+".tmp"DATA b$()
-
-6360 IF (b=10 OR b=13) AND fp<lf THEN LET pag=pag+1:LET n=1:GO TO %6080
-6370 CLOSE # 4:PRINT AT 20,12;"                       "
-6380 LET maxpag=pag:LET maxpos=n:IF maxpos=23 THEN LET maxpos=22
+6350 PRINT AT 20,12;"BUILDING CACHE:";%(10*f/g*10);"%"
+6360 IF %f<g THEN LET pag=pag+1:LET n=1:GO TO 6080
+6380 PRINT AT 20,12;"                       ":LET maxpag=pag:LET maxpos=n:IF maxpos=23 THEN LET maxpos=22
 6390 DIM p(2):LET p(1)=maxpag:LET p(2)=maxpos
 6400 SAVE "/tmp/knloader/cache.tmp"DATA p()
 6410 DIM o$(1,maxpath*2):LET o$(1)=y$:SAVE "/tmp/knloader/ycch.tmp" DATA o$() 
-6490 LET pag=0:LET pos=0:RETURN
+6490 LET pag=0:LET pos=0:BANK 12 CLEAR:RETURN
 
 6495 ; Database Not Found
 6500 CLS:PRINT AT 2,2;INK 6;PAPER 2;" ERROR:  Database Not Found "
