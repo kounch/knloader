@@ -19,17 +19,17 @@ Do you have a ZX Spectrum Next, but you are tired to remember which is the best 
 
 This a set of NextBASIC programs which you can configure to remember, and then use, your preferred way to launch other programs (Next/+3e Mode, 128K mode, USR 0, etc.). As a bonus, you can put some images (like cassette covers or loading screens).
 
-This program is not a replacement for the incoportaded Browser, nor offers any other function than to launch other programs.
+These programs aren't a replacement for the incoportaded Browser, nor offer any other function than to launch other programs.
 
 == Requirements
 
 === Download
 
-A ZIP file with the latest version is available following https://github.com/kounch/knloader/releases/latest[this link]
+A ZIP file with the latest version is available following https://github.com/kounch/knloader/releases/latest[this link].
 
 === Software Requirements
 
-- *NextZXOS (version 1.3.2)*. Docs, downloads, etc. [here](https://www.specnext.com/latestdistro/)
+- *NextZXOS (version 1.3.2)*. Docs, downloads, etc. https://www.specnext.com/latestdistro/[here].
 
 == Installation
 
@@ -97,11 +97,11 @@ Where each of the fields between ',' are as follows:
 
 *`Loading Mode`*: A number indicating how to load the program file. See the Table below
 
-*`Directory`*: (Optional) Subdirectory where file (optionally) and image file are located (maximum 64 characters)
+*`Directory`*: (Optional) Subdirectory where file and image file are located (maximum 64 characters)
 
 *`File`*: Name of the file to execute (maximum 64 characters). If Mode 8 (DSK Custom Boot) is selected, it must have the name of both the DSK file and the file to load inside the disk image, separated by `:` (e.g. `Bounder.dsk:BOUNDER.BAS`)
 
-*`Image File`*: (Optional) Name (maximum 64 characters) of a full screen image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2 or BMP format.
+*`Image File`*: (Optional) Name (maximum 64 characters) of a full screen image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2 or BMP format. BMP file has to be 256x192 pixels, 256 colours (with Next palette and no colour space information).
 
 <<<
 
@@ -133,9 +133,9 @@ Unless stated otherwise (e.g. on modes 6,7), all modes set the ZX Spectrum Next 
 
 All TZX (fast) modes run at 14Mhz. Once the program is loaded, you can get back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.
 
-Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive `A:` and execute `LOAD "*"`
+Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive `A:` and execute `LOAD "*"`.
 
-Mode 8 (DSK Custom Boot) will mount the DSK file at drive `A:` and execute `LOAD "diskfile"`, where `diskfile` is obtained from the `File` field
+Mode 8 (DSK Custom Boot) will mount the DSK file at drive `A:` and execute `LOAD "diskfile"`, where `diskfile` is obtained from the `File` field.
 ====
 
 <<<
@@ -192,19 +192,19 @@ Amaurote,2,Amaurote,Amaurote.tzx
 Aquanoids,5,Aquanoids,Aquanoids.tzx
 Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
 Astronut,16,../Next/,Astronut.snx
-Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,Barbarian.bmp
+Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,../Barbarian.bmp
 Batty,9,Batty,Batty.tap,
 Bounder,8,Bounder,Bounder.dsk:BOUNDER.BAS
 Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3
 ----
 
-So, using this example, when you choose `Barbarian: The Ultimat` in the user interface, the program will try to load `/all/Games/Barbarian/3DOS/BARB.BAS`, and it will also try to show the image located at `/all/Games/Barbarian/3DOS/Barbarian.bmp`.
+So, using this example, when you choose `Barbarian: The Ultimat` in the user interface, the program will try to load `/all/Games/Barbarian/3DOS/BARB.BAS`, and it will also try to show the image located at `/all/Games/Barbarian/Barbarian.bmp`.
 
 == Notes
 
-This program creates a preferences file named `opts.tmp` inside the same folder where `knloader.bas` is installed.
+These programs create a preferences file named `opts.tmp` inside the same folder where `knloader.bas` is installed.
 
-It also creates a variable number of cache files inside `/tmp/knloader`. This is necessary to speed up the program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
+They also create a variable number of cache files inside `/tmp/knloader`. This is necessary to speed up program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
 
 == Copyright
 

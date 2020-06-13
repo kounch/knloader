@@ -1,0 +1,219 @@
+= Manual de knloader
+:author: kounch
+:revnumber: 0.4.0
+:doctype: book
+:email: kounch@users.noreply.github.com
+:Revision:  1.0
+:description: Manual en español de knloader
+:keywords: Manual, Español, knloader, ZX Spectrum Next, BASIC, Lanzador
+:icons: font 
+:toc: left
+:toc-title: Índice
+:toclevels: 4
+
+<<<
+
+== Descripción
+
+¿Tiene usted un ZX Spectrum Next, pero está cansado de tener que recordar cuál es la mejor opción para lanzar sus programas? Entonces knloader puede ser la solución.
+
+Este es un conjunto de programas NextBASIC que se pueden configurar para recordar, y entonces utilizar, el método preferido para lanzar otros programas (Modo Next/+3e, Modo 128K, USR 0, etc.). Como extra, además se pueden utilizar imágenes (como carátulas de cassette o pantallas de carga).
+
+Estos programas no reemplazan el programa Browser incorporado, ni ofrecen otra función que no sea lanzar otros programas.
+
+== Requisitos
+
+=== Descarga
+
+Se puede obtener un fichero ZIP con la última versión siguiendo  https://github.com/kounch/knloader/releases/latest[este enlace].
+
+=== Requisitos de Software
+
+- *NextZXOS (versión 1.3.2)*. Documentos, descargas, etc. https://www.specnext.com/latestdistro/[aquí].
+
+== Instalación
+
+Crear manualmente un archivo `knloader.bdt` con un programa editor de texto (leer a continuación para más instrucciones).
+
+Copiar, juntos, `knloader.bas`, `knlauncher`, `knzml` y el nuevo archivo `knloader.bdt` al lugar que se desee de la tarjeta SD.
+
+== Uso
+
+Acceder usando el programa Browser, o con otro método, hasta la carpeta donde están `knloader.bas`, `knlauncher`, `knzml` y `knloader.bdt`. Cargar `knloader.bas`.
+
+En la primera ejecución, se crearán archivos de caché desde la información del archivo de datos `knloader.bdt`. Esto sólo tiene que hacerse una vez, o tras haber realizado algún cambio en el archivo de datos.
+
+[.text-center] 
+image::FirstBoot.png[pdfwidth=70%]
+
+La interfaz principal muestra una lista de los programas encontrados en el archivo de datos.
+
+[.text-center] 
+image::CoverOff.png[pdfwidth=70%]
+
+<<<
+
+Se pueden utilizar las teclas de cursor o un joystick compatible (modo Kempston o MD) para moverse y elegir el programa a cargar. Entonces, pulsar `ENTER`, `0` o el botón del joystick para ejecutarlo.
+
+[.text-center] 
+image::LoadDetails.png[pdfwidth=70%]
+
+Después de unos instantes, el programa debería cargarse usando el modo deseado.
+
+[.text-center] 
+image::knlauncher.png[pdfwidth=70%]
+
+<<<
+
+Si se han introducido cambios en el archivo de datos, pulsar R para reconstruir la caché con la nueva información.
+
+Pulsar C o el botón secundario del joystick (en modo MD ) para ocultar o mostrar las imágenes.
+
+[.text-center] 
+image::CoverOn.png[pdfwidth=70%]
+
+Pulsar X para salir del programa.
+
+Pulsar H para mostrar una pequeña ayuda (en inglés).
+
+== Formato del archivo de datos
+
+La base de datos principal se almacena en un archivo de texto (codificación ANSI, sin acentos u otros caracteres similares), que se ha de llamar `knloader.bdt`, y que debe estar en el mismo directorio en el que esté `knloader.bas` en la tarjeta SD. Por el momento, el archivo de datos se tiene que crear de forma manual.
+
+Todas las rutas que se indiquen deben usar `/` como separador para indicar directorios. El uso de `\` no está soportado.
+
+La primera linea del arcchivo ha de ser la ruta principal de la SD desde la que empezar a buscar programas (por ejemplo: `/Juegos`). No debe exceder los 128 caracteres de longitud.
+
+A partir de la segunda, cada línea debe ser según el siguiente formato:
+
+[source]
+----
+Nombre,Modo de carga,<Directorio>,Archivo,<Archivo de Imagen>
+----
+
+Donde cada uno de los campos entre ',' son de la siguiente manera:
+
+*`Nombre`*: Nombre a mostrar en la interfaz (máximo de 22 caracteres)
+
+*`Modo de carga`*: Un número indicando cómo cargar el archivo de programa. Véase la tabla a continuación
+
+*`Directorio`*: (Opcional) Subdirectorio donde se encuentran `Archivo` y `Archivo de Imagen` (máximo de 64 caracteres)
+
+*`Archivo`*: Nombre del archivo a ejecutar (máximo 64 caracteres). Si se elige el modo 8 (DSK con arranque personalizado), debe contener el nombre, tanto del archivo DSK, como el del archivo a ejecutar de dentro de la imagen de disco, separados por `:` (por ejemplo: `Bounder.dsk:BOUNDER.BAS`)
+
+*`Archivo de imagen`*: (Opcional) Nombre (máximo 64 caracteres) de una imagen de pantalla completa para mostrar por debajo del listado de programas. Puede ser en el formato SCR, SLR, SHC, SL2 o BMP. En el caso de BMP, este ha de ser de 256x192 píxeles, 256 colores, usando la paleta de color de Next y sin información del espacio de color.
+
+<<<
+
+=== Códigos de referencia de los modos de carga
+
+    0  - 3DOS (Next)
+    1  - TAP
+    2  - TZX (rápido)
+    3  - DSK (auto arranque)
+    4  - TAP (USR 0)
+    5  - TZX (USR0 - rápido)
+    6  - TAP (Next)
+    7  - TZX (Next - rápido)
+    8  - DSK (arranque personalizado)
+    9  - TAP (PI Audio)
+    10 - TZX
+    11 - TAP (USR 0 - PI Audio)
+    12 - TZX (USR 0)
+    13 - TAP (PI Audio - Next)
+    14 - TZX (Next)
+    15 - NEX (Next)
+    16 - Snapshot
+    17 - Programa de Z-Machine (Next)
+    18 - 3DOS
+
+[NOTE]
+====
+Salvo que se indique lo contrario (por ej. en los modos 6, 7), todos los modos configuran el ZX Spectrum Next en modo 128K, deshabilitando el hardware especial de  Next.
+
+Totos los modos TZX (rápido), se ejecutan a 14 MHz. Una vez que el programa haya cargado, se puede volver a la velocidad de 3,5MHz desde el menú NMI, o pulsando NMI y 8 a la vez.
+
+El modo 3 DSK (auto arranque) monta el archivo DSK en la unidad `A:` y ejecuta `LOAD "*"`.
+
+El modo 8 DSK (arranque personalizado) monta el archivo DSK en la unidad `A:` y ejecuta `LOAD "archivo"`, donde `archivo`, se obtiene desde el campo `Archivo`.
+====
+
+<<<
+
+=== Ejemplos
+
+Estas son todas líneas con un formato válido:
+
+[source]
+----
+Albatrossity,1,,Albatrossity.tap
+
+Alter Ego,4,Alter Ego,Alter Ego.tap
+
+Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
+
+Astronut,16,../Next/,Astronut.snx
+----
+
+Pero estas otras, no:
+
+[source]
+----
+Albatrossity,,,Albatrossity.tap
+----
+
+(falta el código del modo de carga)
+
+[source]
+----
+,1,,Albatrossity.tap
+----
+
+(falta el nombre)
+
+[source]
+----
+Albatrossity,1,,
+----
+
+(falta el archivo)
+
+<<<
+
+Ejemplo de archivo de datos:
+
+[source]
+----
+/all/Games
+Albatrossity,1,,Albatrossity.tap
+Alter Ego,4,Alter Ego,Alter Ego.tap
+Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
+Amaurote,2,Amaurote,Amaurote.tzx
+Aquanoids,5,Aquanoids,Aquanoids.tzx
+Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
+Astronut,16,../Next/,Astronut.snx
+Barbarian: El Guerreo Definitivo,0,Barbarian/3DOS,BARB.BAS,../Barbarian.bmp
+Batty,9,Batty,Batty.tap,
+Bounder,8,Bounder,Bounder.dsk:BOUNDER.BAS
+Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3
+----
+
+Así, según este último ejemplo, al elegir `Barbarian: El Guerrero` en la interfaz de usuario, el programa intentará cargar `/all/Games/Barbarian/3DOS/BARB.BAS`, y tambén mostrará la imagen que se encuentra en `/all/Games/Barbarian/Barbarian.bmp`.
+
+== Notas
+
+Estos programas crean un archivo de preferencias llamado `opts.tmp` en la misma carpeta donde se encuentre `knloader.bas`.
+
+También crean un número variable de archivos de caché en `/tmp/knloader`. Esto es algo necesario para que la ejecución del programa sea a una velocidad adecuada, así como para superar limitaciones de RAM para archivos de datos grandes. Sin embargo, si no se modifica el archivo de datos, estos nuevos ficheros serán de sólo lectura en todas las ejecuciones posteriores.
+
+== Copyright
+
+Copyright (c) 2020 kounch
+
+Parte del código utilizado para lanzar programas ha sido adaptado desde la distribución oficial de NextZXOS (concretamente de `browser.cfg`, `tapload.bas` y `tzxload.bas`).
+
+**_Spectrum Next_** y **_System/Next_** son © **SpecNext Ltd**.
+
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE
