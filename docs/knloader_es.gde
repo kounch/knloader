@@ -1,0 +1,277 @@
+@title Manual de knloader
+@author kounch
+@version 0.4
+@copyright Copyright (C)2020 kounch
+@date 2020/06/13
+
+@index INDEX
+
+@-------------------------------------------------------------------------------
+@node MAIN
+@next COPYRIGHT
+
+@{c}Manual de knloader
+
+@{c}Version 0.4
+
+@{h1}
+
+Descripción
+
+¿Tiene usted un ZX Spectrum Next, pero está cansado de tener que recordar cuál
+es la mejor opción para lanzar sus programas? Entonces knloader puede ser la
+solución.
+
+Este es un conjunto de programas NextBASIC que se pueden configurar para
+recordar, y entonces utilizar, el método preferido para lanzar otros programas
+(Modo Next/+3e, Modo 128K, USR 0, etc.). Como extra, además se pueden utilizar
+imágenes (como carátulas de cassette o pantallas de carga).
+
+Estos programas no reemplazan el programa Browser incorporado, ni ofrecen otra
+función que no sea lanzar otros programas.
+
+Debajo se encuentran los enlaces de este nodo (llamado "PRINCIPAL", como se
+puede ver en la esquina inferior derecha). Se puede hacer clic en estos enlaces
+usando el ratón o navegar con el teclado. La @{i}Flecha Derecha@{ui} avanza
+cíclicamente por los enlaces y la  @{i}Flecha Izquierda@{ui} retrocede.
+Al pulsar @{i}ENTER@{ui} se activa el enlace seleccionado. Para regresar al 
+enlace anterior, pulsar @{i}B@{ui}.
+
+ @{" Copyright " LINK COPYRIGHT}
+ @{" Requisitos " LINK REQUIREMENTS}
+ @{" Instalación " LINK INSTALLATION}
+ @{" Uso " LINK USE}
+ 
+Usar las flechas @{i}Arriba@{ui} y @{i}Abajo@{ui} para desplazar el texto,
+@{i}ESPACIO@{ui} para avanzar una página completa y @{i}DELETE@{ui} retroceder.
+
+@-------------------------------------------------------------------------------
+@node INDEX
+@{r}Manual de knloader
+@{c}@{h1}Índice
+
+ @{" Requisitos " LINK REQUIREMENTS}
+ @{" Instalación " LINK INSTALLATION}
+ @{" Uso " LINK USE}
+ @{" Formato de los datos " LINK DATABASE}
+ @{" Notas " LINK NOTES}
+ @{" Copyright " LINK COPYRIGHT}
+
+@-------------------------------------------------------------------------------
+@node COPYRIGHT
+@next REQUIREMENTS
+@prev MAIN
+@toc MAIN
+@{r}Manual de knloader
+@{c}@{h1}Copyright
+
+@{c}@{b}@{i}Copyright (c) 2020 kounch@{ui}@{ub}
+
+Parte del código utilizado para lanzar programas ha sido adaptado desde la
+distribución oficial de NextZXOS (concretamente de browser.cfg, tapload.bas
+y tzxload.bas).
+
+Spectrum Next y System/Next son (c) SpecNext Ltd.
+
+Permission to use, copy, modify, and/or distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright notice
+and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+THIS SOFTWARE
+
+@-------------------------------------------------------------------------------
+@node REQUIREMENTS
+@next INSTALLATION
+@prev COPYRIGHT
+@toc MAIN
+@{r}Manual de knloader
+@{c}@{h1}Requisitos
+
+@{i}Descarga@{ui}
+
+Se puede obtener un fichero ZIP con la última versión siguiendo este enlace:
+
+https://github.com/kounch/knlauncher/releases/latest
+
+
+@{i}Requisitos de Software@{ui}
+
+NextZXOS (version 1.3.2)*. Documentos, descargas, etc. aquí:
+
+https://www.specnext.com/latestdistro/
+
+@-------------------------------------------------------------------------------
+@node INSTALLATION
+@next USE
+@prev REQUIREMENTS
+@toc MAIN
+@{r}Manual de knloader
+@{c}@{h1}Instalación
+
+Crear manualmente un archivo @{i}knloader.bdt@{ui} con un programa editor de
+texto (leer a continuación para más instrucciones).
+
+Copiar, juntos, @{i}knloader.bas@{ui}, @{i}knlauncher@{ui}, @{i}knzml@{ui} y el nuevo
+archivo @{i}knloader.bdt@{ui} al lugar que se desee de la tarjeta SD.
+
+@-------------------------------------------------------------------------------
+@node USE
+@next DATABASE
+@prev INSTALLATION
+@toc MAIN
+@{r}Manual de knloader
+@{c}@{h1}Uso
+
+Acceder usando el programa Browser, o con otro método, hasta la carpeta donde
+están knloader.bas, knlauncher, knzml y knloader.bdt. Cargar "knloader.bas".
+
+En la primera ejecución, se crearán archivos de caché desde la información del
+archivo de datos `knloader.bdt`. Esto sólo tiene que hacerse una vez, o tras
+haber realizado algún cambio en el archivo de datos.
+
+La interfaz principal muestra una lista de los programas encontrados en el
+archivo de datos.
+
+Se pueden utilizar las teclas de cursor o un joystick compatible (modo Kempston
+o MD) para moverse y elegir el programa a cargar. Entonces, pulsar @{b}ENTER@{ub}, @{b}0@{ub}
+o el botón del joystick para ejecutarlo.
+
+Después de unos instantes, el programa debería cargarse usando el modo deseado.
+
+Si se han introducido cambios en el archivo de datos, pulsar @{b}R@{ub} para reconstruir
+la caché con la nueva información.
+
+Pulsar @{b}C@{ub} o el botón secundario del joystick (en modo MD ) para ocultar
+o mostrar las imágenes.
+
+Pulsar @{b}X@{ub} para salir del programa.
+
+Pulsar @{b}H@{ub} para mostrar una pequeña ayuda (en inglés).
+
+@-------------------------------------------------------------------------------
+@node DATABASE
+@next NOTES
+@prev USE
+@toc MAIN
+@{r}Manual de knloader
+@{c}@{h1}Formato del archivo de datos
+
+La base de datos principal se almacena en un archivo de texto (codificación
+ANSI, sin acentos u otros caracteres similares), que se ha de llamar
+@{b}knloader.bdt@{ub}, y que debe estar en el mismo directorio en el que esté
+knloader.bas en la tarjeta SD.
+
+Por el momento, el archivo de datos se tiene que crear de forma manual.
+
+Todas las rutas que se indiquen deben usar @{i}/@{ui} como separador para indicar
+directorios. El uso de @{i}\@{ui} no está soportado.
+
+La primera linea del archivo ha de ser la ruta principal de la SD desde la que
+empezar a buscar programas (por ejemplo: /Juegos). No debe exceder los 128
+caracteres de longitud.
+
+A partir de la segunda, cada línea debe ser según el siguiente formato:
+
+Nombre,Modo de carga,<Directorio>,Archivo,<Archivo de Imagen>
+
+Donde cada uno de los campos entre ',' son de la siguiente manera:
+
+@{b}Nombre@{ub}: Nombre a mostrar en la interfaz (máximo de 22 caracteres)
+
+@{b}Modo de carga@{ub}: Un número indicando cómo cargar el archivo de
+programa. Debe ser uno de estos:
+
+    0  - 3DOS (Next)
+    1  - TAP
+    2  - TZX (rápido)
+    3  - DSK (auto arranque)
+    4  - TAP (USR 0)
+    5  - TZX (USR0 - rápido)
+    6  - TAP (Next)
+    7  - TZX (Next - rápido)
+    8  - DSK (arranque personalizado)
+    9  - TAP (PI Audio)
+    10 - TZX
+    11 - TAP (USR 0 - PI Audio)
+    12 - TZX (USR 0)
+    13 - TAP (PI Audio - Next)
+    14 - TZX (Next)
+    15 - NEX (Next)
+    16 - Snapshot
+    17 - Programa de Z-Machine (Next)
+    18 - 3DOS
+
+@{b}Directorio@{ub}: (Opcional) Subdirectorio donde se encuentran Archivo y
+Archivo de Imagen (máximo de 64 caracteres)
+
+@{b}Archivo@{ub}: Nombre del archivo a ejecutar (máximo de 64 caracteres). Si se
+elige el modo 8 (DSK con arranque personalizado), debe contener el nombre,
+tanto del archivo DSK, como el del archivo a ejecutar de dentro de la imagen de
+disco, separados por ":" (por ejemplo: @{i}Bounder.dsk:BOUNDER.BAS@{ui})
+
+@{b}Archivo de imagen@{ub}: (Opcional) Nombre (máximo 64 caracteres) de una imagen
+de pantalla completa para mostrar por debajo del listado de programas. Puede
+ser en el formato SCR, SLR, SHC, SL2 o BMP.
+
+@{b}@{i}Notas@{ui}@{ub}:
+
+* Salvo que se indique lo contrario (por ej. en los modos 6, 7), todos los
+modos configuran el ZX Spectrum Next en modo 128K, deshabilitando el hardware
+especial de  Next.
+
+* Totos los modos TZX (rápido), se ejecutan a 14 MHz. Una vez que el programa
+haya cargado, se puede volver a la velocidad de 3,5MHz desde el menú NMI, o
+pulsando NMI y 8 a la vez.
+
+* El modo 3 DSK (auto arranque) monta el archivo DSK en la unidad @{i}A:@{ui} y ejecuta
+@{i}LOAD "*"@{ui}.
+
+* El modo 8 DSK (arranque personalizado) monta el archivo DSK en la unidad @{i}A:@{ui} y
+ejecuta @{i}LOAD "archivo"@{ui}, donde @{i}archivo@{ui} , se obtiene desde el campo @{i}Archivo@{ui}.
+
+@{b}@{i}Ejemplo@{ui}@{ub}:
+
+Ejemplo de archivo de datos:
+@{i}
+/all/Games
+Albatrossity,1,,Albatrossity.tap
+Alter Ego,4,Alter Ego,Alter Ego.tap
+Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
+Amaurote,2,Amaurote,Amaurote.tzx
+Aquanoids,5,Aquanoids,Aquanoids.tzx
+Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
+Astronut,16,../Next/,Astronut.snx
+Barbarian: El Guerreo Definitivo,0,Barbarian/3DOS,BARB.BAS,../Barbarian.bmp
+Batty,9,Batty,Batty.tap,
+Bounder,8,Bounder,Bounder.dsk:BOUNDER.BAS
+Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3
+@{ui}
+
+Así, según este último ejemplo, al elegir "Barbarian: El Guerrero" en la
+interfaz de usuario, el programa intentará cargar
+@{c}@{i}/all/Games/Barbarian/3DOS/BARB.BAS@{ui}
+y tambén mostrará la imagen que se encuentra en
+@{c}@{i}/all/Games/Barbarian/Barbarian.bmp@{ui}.
+
+@-------------------------------------------------------------------------------
+@node NOTES
+@next MAIN
+@prev DATABASE
+@toc MAIN
+@{r}Manual de knloader
+@{c}@{h1}Notas
+
+Estos programas crean un archivo de preferencias llamado opts.tmp en la misma
+carpeta donde se encuentre knloader.bas.
+
+También crean un número variable de archivos de caché en /tmp/knloader. Esto es
+algo necesario para que la ejecución del programa sea a una velocidad adecuada,
+así como para superar limitaciones de RAM para archivos de datos grandes. Sin
+embargo, si no se modifica el archivo de datos, estos nuevos ficheros serán de
+sólo lectura en todas las ejecuciones posteriores.

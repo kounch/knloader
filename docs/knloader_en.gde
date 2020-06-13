@@ -26,7 +26,7 @@ use, your preferred way to launch other programs (Next/+3e Mode, 128K mode,
 USR 0, etc.). As a bonus, you can put some images (like cassette covers or
 loading screens).
 
-This program is not a replacement for the incoportaded Browser, nor offers any
+These programs aren't a replacement for the incoportaded Browser, nor offers any
 other function than to launch other programs.
 
 Below are the hyperlinks found on this node (called "MAIN" as you can see
@@ -231,7 +231,7 @@ Amaurote,2,Amaurote,Amaurote.tzx
 Aquanoids,5,Aquanoids,Aquanoids.tzx
 Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
 Astronut,16,../Next/,Astronut.snx
-Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,Barbarian.bmp
+Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,../Barbarian.bmp
 Batty,9,Batty,Batty.tap,
 Bounder,8,Bounder,Bounder.dsk:BOUNDER.BAS
 Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3
@@ -241,7 +241,7 @@ So, using this example, when you choose "Barbarian: The Ultimat" in the user
 interface, the program will try to load
 @{c}@{i}/all/Games/Barbarian/3DOS/BARB.BAS@{ui}
 and it will also try to show the image located at
-@{c}@{i}/all/Games/Barbarian/3DOS/Barbarian.bmp@{ui}.
+@{c}@{i}/all/Games/Barbarian/Barbarian.bmp@{ui}.
 
 @-------------------------------------------------------------------------------
 @node NOTES
@@ -251,10 +251,10 @@ and it will also try to show the image located at
 @{r}knloader Manual
 @{c}@{h1}Notes
 
-This program creates a preferences file named opts.tmp inside the same folder
+These programs create a preferences file named opts.tmp inside the same folder
 where knloader.bas is installed.
 
-It also creates a variable number of cache files inside /tmp/knloader. This is
+They also create a variable number of cache files inside /tmp/knloader. This is
 necessary to speed up the program execution and overcome RAM limitations for
 large database files. However, if the database file is not changed, these will
 become read only on all subsequent executions.
