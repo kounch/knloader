@@ -102,7 +102,7 @@ https://github.com/kounch/knlauncher/releases/latest
 
 @{i}Requisitos de Software@{ui}
 
-NextZXOS (version 1.3.2)*. Documentos, descargas, etc. aquí:
+NextZXOS (version 1.3.2). Documentos, descargas, etc. aquí:
 
 https://www.specnext.com/latestdistro/
 
@@ -132,7 +132,7 @@ Acceder usando el programa Browser, o con otro método, hasta la carpeta donde
 están knloader.bas, knlauncher, knzml y knloader.bdt. Cargar "knloader.bas".
 
 En la primera ejecución, se crearán archivos de caché desde la información del
-archivo de datos `knloader.bdt`. Esto sólo tiene que hacerse una vez, o tras
+archivo de datos knloader.bdt. Esto sólo tiene que hacerse una vez, o tras
 haber realizado algún cambio en el archivo de datos.
 
 La interfaz principal muestra una lista de los programas encontrados en el
