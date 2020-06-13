@@ -1,9 +1,9 @@
 = Manual de knloader
 :author: kounch
-:revnumber: 0.4.0
+:revnumber: 0.5.0
 :doctype: book
 :email: kounch@users.noreply.github.com
-:Revision:  1.0
+:Revision: 1.0
 :description: Manual en castellano de knloader
 :keywords: Manual, Castellano, knloader, ZX Spectrum Next, BASIC, Lanzador
 :icons: font 

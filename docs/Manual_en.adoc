@@ -1,9 +1,9 @@
 = knloader English Manual
 :author: kounch
-:revnumber: 0.4.0
+:revnumber: 0.5.0
 :doctype: book
 :email: kounch@users.noreply.github.com
-:Revision:  1.0
+:Revision: 1.0
 :description: English Manual for knloader
 :keywords: Manual, English, knloader, ZX Spectrum Next, BASIC, Launcher
 :icons: font 
