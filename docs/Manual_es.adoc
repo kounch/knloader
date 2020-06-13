@@ -4,8 +4,8 @@
 :doctype: book
 :email: kounch@users.noreply.github.com
 :Revision:  1.0
-:description: Manual en español de knloader
-:keywords: Manual, Español, knloader, ZX Spectrum Next, BASIC, Lanzador
+:description: Manual en castellano de knloader
+:keywords: Manual, Castellano, knloader, ZX Spectrum Next, BASIC, Lanzador
 :icons: font 
 :toc: left
 :toc-title: Índice

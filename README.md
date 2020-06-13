@@ -74,11 +74,81 @@ The file must be a full ZX Spectrum Next screen image file. It can be in SCR, SL
 
 - **Does this software write anything to the SD card?**
 
-The program creates a preferences file named `opts.tmp` inside the same folder where `knloader.bas` is installed.
+The programs create a preferences file named `opts.tmp` inside the same folder where `knloader.bas` is installed.
 
-It also creates a variable number of cache files inside `/tmp/knloader`. This is necessary to speed up the program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
+They also create a variable number of cache files inside `/tmp/knloader`. This is necessary to speed up the program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
 
 For all other operations, temporary files are created in the RAM disk.
+
+---
+
+## Castellano
+
+Se puede obtener un fichero ZIP con la última versión siguiendo  [este enlace](https://github.com/kounch/knloader/releases/latest).
+
+### Requisitos de Software
+
+- **NextZXOS (versión 1.3.2)**. Documentos, descargas, etc. [aquí](https://www.specnext.com/latestdistro/).
+
+### Instalación
+
+- Crear manualmente un archivo `knloader.bdt` con un programa editor de texto. Veáse el manual incluído (PDF o GDE) para más instrucciones.
+
+- Copiar, juntos, `knloader.bas`, `knlauncher`, `knzml` y el nuevo archivo `knloader.bdt` al lugar que se desee de la tarjeta SD.
+
+#### Uso
+
+Acceder usando el programa Browser, o con otro método, hasta la carpeta donde están `knloader.bas`, `knlauncher`, `knzml` y `knloader.bdt`. Cargar `knloader.bas`.
+
+En la primera ejecución, se crearán archivos de caché desde la información del archivo de datos `knloader.bdt`. Esto sólo tiene que hacerse una vez, o tras haber realizado algún cambio en el archivo de datos.
+
+![First Boot](./docs/FirstBoot.png)
+
+La interfaz principal muestra una lista de los programas encontrados en el archivo de datos.
+
+![First Boot](./docs/CoverOff.png)
+
+Se pueden utilizar las teclas de cursor o un joystick compatible (modo Kempston o MD) para moverse y elegir el programa a cargar. Entonces, pulsar `ENTER`, `0` o el botón del joystick para ejecutarlo.
+
+---
+
+### Preguntas frecuentes
+
+- **¿Cuántos modos de carga hay?**
+
+En este momento, el modo de carga puede ser uno de los siguientes (los modos TZX y Pi Audio requieren un ZX Spectrum Next Accelerated para funcionar correctamente):
+
+    0  - 3DOS (Next)
+    1  - TAP
+    2  - TZX (rápido)
+    3  - DSK (auto arranque)
+    4  - TAP (USR 0)
+    5  - TZX (USR0 - rápido)
+    6  - TAP (Next)
+    7  - TZX (Next - rápido)
+    8  - DSK (arranque personalizado)
+    9  - TAP (PI Audio)
+    10 - TZX
+    11 - TAP (USR 0 - PI Audio)
+    12 - TZX (USR 0)
+    13 - TAP (PI Audio - Next)
+    14 - TZX (Next)
+    15 - NEX (Next)
+    16 - Snapshot
+    17 - Programa de Z-Machine (Next)
+    18 - 3DOS
+
+- **¿Qué formatos pueden tener las imágenes?**
+
+Debe ser un archivo de imagen de pantalla completa. Puede ser en el formato SCR, SLR, SHC, SL2 o BMP.
+
+- **¿Se modifican o crean datos en la tarjeta SD?**
+
+Los programas crean un archivo de preferencias llamado `opts.tmp` en la misma carpeta donde se encuentre `knloader.bas`.
+
+También crean un número variable de archivos de caché en `/tmp/knloader`. Esto es algo necesario para que la ejecución del programa sea a una velocidad adecuada, así como para superar limitaciones de RAM para archivos de datos grandes. Sin embargo, si no se modifica el archivo de datos, estos nuevos ficheros serán de sólo lectura en todas las ejecuciones posteriores.
+
+Para las demás operaciones, se crean ficheros temporales en el disco RAM.
 
 ---
 
