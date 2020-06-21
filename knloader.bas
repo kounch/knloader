@@ -9,7 +9,7 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,14;"> knloader  v0.5 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
+  90 PRINT AT 5,14;"> knloader  v0.6 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
 
   95 ; Load Menu Items
  100 GO SUB 5000:; Load Cache
@@ -18,7 +18,7 @@
 
  195 ; Draw Menu Text
  200 PAPER tinta:BORDER tinta:INK papel:CLS:OPEN # 6,"w>0,0,24,12,4"
- 210 PRINT #6;INK tinta;PAPER papel;CHR$ 14:REM Clear Widow
+ 210 PRINT #6;INK tinta;PAPER papel;CHR$ 14:; Clear Widow
  250 FOR %c=1 TO 22:LET c=%c:PRINT #6;INVERSE 0;OVER 0;AT c,1;z$(c):NEXT %c
  295 ; Menu Input Control and Delay Logic
 
@@ -80,7 +80,6 @@
  960 LET c$=y$:IF a$<>" " THEN LET c$=y$+"/"+a$
  970 LET a$=l$:GO SUB 5400:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
  980 IF d$(1 TO 14)="No files found" THEN GO TO 1300
- 990 REM PAUSE 0
 
  995 ; Save Loader Options
 1000 LET mode=o(pos)
