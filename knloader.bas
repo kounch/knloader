@@ -9,7 +9,7 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,14;"> knloader  v0.6 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
+  90 PRINT AT 5,14;"> knloader  v0.7 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
 
   95 ; Load Menu Items
  100 GO SUB 5000:; Load Cache
@@ -21,7 +21,6 @@
  210 PRINT #6;INK tinta;PAPER papel;CHR$ 14:; Clear Widow
  250 FOR %c=1 TO 22:LET c=%c:PRINT #6;INVERSE 0;OVER 0;AT c,1;z$(c):NEXT %c
  295 ; Menu Input Control and Delay Logic
-
 
  300 LET prv=1:LET %k=0:LET J=0:LET K$="":LET %d=1
  310 PRINT #6;AT prv,0;OVER 1;"                        ":PRINT #6;AT pos,0;OVER 1;INVERSE 1;"                        "
@@ -249,6 +248,7 @@
 
 6295 ;Save cache
 6300 IF n<23 THEN LET a$=z$(n):GO SUB 5300:IF a$=" " THEN LET n=n-1
+6310 IF n<22 THEN FOR %a=n+1 TO 22:LET ln=%a:LET z$(ln)="":NEXT %a
 6320 SAVE "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$():SAVE "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
 6330 SAVE "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$():SAVE "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
 6340 SAVE "/tmp/knloader/bcch"+STR$ pag+".tmp"DATA b$()
