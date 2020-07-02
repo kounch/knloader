@@ -250,7 +250,7 @@
 6230 NEXT %a:IF ln<=cn THEN GO TO 6260
 6240 LET l$=m$(cn TO ln):IF lp=4 THEN BANK %k POKE %(j+89),l$
 6250 IF lp=5 THEN BANK %k POKE %(j+154),l$
-6260 LET %j=%j+219:IF %j>16165 THEN LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %k:LET %k=%k+1:LET %j=0:BANK %k ERASE 0
+6260 LET %j=%j+219:IF %j>16165 THEN LET %k=%k+1:LET %j=0:BANK %k ERASE 0
 6270 IF %f>=g THEN GO TO 6300
 6280 LET %n=%n+1:IF %n<23 THEN GO TO 6080
 6290 IF %n<23 THEN LET a$=BANK %k PEEK$(%j,~0):IF a$="" THEN LET %n=%n-1
@@ -260,8 +260,8 @@
 6330 BANK 13 DPOKE 16252,maxpag:BANK 13 POKE 16254,maxpos
 6340 IF CODE y$(LEN y$ TO LEN y$)=13 THEN LET y$=y$(1 TO LEN y$-1)
 6350 BANK 13 POKE 16255,y$
-6360 SAVE"/tmp/knloader/cache13"BANK 13
-6370 LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %k:LET pag=0:LET pos=1:BANK 12 CLEAR:RETURN
+6360 FOR %a=13 TO %k:LET bnk=%a:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %a:NEXT %a
+6370 LET pag=0:LET pos=1:BANK 12 CLEAR:RETURN
 
 6495 ; Database Not Found
 6500 CLS:PRINT AT 2,2;INK 6;PAPER 2;" ERROR:  Database Not Found "
