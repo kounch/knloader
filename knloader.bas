@@ -179,16 +179,17 @@
 
 4895 ; Load Cache from Disk
 4900 ON ERROR GO SUB 6000:ON ERROR
-4920 DIM p(2):LOAD "/tmp/knloader/cache0"DATA p():LET maxpag=p(1):LET maxpos=p(2)
-4930 LET bnk=13+INT((maxpag*22+maxpos)/74):FOR p=13 TO bnk:LOAD"/tmp/knloader/cache"+STR$ p BANK p:NEXT p
-4940 DIM o$(1,maxpath*2):LOAD "/tmp/knloader/ycch.tmp" DATA o$():LET a$=o$(1):GO SUB 5300:LET y$=a$
-4950 IF y$(LEN y$ TO LEN y$)="/" AND LEN y$>1 THEN LET y$=y$(1 TO LEN y$-1)
+4910 LOAD"/tmp/knloader/cache13"BANK 13
+4920 LET maxpag=%BANK 13 DPEEK 16252:LET maxpos=%BANK 13 PEEK 16254
+4930 LET y$=BANK 13 PEEK$(16255,~0)
+4940 IF y$(LEN y$ TO LEN y$)="/" AND LEN y$>1 THEN LET y$=y$(1 TO LEN y$-1)
+4950 LET bnk=13+INT((maxpag*22+maxpos)/74):IF bnk>13 THEN FOR p=14 TO bnk:LOAD"/tmp/knloader/cache"+STR$ p BANK p:NEXT p
 4960 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
 4970 RETURN
 
 4995 ; Load from RAM Cache
 5000 LET %n=pag:LET %j=%(22*n)MOD 74*219:LET %k=13+INT(22*pag/74):LET a=22:IF pag=maxpag THEN LET a=maxpos
-5010 FOR p=1 TO a:LET z$(p)=BANK %k PEEK$(%j,~0):LET a$=BANK %k PEEK$(%(j+23),1):LET o(p)=CODE a$:LET w$(p)=BANK %k PEEK$(%(j+24),~0)
+5010 FOR p=1 TO a:LET z$(p)=BANK %k PEEK$(%j,~0):LET o(p)=%BANK k PEEK (j+23):LET w$(p)=BANK %k PEEK$(%(j+24),~0)
 5020 LET x$(p)=BANK %k PEEK$(%(j+89),~0):LET b$(p)=BANK %k PEEK$(%(j+154),~0):LET %j=%j+219:IF %j>16165 THEN LET %k=%k+1:LET %j=0
 5030 NEXT p:IF a<22 THEN FOR p=a+1 TO 22:LET z$(p)="":NEXT p
 5060 RETURN
@@ -232,33 +233,35 @@
 6060 OPEN # 4,"knloader.bdt":DIM #4 TO %g:CLOSE # 4:BANK 12 ERASE 10:LOAD "knloader.bdt" BANK 12
 6070 LET %k=13:BANK %k ERASE 0:LET %j=0:;Current Bank, Current Base Address
 6080 LET lp=1:LET cn=1
-6090 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6250
-6100 IF CODE m$(LEN m$ TO LEN m$)=13 THEN LET m$=m$(1 TO LEN m$-1):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6250
-6110 LET %f=%f+c+1:IF %n=0 THEN LET y$=m$:GO TO 6250
-6120 FOR %a=1 TO %c:LET ln=%a:LET c$=m$(ln TO ln):LET %b=CODE c$:IF %b=13 THEN GO TO 6210
-6130 IF c$<>"," THEN GO TO 6210
+6090 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6270
+6100 IF CODE m$(LEN m$ TO LEN m$)=13 THEN LET m$=m$(1 TO LEN m$-1):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6270
+6110 LET %f=%f+c+1:IF %n=0 THEN LET y$=m$:GO TO 6270
+6120 FOR %a=1 TO %c:LET ln=%a:LET c$=m$(ln TO ln):LET %b=CODE c$:IF %b=13 THEN GO TO 6230
+6130 IF c$<>"," THEN GO TO 6230
 6140 LET l$="":IF ln>cn THEN LET l$=m$(cn TO ln-1):LET cn=ln+1
-6150 IF lp=1 THEN BANK %k POKE %j,l$:IF l$="" THEN IF %f<=g THEN GO TO 6090
-6160 IF lp=2 THEN BANK %k POKE %(j+23),VAL l$
-6170 IF lp=3 THEN BANK %k POKE %(j+24),l$
-6180 IF lp=4 THEN BANK %k POKE %(j+89),l$
-6190 IF lp=5 THEN BANK %k POKE %(j+154),l$
-6200 LET lp=lp+1
-6210 NEXT %a:IF ln<=cn THEN GO TO 6240
-6220 LET l$=m$(cn TO ln):IF lp=4 THEN BANK %k POKE %(j+89),l$
-6230 IF lp=5 THEN BANK %k POKE %(j+154),l$
-6240 LET %j=%j+219:IF %j>16165 THEN LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %k:LET %k=%k+1:LET %j=0:BANK %k ERASE 0
-6250 IF %f>=g THEN GO TO 6280
-6260 LET %n=%n+1:IF %n<23 THEN GO TO 6080
-6270 IF %n<23 THEN LET a$=BANK %k PEEK$(%j,~0):IF a$="" THEN LET %n=%n-1
-6280 PRINT AT 20,12;"BUILDING CACHE:";%(10*f/g*10);"%"
-6290 IF %f<g THEN LET pag=pag+1:LET %n=1:GO TO 6080
-6300 PRINT AT 20,12;"                       ":LET maxpag=pag:LET maxpos=%n:IF maxpos=23 THEN LET maxpos=22
-6310 DIM p(2):LET p(1)=maxpag:LET p(2)=maxpos
-6320 SAVE "/tmp/knloader/cache0"DATA p()
-6330 IF CODE y$(LEN y$ TO LEN y$)=13 THEN LET y$=y$(1 TO LEN y$-1)
-6340 DIM o$(1,maxpath*2):LET o$(1)=y$:SAVE "/tmp/knloader/ycch.tmp" DATA o$() 
-6350 LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %k:LET pag=0:LET pos=1:BANK 12 CLEAR:RETURN
+6150 IF LEN l$>maxpath THEN LET l$=l$(1 TO maxpath)
+6160 LET a$=l$:IF LEN a$>22 THEN LET a$=a$(1 TO 22)
+6170 IF lp=1 THEN BANK %k POKE %j,a$:IF a$="" THEN IF %f<=g THEN GO TO 6090
+6180 IF lp=2 THEN BANK %k POKE %(j+23),VAL l$
+6190 IF lp=3 THEN BANK %k POKE %(j+24),l$
+6200 IF lp=4 THEN BANK %k POKE %(j+89),l$
+6210 IF lp=5 THEN BANK %k POKE %(j+154),l$
+6220 LET lp=lp+1
+6230 NEXT %a:IF ln<=cn THEN GO TO 6260
+6240 LET l$=m$(cn TO ln):IF lp=4 THEN BANK %k POKE %(j+89),l$
+6250 IF lp=5 THEN BANK %k POKE %(j+154),l$
+6260 LET %j=%j+219:IF %j>16165 THEN LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %k:LET %k=%k+1:LET %j=0:BANK %k ERASE 0
+6270 IF %f>=g THEN GO TO 6300
+6280 LET %n=%n+1:IF %n<23 THEN GO TO 6080
+6290 IF %n<23 THEN LET a$=BANK %k PEEK$(%j,~0):IF a$="" THEN LET %n=%n-1
+6300 PRINT AT 20,12;"BUILDING CACHE:";%(10*f/g*10);"%"
+6310 IF %f<g THEN LET pag=pag+1:LET %n=1:GO TO 6080
+6320 PRINT AT 20,12;"                       ":LET maxpag=pag:LET maxpos=%n:IF maxpos=23 THEN LET maxpos=22
+6330 BANK 13 DPOKE 16252,maxpag:BANK 13 POKE 16254,maxpos
+6340 IF CODE y$(LEN y$ TO LEN y$)=13 THEN LET y$=y$(1 TO LEN y$-1)
+6350 BANK 13 POKE 16255,y$
+6360 SAVE"/tmp/knloader/cache13"BANK 13
+6370 LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %k:LET pag=0:LET pos=1:BANK 12 CLEAR:RETURN
 
 6495 ; Database Not Found
 6500 CLS:PRINT AT 2,2;INK 6;PAPER 2;" ERROR:  Database Not Found "
