@@ -9,12 +9,12 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,14;"> knloader  v0.7 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
+  90 PRINT AT 5,14;"> knloader  v0.8 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
 
   95 ; Load Menu Items
- 100 GO SUB 5000:; Load Cache
- 110 GO SUB 5100:; Load Options
- 120 LET pos=1
+ 100 GO SUB 4900:; Load Cache To RAM
+ 110 GO SUB 5000:; Load From Cache
+ 120 GO SUB 5100:; Load Options
 
  195 ; Draw Menu Text
  200 PAPER tinta:BORDER tinta:INK papel:CLS:OPEN # 6,"w>0,0,24,12,4"
@@ -177,16 +177,21 @@
 4580 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
 4590 RETURN
 
-4995 ; Load Cache
-5000 ON ERROR GO SUB 6000:ON ERROR
-5010 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
-5020 LOAD "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$():LOAD "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
-5030 LOAD "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$():LOAD "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
-5040 LOAD "/tmp/knloader/bcch"+STR$ pag+".tmp"DATA b$()
-5050 DIM p(2):LOAD "/tmp/knloader/cache.tmp"DATA p():LET maxpag=p(1):LET maxpos=p(2)
-5060 DIM o$(1,maxpath*2):LOAD "/tmp/knloader/ycch.tmp" DATA o$():LET a$=o$(1):GO SUB 5300:LET y$=a$
-5070 IF y$(LEN y$ TO LEN y$)="/" AND LEN y$>1 THEN LET y$=y$(1 TO LEN y$-1)
-5090 RETURN
+4895 ; Load Cache from Disk
+4900 ON ERROR GO SUB 6000:ON ERROR
+4920 DIM p(2):LOAD "/tmp/knloader/cache0"DATA p():LET maxpag=p(1):LET maxpos=p(2)
+4930 LET bnk=13+INT((maxpag*22+maxpos)/74):FOR p=13 TO bnk:LOAD"/tmp/knloader/cache"+STR$ p BANK p:NEXT p
+4940 DIM o$(1,maxpath*2):LOAD "/tmp/knloader/ycch.tmp" DATA o$():LET a$=o$(1):GO SUB 5300:LET y$=a$
+4950 IF y$(LEN y$ TO LEN y$)="/" AND LEN y$>1 THEN LET y$=y$(1 TO LEN y$-1)
+4960 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
+4970 RETURN
+
+4995 ; Load from RAM Cache
+5000 LET %n=pag:LET %j=%(22*n)MOD 74*219:LET %k=13+INT(22*pag/74):LET a=22:IF pag=maxpag THEN LET a=maxpos
+5010 FOR p=1 TO a:LET z$(p)=BANK %k PEEK$(%j,~0):LET a$=BANK %k PEEK$(%(j+23),1):LET o(p)=CODE a$:LET w$(p)=BANK %k PEEK$(%(j+24),~0)
+5020 LET x$(p)=BANK %k PEEK$(%(j+89),~0):LET b$(p)=BANK %k PEEK$(%(j+154),~0):LET %j=%j+219:IF %j>16165 THEN LET %k=%k+1:LET %j=0
+5030 NEXT p:IF a<22 THEN FOR p=a+1 TO 22:LET z$(p)="":NEXT p
+5060 RETURN
 
 5095 ; Load Options
 5100 ON ERROR GO SUB 5200:ON ERROR
@@ -223,43 +228,37 @@
 6020 ON ERROR GO TO 6040:ON ERROR
 6030 MKDIR "/tmp/knloader"
 6040 ON ERROR PRINT "Cache Build Error!!":ERROR  TO e,l:PRINT e,l:PAUSE 0:ON ERROR:STOP
-6050 LET n=0:LET f=0:LET %f=0:LET pag=0:PRINT AT 20,12;"BUILDING CACHE: 0%"
+6050 LET %n=0:LET f=0:LET %f=0:LET pag=0:PRINT AT 20,12;"BUILDING CACHE: 0%"
 6060 OPEN # 4,"knloader.bdt":DIM #4 TO %g:CLOSE # 4:BANK 12 ERASE 10:LOAD "knloader.bdt" BANK 12
-
-6070 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
-6080 LET lp=1:LET cn=1:IF n>0 THEN LET z$(n)="":LET o(n)=0:LET w$(n)="":LET x$(n)="":LET b$(n)=""
-6090 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET n=n-1:GO TO 6250
-6100 IF CODE m$(LEN m$ TO LEN m$)=13 THEN LET m$=m$(1 TO LEN m$-1):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET n=n-1:GO TO 6250
-6110 LET %f=%f+c+1:IF n=0 THEN LET y$=m$:GO TO 6250
+6070 LET %k=13:BANK %k ERASE 0:LET %j=0:;Current Bank, Current Base Address
+6080 LET lp=1:LET cn=1
+6090 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6250
+6100 IF CODE m$(LEN m$ TO LEN m$)=13 THEN LET m$=m$(1 TO LEN m$-1):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6250
+6110 LET %f=%f+c+1:IF %n=0 THEN LET y$=m$:GO TO 6250
 6120 FOR %a=1 TO %c:LET ln=%a:LET c$=m$(ln TO ln):LET %b=CODE c$:IF %b=13 THEN GO TO 6210
 6130 IF c$<>"," THEN GO TO 6210
 6140 LET l$="":IF ln>cn THEN LET l$=m$(cn TO ln-1):LET cn=ln+1
-6150 IF lp=1 THEN LET z$(n)=l$:IF l$="" THEN IF %f<=g THEN GO TO 6090
-6160 IF lp=2 THEN LET o(n)=VAL(l$)
-6170 IF lp=3 THEN LET w$(n)=l$
-6180 IF lp=4 THEN LET x$(n)=l$
-6190 IF lp=5 THEN LET b$(n)=l$
+6150 IF lp=1 THEN BANK %k POKE %j,l$:IF l$="" THEN IF %f<=g THEN GO TO 6090
+6160 IF lp=2 THEN BANK %k POKE %(j+23),VAL l$
+6170 IF lp=3 THEN BANK %k POKE %(j+24),l$
+6180 IF lp=4 THEN BANK %k POKE %(j+89),l$
+6190 IF lp=5 THEN BANK %k POKE %(j+154),l$
 6200 LET lp=lp+1
-6210 NEXT %a:IF ln<=cn THEN GO TO 6250
-6220 LET l$=m$(cn TO ln):IF lp=4 THEN LET x$(n)=l$
-6230 IF lp=5 THEN LET b$(n)=l$
-6250 IF %f>=g THEN GO TO 6300
-6260 LET n=n+1:IF n<23 THEN GO TO 6080
-
-6295 ;Save cache
-6300 IF n<23 THEN LET a$=z$(n):GO SUB 5300:IF a$=" " THEN LET n=n-1
-6310 IF n<22 THEN FOR %a=n+1 TO 22:LET ln=%a:LET z$(ln)="":NEXT %a
-6320 SAVE "/tmp/knloader/zcch"+STR$ pag+".tmp"DATA z$():SAVE "/tmp/knloader/occh"+STR$ pag+".tmp"DATA o()
-6330 SAVE "/tmp/knloader/wcch"+STR$ pag+".tmp"DATA w$():SAVE "/tmp/knloader/xcch"+STR$ pag+".tmp"DATA x$()
-6340 SAVE "/tmp/knloader/bcch"+STR$ pag+".tmp"DATA b$()
-6350 PRINT AT 20,12;"BUILDING CACHE:";%(10*f/g*10);"%"
-6360 IF %f<g THEN LET pag=pag+1:LET n=1:GO TO 6080
-6380 PRINT AT 20,12;"                       ":LET maxpag=pag:LET maxpos=n:IF maxpos=23 THEN LET maxpos=22
-6390 DIM p(2):LET p(1)=maxpag:LET p(2)=maxpos
-6400 SAVE "/tmp/knloader/cache.tmp"DATA p()
-6410 IF CODE y$(LEN y$ TO LEN y$)=13 THEN LET y$=y$(1 TO LEN y$-1)
-6420 DIM o$(1,maxpath*2):LET o$(1)=y$:SAVE "/tmp/knloader/ycch.tmp" DATA o$() 
-6490 LET pag=0:LET pos=0:BANK 12 CLEAR:RETURN
+6210 NEXT %a:IF ln<=cn THEN GO TO 6240
+6220 LET l$=m$(cn TO ln):IF lp=4 THEN BANK %k POKE %(j+89),l$
+6230 IF lp=5 THEN BANK %k POKE %(j+154),l$
+6240 LET %j=%j+219:IF %j>16165 THEN LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %k:LET %k=%k+1:LET %j=0:BANK %k ERASE 0
+6250 IF %f>=g THEN GO TO 6280
+6260 LET %n=%n+1:IF %n<23 THEN GO TO 6080
+6270 IF %n<23 THEN LET a$=BANK %k PEEK$(%j,~0):IF a$="" THEN LET %n=%n-1
+6280 PRINT AT 20,12;"BUILDING CACHE:";%(10*f/g*10);"%"
+6290 IF %f<g THEN LET pag=pag+1:LET %n=1:GO TO 6080
+6300 PRINT AT 20,12;"                       ":LET maxpag=pag:LET maxpos=%n:IF maxpos=23 THEN LET maxpos=22
+6310 DIM p(2):LET p(1)=maxpag:LET p(2)=maxpos
+6320 SAVE "/tmp/knloader/cache0"DATA p()
+6330 IF CODE y$(LEN y$ TO LEN y$)=13 THEN LET y$=y$(1 TO LEN y$-1)
+6340 DIM o$(1,maxpath*2):LET o$(1)=y$:SAVE "/tmp/knloader/ycch.tmp" DATA o$() 
+6350 LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %k:LET pag=0:LET pos=1:BANK 12 CLEAR:RETURN
 
 6495 ; Database Not Found
 6500 CLS:PRINT AT 2,2;INK 6;PAPER 2;" ERROR:  Database Not Found "
@@ -273,7 +272,7 @@
 
 6995 ; Default Config
 7000 ON ERROR ERASE
-7010 LET tinta=0:LET papel=7:LET %p=8:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
+7010 LET tinta=0:LET papel=7:LET %p=8:LET pos=1:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
 7020 LET covers=1:DIM d$(255):OPEN # 2,"v>d$":PWD #2:CLOSE # 2
 7030 LET a$=d$:GO SUB 5300:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
 7040 DIM d$(255):OPEN # 2,"v>d$":.NEXTVER -v:CLOSE # 2:LET a=VAL(d$):GO SUB 5300:PRINT a
