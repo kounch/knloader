@@ -231,37 +231,37 @@
 6040 ON ERROR PRINT "Cache Build Error!!":ERROR  TO e,l:PRINT e,l:PAUSE 0:ON ERROR:STOP
 6050 LET %n=0:LET f=0:LET %f=0:LET pag=0:PRINT AT 20,12;"BUILDING CACHE: 0%"
 6060 OPEN # 4,"knloader.bdt":DIM #4 TO %g:CLOSE # 4:BANK 12 ERASE 10:LOAD "knloader.bdt" BANK 12
-6070 LET %k=13:BANK %k ERASE 0:LET %j=0:;Current Bank, Current Base Address
+6070 LET %k=13:BANK 48 ERASE 0:LET %j=0:;Current Bank, Current Base Address
 6080 LET lp=1:LET cn=1
-6090 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6270
-6100 IF CODE m$(LEN m$ TO LEN m$)=13 THEN LET m$=m$(1 TO LEN m$-1):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6270
-6110 LET %f=%f+c+1:IF %n=0 THEN LET y$=m$:GO TO 6270
+6090 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6300
+6100 IF CODE m$(LEN m$ TO LEN m$)=13 THEN LET m$=m$(1 TO LEN m$-1):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6300
+6110 LET %f=%f+c+1:IF %n=0 THEN LET y$=m$:GO TO 6300
 6120 FOR %a=1 TO %c:LET ln=%a:LET c$=m$(ln TO ln):LET %b=CODE c$:IF %b=13 THEN GO TO 6230
 6130 IF c$<>"," THEN GO TO 6230
 6140 LET l$="":IF ln>cn THEN LET l$=m$(cn TO ln-1):LET cn=ln+1
 6150 IF LEN l$>maxpath THEN LET l$=l$(1 TO maxpath)
 6160 LET a$=l$:IF LEN a$>22 THEN LET a$=a$(1 TO 22)
-6170 IF lp=1 THEN BANK %k POKE %j,a$:IF a$="" THEN IF %f<=g THEN GO TO 6090
-6180 IF lp=2 THEN BANK %k POKE %(j+23),VAL l$
-6190 IF lp=3 THEN BANK %k POKE %(j+24),l$
-6200 IF lp=4 THEN BANK %k POKE %(j+89),l$
-6210 IF lp=5 THEN BANK %k POKE %(j+154),l$
+6170 IF lp=1 THEN BANK 48 POKE %j,a$:IF a$="" THEN IF %f<=g THEN GO TO 6090
+6180 IF lp=2 THEN BANK 48 POKE %(j+23),VAL l$
+6190 IF lp=3 THEN BANK 48 POKE %(j+24),l$
+6200 IF lp=4 THEN BANK 48 POKE %(j+89),l$
+6210 IF lp=5 THEN BANK 48 POKE %(j+154),l$
 6220 LET lp=lp+1
 6230 NEXT %a:IF ln<=cn THEN GO TO 6260
-6240 LET l$=m$(cn TO ln):IF lp=4 THEN BANK %k POKE %(j+89),l$
-6250 IF lp=5 THEN BANK %k POKE %(j+154),l$
-6260 LET %j=%j+219:IF %j>16165 THEN LET %k=%k+1:LET %j=0:BANK %k ERASE 0
-6270 IF %f>=g THEN GO TO 6300
-6280 LET %n=%n+1:IF %n<23 THEN GO TO 6080
-6290 IF %n<23 THEN LET a$=BANK %k PEEK$(%j,~0):IF a$="" THEN LET %n=%n-1
-6300 PRINT AT 20,12;"BUILDING CACHE:";%(10*f/g*10);"%"
-6310 IF %f<g THEN LET pag=pag+1:LET %n=1:GO TO 6080
-6320 PRINT AT 20,12;"                       ":LET maxpag=pag:LET maxpos=%n:IF maxpos=23 THEN LET maxpos=22
-6330 BANK 13 DPOKE 16252,maxpag:BANK 13 POKE 16254,maxpos
-6340 IF CODE y$(LEN y$ TO LEN y$)=13 THEN LET y$=y$(1 TO LEN y$-1)
-6350 BANK 13 POKE 16255,y$
-6360 FOR %a=13 TO %k:LET bnk=%a:SAVE"/tmp/knloader/cache"+STR$ bnk BANK %a:NEXT %a
-6370 LET pag=0:LET pos=1:BANK 12 CLEAR:RETURN
+6240 LET l$=m$(cn TO ln):IF lp=4 THEN BANK 48 POKE %(j+89),l$
+6250 IF lp=5 THEN BANK 48 POKE %(j+154),l$
+6260 LET %j=%j+219:IF %j<16166 THEN GO TO 6300
+6270 IF %k=13 THEN BANK 48 COPY TO 47:GO TO 6290
+6280 LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK 48
+6290 LET %k=%k+1:LET %j=0:BANK 48 ERASE 0
+6300 IF %f>=g THEN GO TO 6330
+6310 LET %n=%n+1:IF %n<23 THEN GO TO 6080
+6320 IF %n<23 THEN LET a$=BANK 48 PEEK$(%j,~0):IF a$="" THEN LET %n=%n-1
+6330 PRINT AT 20,12;"BUILDING CACHE:";%(10*f/g*10);"%":IF %f<g THEN LET pag=pag+1:LET %n=1:GO TO 6080
+6340 PRINT AT 20,12;"                       ":LET maxpag=pag:LET maxpos=%n:IF maxpos=23 THEN LET maxpos=22
+6350 IF %k>13 THEN LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK 48
+6370 BANK 47 DPOKE 16252,maxpag:BANK 47 POKE 16254,maxpos:IF CODE y$(LEN y$ TO LEN y$)=13 THEN LET y$=y$(1 TO LEN y$-1)
+6380 BANK 47 POKE 16255,y$:SAVE"/tmp/knloader/cache13" BANK 47:BANK 47 CLEAR:BANK 48 CLEAR:LET pag=0:LET pos=1:BANK 12 CLEAR:RETURN
 
 6495 ; Database Not Found
 6500 CLS:PRINT AT 2,2;INK 6;PAPER 2;" ERROR:  Database Not Found "
@@ -272,6 +272,18 @@
 6550 PRINT AT 12,1;" Please read the installation"
 6560 PRINT AT 13,0;"guide for more information."
 6590 PAUSE 0:STOP
+
+6595 ; Database Too Big
+6600 CLS:PRINT AT 2,2;INK 6;PAPER 2;" ERROR: BDT File is Too Big "
+6610 PRINT AT 5,1;"The file ";INK 6;"knloader.bdt";INK papel;" is too"
+6620 PRINT AT 6,0;"large: ";INK 2;%g;" bytes"
+6630 PRINT AT 8,1;"The maximum is 16384 bytes." 
+6640 PRINT AT 11,1;"Please use a smaller file or"
+6650 PRINT AT 12,0;"build the cache with an external"
+6660 PRINT AT 13,0;"program."
+6670 PRINT AT 15,1;" Read the user guide for more"
+6680 PRINT AT 16,0;"information."
+6690 PAUSE 0:STOP
 
 6995 ; Default Config
 7000 ON ERROR ERASE
