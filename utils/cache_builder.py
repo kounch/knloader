@@ -193,10 +193,22 @@ def parse_args():
         str_msg = _('Input path does not exist!')
         raise IOError(str_msg)
 
+    if not i_path.is_file():
+        str_msg = _('Path is not a file: {0}')
+        LOGGER.error(str_msg.format(i_path))
+        str_msg = _('Input path is not a file!')
+        raise IOError(str_msg)
+
     if not o_path.exists():
         str_msg = _('Path not found: {0}')
         LOGGER.error(str_msg.format(o_path))
         str_msg = _('Output path does not exist!')
+        raise IOError(str_msg)
+
+    if not o_path.is_dir():
+        str_msg = _('Path is not a directory: {0}')
+        LOGGER.error(str_msg.format(o_path))
+        str_msg = _('Output path is not a dir!')
         raise IOError(str_msg)
 
     values['input'] = i_path
