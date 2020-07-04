@@ -230,7 +230,7 @@
 6030 MKDIR "/tmp/knloader"
 6040 ON ERROR PRINT "Cache Build Error!!":ERROR  TO e,l:PRINT e,l:PAUSE 0:ON ERROR:STOP
 6050 LET %n=0:LET f=0:LET %f=0:LET pag=0:PRINT AT 20,12;"BUILDING CACHE: 0%"
-6060 OPEN # 4,"knloader.bdt":DIM #4 TO %g:CLOSE # 4:BANK 12 ERASE 10:LOAD "knloader.bdt" BANK 12
+6060 OPEN # 4,"knloader.bdt":DIM #4 TO %g:CLOSE # 4:BANK 12 ERASE 10:LOAD "knloader.bdt" BANK 12:IF %g>16384 THEN GO TO 6600
 6070 LET %k=13:BANK 48 ERASE 0:LET %j=0:;Current Bank, Current Base Address
 6080 LET lp=1:LET cn=1
 6090 LET m$=BANK 12 PEEK$(%f,~10):LET %c=LEN m$:IF %c=0 THEN LET %f=%f+c+1:LET %n=%n-1:GO TO 6300
