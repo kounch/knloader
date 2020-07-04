@@ -37,7 +37,7 @@ __MY_NAME__ = 'bdt_builder.py'
 __MY_VERSION__ = '0.8'
 
 LOGGER = logging.getLogger(__name__)
-LOGGER.setLevel(logging.DEBUG)
+LOGGER.setLevel(logging.INFO)
 LOG_FORMAT = logging.Formatter(
     '%(asctime)s [%(levelname)-5.5s] - %(name)s: %(message)s')
 LOG_STREAM = logging.StreamHandler(sys.stdout)
@@ -60,6 +60,11 @@ def main():
     LOGGER.info(str_msg)
 
     bdt_data = scan_dir(arg_data['input'])
+
+    if arg_data['sort']:
+        str_msg = _('Sorting...')
+        LOGGER.debug(str_msg)
+        bdt_data.sort()
 
     if bdt_data:
         with open(arg_data['output'], 'w') as f:
@@ -124,13 +129,25 @@ def parse_args():
 
     values['input'] = i_path
     values['output'] = o_path
+    values['sort'] = True
 
     return values
 
 
 def scan_dir(input_dir):
     """Scans directories"""
-    dict_exts = {'nex': 15, 'tap': 1, 'bas': 0, 'dsk': 3, 'tzx': 2, 'z3': 17}
+    dict_exts = {
+        'nex': 15,
+        'snx': 16,
+        'tap': 1,
+        'bas': 0,
+        'dsk': 3,
+        'p': 16,
+        'tzx': 2,
+        'z3': 17,
+        'z5': 17,
+        'z8': 17
+    }
     arr_imgs = ['bmp', 'scr']
 
     input_dir = input_dir.resolve()
@@ -152,12 +169,11 @@ def scan_dir(input_dir):
                 str_msg = _('Invalid Char!')
                 raise IOError(str_msg)
 
-            if str(zxdir.parent) == '.' and str(zxdir.name) != '':
-                zxname = zxdir.name
-            if str(zxdir.name).upper() == '3DOS':
-                if str(zxdir.parent.parent) == '.' and str(
-                        zxdir.parent.name) != '':
+            if str(zxdir.name) != '':
+                if str(zxdir.name).upper() == '3DOS':
                     zxname = zxdir.parent.name
+                else:
+                    zxname = zxdir.name
 
             if zxname not in dict_tmp:
                 dict_tmp[zxname] = {}
