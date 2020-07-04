@@ -103,6 +103,15 @@ def main():
                 arr_banks.append(b_bank)
                 b_bank = b_line
                 i_bank = 0
+                if len(arr_banks) > 31:
+                    str_msg = _(
+                        'This cache will only work on 2MiB expanded hardware')
+                    LOGGER.warning(str_msg)
+                if len(arr_banks) > 99:
+                    str_msg = _(
+                        'Cache exceeds 2MiB! Please remove data from BDT file')
+                    LOGGER.error(str_msg)
+                    raise Exception(str_msg)
         else:
             str_msg = _('Bad Line: {0}')
             LOGGER.warning(str_msg.format(line))
@@ -126,22 +135,17 @@ def main():
     arr_banks[0] += maxpos.to_bytes(1, byteorder='little')
     arr_banks[0] += truncate_to_bytes(base_path, 129)
 
-    if arg_data['output']:
-        output_dir = arg_data['output']
-    else:
-        output_dir = Path.cwd()
-
     i_bank = 13
     for b_bank in arr_banks:
         b_bank += (b'\0' * (16384 - len(b_bank)))
-        o_file = Path(output_dir, 'cache{0}'.format(i_bank))
+        o_file = Path(arg_data['output'], 'cache{0}'.format(i_bank))
         with open(o_file, 'wb') as output:
             str_msg = _('Writing: "{0}"')
             LOGGER.debug(str_msg.format(o_file))
             output.write(b_bank)
             i_bank += 1
 
-    str_msg = _('Finished')
+    str_msg = _('Finished.')
     LOGGER.info(str_msg)
 
 
@@ -151,11 +155,10 @@ def main():
 
 def parse_args():
     """Command Line Parser"""
-    str_hlp_input = _('Input text file with BASIC code')
-    str_hlp_output = _('Output file path')
-    str_hlp_steps = _('Line number step size')
+    str_hlp_input = _('Input path to BDT text file')
+    str_hlp_output = _('Output directory path')
 
-    parser = argparse.ArgumentParser(description='NextBASIC TXT Renumber')
+    parser = argparse.ArgumentParser(description='knloader Cache Builder')
     parser.add_argument('-v',
                         '--version',
                         action='version',
@@ -180,7 +183,7 @@ def parse_args():
     if arguments.input_path:
         i_path = Path(arguments.input_path)
 
-    o_path = None
+    o_path = Path.cwd()
     if arguments.output_path:
         o_path = Path(arguments.output_path)
 
