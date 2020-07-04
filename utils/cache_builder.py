@@ -118,6 +118,8 @@ def main():
             LOGGER.warning(str_msg.format(line))
 
     if i_bank > 0:
+        if i_bank < 16207:
+            b_bank += (b'\0' * (16206 - len(b_bank)))
         # Append last bank if needed
         arr_banks.append(b_bank)
 
