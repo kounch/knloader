@@ -57,14 +57,14 @@ def main():
     arg_data = parse_args()
 
     str_msg = _('Start...')
-    LOGGER.info(str_msg)
+    LOGGER.debug(str_msg)
 
     bdt_data = scan_dir(arg_data['input'])
 
     if arg_data['sort']:
         str_msg = _('Sorting...')
         LOGGER.debug(str_msg)
-        bdt_data.sort()
+        bdt_data = sorted(sorted(bdt_data), key=lambda x: x[0].upper())
 
     if bdt_data:
         with open(arg_data['output'], 'w') as f:
@@ -73,8 +73,14 @@ def main():
             writer = csv.writer(f)
             writer.writerows(bdt_data)
 
+            str_msg = 'BDT file created at: {0}\n'
+            str_msg += 'Copy it to your SD card, in the same place where '
+            str_msg += 'knloader.bas, knlauncher and nkzml are located.'
+            str_msg = _(str_msg)
+            print(str_msg.format(arg_data['output']))
+
     str_msg = _('Finished.')
-    LOGGER.info(str_msg)
+    LOGGER.debug(str_msg)
 
 
 # Functions

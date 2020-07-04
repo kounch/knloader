@@ -59,7 +59,7 @@ def main():
     arg_data = parse_args()
 
     str_msg = _('Start...')
-    LOGGER.info(str_msg)
+    LOGGER.debug(str_msg)
 
     content = []
     with open(arg_data['input']) as f:
@@ -146,8 +146,16 @@ def main():
             output.write(b_bank)
             i_bank += 1
 
+    str_banks = 'cache13'
+    if i_bank > 14:
+        str_banks += '...cache{0}'.format(i_bank - 1)
+    str_msg = 'Cache data created at: {0}\n'
+    str_msg += 'Copy {1} to your SD card into: /tmp/knloader'
+    str_msg = _(str_msg)
+    print(str_msg.format(arg_data['output'], str_banks))
+
     str_msg = _('Finished.')
-    LOGGER.info(str_msg)
+    LOGGER.debug(str_msg)
 
 
 # Functions
