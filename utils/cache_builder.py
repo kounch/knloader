@@ -79,6 +79,7 @@ def main():
         arr_line = line.split(',')
         if arr_line and len(arr_line) > 3:
             i_games += 1
+            LOGGER.debug('{0} . {1}'.format(len(arr_banks), arr_line))
             # Name
             b_line = truncate_to_bytes(arr_line[0], __MAXNAME_L__)
             # Mode
@@ -95,14 +96,14 @@ def main():
 
             i_bank += 219  # Address Counter
 
-            if (i_bank < 16384):
+            if (i_bank < 16207):
                 # Expand Bank
                 b_bank += b_line
             else:
                 # Bank is full
                 arr_banks.append(b_bank)
                 b_bank = b_line
-                i_bank = 0
+                i_bank = 219
                 if len(arr_banks) > 31:
                     str_msg = _(
                         'This cache will only work on 2MiB expanded hardware')

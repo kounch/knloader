@@ -190,7 +190,7 @@
 4995 ; Load from RAM Cache
 5000 LET %n=pag:LET %j=%(22*n)MOD 74*219:LET %k=13+INT(22*pag/74):LET a=22:IF pag=maxpag THEN LET a=maxpos
 5010 FOR p=1 TO a:LET z$(p)=BANK %k PEEK$(%j,~0):LET o(p)=%BANK k PEEK (j+23):LET w$(p)=BANK %k PEEK$(%(j+24),~0)
-5020 LET x$(p)=BANK %k PEEK$(%(j+89),~0):LET b$(p)=BANK %k PEEK$(%(j+154),~0):LET %j=%j+219:IF %j>16165 THEN LET %k=%k+1:LET %j=0
+5020 LET x$(p)=BANK %k PEEK$(%(j+89),~0):LET b$(p)=BANK %k PEEK$(%(j+154),~0):LET %j=%j+219:IF %j>16205 THEN LET %k=%k+1:LET %j=0
 5030 NEXT p:IF a<22 THEN FOR p=a+1 TO 22:LET z$(p)="":NEXT p
 5060 RETURN
 
@@ -250,7 +250,7 @@
 6230 NEXT %a:IF ln<=cn THEN GO TO 6260
 6240 LET l$=m$(cn TO ln):IF lp=4 THEN BANK 48 POKE %(j+89),l$
 6250 IF lp=5 THEN BANK 48 POKE %(j+154),l$
-6260 LET %j=%j+219:IF %j<16166 THEN GO TO 6300
+6260 LET %j=%j+219:IF %j<16207 THEN GO TO 6300
 6270 IF %k=13 THEN BANK 48 COPY TO 47:GO TO 6290
 6280 LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK 48
 6290 LET %k=%k+1:LET %j=0:BANK 48 ERASE 0
