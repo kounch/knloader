@@ -187,6 +187,7 @@ def scan_dir(input_dir):
     for game in dict_tmp:
         if dict_tmp[game]:
             arr_tmp = []
+            zxdir = None
             for zxext in dict_exts:
                 if zxext in dict_tmp[game]:
                     zxname = game
@@ -200,8 +201,23 @@ def scan_dir(input_dir):
             if arr_tmp:
                 for zxext in arr_imgs:
                     if zxext in dict_tmp[game]:
-                        arr_tmp.append(dict_tmp[game][zxext][1])
-                        break
+                        zximg = dict_tmp[game][zxext][1]
+                        if dict_tmp[game][zxext][0] != zxdir:
+                            if str(dict_tmp[game][zxext][0]).startswith(
+                                    str(zxdir)):
+                                imgdir = Path(
+                                    str(dict_tmp[game][zxext][0])
+                                    [len(str(zxdir)) + 1:])
+                                zximg = str(Path(imgdir, zximg))
+                            else:
+                                str_msg = _(
+                                    'Image "{0}" ignored for program: {1}')
+                                LOGGER.warning(str_msg.format(zximg, game))
+                                zximg = ''
+
+                        if zximg:
+                            arr_tmp.append(zximg)
+                            break
 
                 arr_result.append(arr_tmp)
 
