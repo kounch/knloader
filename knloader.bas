@@ -153,6 +153,10 @@
 4170 IF mode=16 THEN LET m$="Snapshot"
 4180 IF mode=17 THEN LET m$="Z-Machine Program"
 4190 IF mode=18 THEN LET m$="3DOS (128K)"
+4200 IF mode=19 THEN LET m$="TAP (48K)"
+4210 IF mode=20 THEN LET m$="TZX (48K - Fast)"
+4220 IF mode=21 THEN LET m$="TAP (PI Audio - 48K)"
+4230 IF mode=22 THEN LET m$="TZX (48K)"
 4390 IF a$<>" " AND covers=1 THEN GO TO 4500
 
 4395 ; Text Data

@@ -1,6 +1,6 @@
 = Manual de knloader
 :author: kounch
-:revnumber: 0.8.0
+:revnumber: 0.9.0
 :doctype: book
 :email: kounch@users.noreply.github.com
 :Revision: 1.0
@@ -130,6 +130,10 @@ Donde cada uno de los campos entre ',' son de la siguiente manera:
     16 - Snapshot
     17 - Programa de Z-Machine (Next)
     18 - 3DOS
+    19 - TAP (48K)
+    20 - TZX (48K - rápido)
+    21 - TAP (48K - Pi Audio)
+    22 - TZX (48K)
 
 [NOTE]
 ====

@@ -1,6 +1,6 @@
 @title knloader Manual
 @author kounch
-@version 0.8
+@version 0.9
 @copyright Copyright (C)2020 kounch
 @date 2020/05/31
 
@@ -12,7 +12,7 @@
 
 @{c}knloader Manual
 
-@{c}Version 0.8
+@{c}Version 0.9
 
 @{h1}
 
@@ -194,6 +194,10 @@ one of these:
     16 - Snapshot
     17 - Z-Machine Program
     18 - 3DOS
+    19 - TAP (48K)
+    20 - TZX (48K - Fast)
+    21 - TAP (48K - Pi Audio)
+    22 - TZX (48K)
 
 @{b}Directory@{ub}: Subdirectory where file (optionally) and image file are
 located (maximum 64 characters, no commas @{b},@{ub} allowed)

@@ -67,6 +67,10 @@ At the moment, the loading mode can be one of these (TZX and Pi audio modes requ
     16 - Snapshot (Z80, SNX, SNA, etc.)
     17 - Z-Machine Program
     18 - 3DOS
+    19 - TAP (48K)
+    20 - TZX (48K - Fast)
+    21 - TAP (48K - Pi Audio)
+    22 - TZX (48K)
 
 - **What formats are supported for the images?**
 
