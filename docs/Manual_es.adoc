@@ -234,9 +234,9 @@ Así mismo, si se encuentran varios archivos de imagen pero con distinta extensi
 
     bmp > sl2 > scr > slr > shr > shc
 
-Modo de uso: `python3 bdt_builder.py -i RUTA [-o FICHERO]`
+Modo de uso: `python3 bdt_builder.py -i RUTA [-o FICHERO] [-c RUTA_SD]`
 
-Donde `RUTA` es la ruta al directorio a analizar y `FICHERO`, opcionalmente, es la ruta al fichero BDT a crear. Si no se indica ruta al fichero, este se crea automáticamente en el directorio actual.
+Donde `RUTA` es la ruta al directorio a analizar, `FICHERO`, opcionalmente, es la ruta al fichero BDT a crear. Si no se indica ruta al fichero, este se crea automáticamente en el directorio actual. Finalmente, `RUTA_SD`, opcionalmente también, es la ruta de la SD donde se encuentran los programas (primera línea del archivo BDT). Si no se indica un ruta de la SD, se usa `RUTA` en su lugar.
 
 Una vez que se ha creado el fichero BDT, se puede revisar y editar con un editor de texto, y luego copiarlo a la tarjeta SD, en la misma ubicación en la que se encuentre `knloader.bas`, o se pueden crear datos de cache (usando el Script de creación de Caché) y copiar estos en la tarjeta.
 

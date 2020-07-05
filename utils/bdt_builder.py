@@ -59,7 +59,7 @@ def main():
     str_msg = _('Start...')
     LOGGER.debug(str_msg)
 
-    bdt_data = scan_dir(arg_data['input'])
+    bdt_data = scan_dir(arg_data['input'], arg_data['prefix'])
 
     if arg_data['sort']:
         str_msg = _('Sorting...')
@@ -68,8 +68,11 @@ def main():
 
     if bdt_data:
         with open(arg_data['output'], 'w') as f:
-            f.write(str(arg_data['input']))
-            f.write('\n')
+            if arg_data['cpath']:
+                f.write(arg_data['cpath'])
+            else:
+                f.write(str(arg_data['input']))
+            f.write('\r\n')
             writer = csv.writer(f)
             writer.writerows(bdt_data)
 
@@ -91,6 +94,7 @@ def parse_args():
     """Command Line Parser"""
     str_hlp_input = _('Path to directory')
     str_hlp_output = _('BDT file path')
+    str_hlp_cpath = _('Path in SD to directory')
 
     parser = argparse.ArgumentParser(description='knloader Cache Builder')
     parser.add_argument('-v',
@@ -108,6 +112,12 @@ def parse_args():
                         action='store',
                         dest='output_path',
                         help=str_hlp_output)
+    parser.add_argument('-c',
+                        '--custom',
+                        action='store',
+                        dest='custom_path',
+                        help=str_hlp_output)
+    parser.add_argument('-p', '--prefix', action='store', dest='prefix')
 
     arguments = parser.parse_args()
 
@@ -120,6 +130,14 @@ def parse_args():
     o_path = Path(Path.cwd(), 'knloader.bdt')
     if arguments.output_path:
         o_path = Path(arguments.output_path)
+
+    c_path = ''
+    if arguments.custom_path:
+        c_path = arguments.custom_path
+
+    str_prefix = ''
+    if arguments.prefix:
+        str_prefix = arguments.prefix
 
     if not i_path.exists():
         str_msg = _('Path not found: {0}')
@@ -135,12 +153,14 @@ def parse_args():
 
     values['input'] = i_path
     values['output'] = o_path
+    values['cpath'] = c_path
     values['sort'] = True
+    values['prefix'] = str_prefix
 
     return values
 
 
-def scan_dir(input_dir):
+def scan_dir(input_dir, str_prefix):
     """Scans directories"""
     dict_exts = {
         'nex': 15,
@@ -202,7 +222,10 @@ def scan_dir(input_dir):
                     zxdir = dict_tmp[game][zxext][0]
                     zxfile = dict_tmp[game][zxext][1]
 
-                    arr_tmp = [zxname, zxmode, str(zxdir), zxfile]
+                    str_dir = str(zxdir)
+                    if str_prefix:
+                        str_dir = str_prefix + str_dir
+                    arr_tmp = [zxname, zxmode, str_dir, zxfile]
                     break
 
             if arr_tmp:
