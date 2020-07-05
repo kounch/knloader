@@ -182,7 +182,8 @@ Nombre,Modo de carga,<Directorio>,Archivo,<Archivo de Imagen>
 
 Donde cada uno de los campos entre ',' son de la siguiente manera:
 
-@{b}Nombre@{ub}: Nombre a mostrar en la interfaz (máximo de 22 caracteres)
+@{b}Nombre@{ub}: Nombre a mostrar en la interfaz (máximo de 22 caracteres, no se
+permiten comas @{b},@{ub})
 
 @{b}Modo de carga@{ub}: Un número indicando cómo cargar el archivo de
 programa. Debe ser uno de estos:
@@ -208,16 +209,17 @@ programa. Debe ser uno de estos:
     18 - 3DOS
 
 @{b}Directorio@{ub}: (Opcional) Subdirectorio donde se encuentran Archivo y
-Archivo de Imagen (máximo de 64 caracteres)
+Archivo de Imagen (máximo de 64 caracteres, no se permiten comas @{b},@{ub})
 
-@{b}Archivo@{ub}: Nombre del archivo a ejecutar (máximo de 64 caracteres). Si se
-elige el modo 8 (DSK con arranque personalizado), debe contener el nombre,
-tanto del archivo DSK, como el del archivo a ejecutar de dentro de la imagen de
-disco, separados por ":" (por ejemplo: @{i}Bounder.dsk:BOUNDER.BAS@{ui})
+@{b}Archivo@{ub}: Nombre del archivo a ejecutar (máximo de 64 caracteres, no se
+permiten comas @{b},@{ub}). Si se elige el modo 8 (DSK con arranque personalizado),
+debe contener el nombre, tanto del archivo DSK, como el del archivo a ejecutar
+de dentro de la imagen de disco, separados por ":" (por ejemplo:
+@{i}Bounder.dsk:BOUNDER.BAS@{ui})
 
-@{b}Archivo de imagen@{ub}: (Opcional) Nombre (máximo 64 caracteres) de una imagen
-de pantalla completa para mostrar por debajo del listado de programas. Puede
-ser en el formato SCR, SLR, SHC, SL2 o BMP.
+@{b}Archivo de imagen@{ub}: (Opcional) Nombre (máximo 64 caracteres, no se permiten
+comas @{b},@{ub}) de una imagen de pantalla completa para mostrar por debajo del
+listado de programas. Puede ser en el formato SCR, SLR, SHC, SL2 o BMP.
 
 @{b}@{i}Notas@{ui}@{ub}:
 

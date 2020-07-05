@@ -97,15 +97,15 @@ Program Name,Loading Mode,<Directory>,File,<Image File>
 
 Where each of the fields between ',' are as follows:
 
-*`Program Name`*: Name to show in the interface (maximum 22 characters)
+*`Program Name`*: Name to show in the interface (no commas `,` allowed)
 
 *`Loading Mode`*: A number indicating how to load the program file. See the Table below
 
-*`Directory`*: (Optional) Subdirectory where file and image file are located (maximum 64 characters)
+*`Directory`*: (Optional) Subdirectory where file and image file are located (maximum 64 characters, no commas `,` allowed)
 
-*`File`*: Name of the file to execute (maximum 64 characters). If Mode 8 (DSK Custom Boot) is selected, it must have the name of both the DSK file and the file to load inside the disk image, separated by `:` (e.g. `Bounder.dsk:BOUNDER.BAS`)
+*`File`*: Name of the file to execute (maximum 64 characters, no commas `,` allowed). If Mode 8 (DSK Custom Boot) is selected, it must have the name of both the DSK file and the file to load inside the disk image, separated by `:` (e.g. `Bounder.dsk:BOUNDER.BAS`)
 
-*`Image File`*: (Optional) Name (maximum 64 characters) of a full screen image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2 or BMP format. BMP file has to be 256x192 pixels, 256 colours (with Next palette and no colour space information).
+*`Image File`*: (Optional) Name (maximum 64 characters, no commas `,` allowed) of a full screen image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2 or BMP format. BMP file has to be 256x192 pixels, 256 colours (with Next palette and no colour space information).
 
 <<<
 

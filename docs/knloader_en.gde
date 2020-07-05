@@ -169,7 +169,8 @@ Starting from line 2, each line must have the following format:
 
 Program Name,Loading Mode,<Directory>,File,<Image File>
 
-@{b}Program Name@{ub}: Name to show in the interface (maximum 22 characters)
+@{b}Program Name@{ub}: Name to show in the interface (maximum 22 characters, no
+commas @{b},@{ub} allowed)
 
 @{b}Loading Mode@{ub}: A number indicating how to load the program file. Must be
 one of these:
@@ -195,16 +196,16 @@ one of these:
     18 - 3DOS
 
 @{b}Directory@{ub}: Subdirectory where file (optionally) and image file are
-located (maximum 64 characters)
+located (maximum 64 characters, no commas @{b},@{ub} allowed)
 
-@{b}File@{ub}: Name of the file to execute (maximum 64 characters). IfMode 8
-(DSK Custom Boot) is selected, it must have the name of both the DSK file and
-the file to load inside the disk image, separated by ":" (e.g.
-@{i}Bounder.dsk:BOUNDER.BAS@{ui}).
+@{b}File@{ub}: Name of the file to execute (maximum 64 characters, no commas
+@{b},@{ub} allowed). IfMode 8 (DSK Custom Boot) is selected, it must have the name of
+both the DSK file and the file to load inside the disk image, separated by ":"
+(e.g. @{i}Bounder.dsk:BOUNDER.BAS@{ui}).
 
-@{b}Image File@{ub}: (Optional) Name (maximum 64 characters) of a full screen
-image file to show behind the program listing. It can be in SCR, SLR, SHC, SL2
-or BMP format.
+@{b}Image File@{ub}: (Optional) Name (maximum 64 characters, no commas @{b},@{ub}
+allowed) of a full screen image file to show behind the program listing. It can
+be in SCR, SLR, SHC, SL2 or BMP format.
 
 
 @{b}@{i}Notes@{ui}@{ub}:

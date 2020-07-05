@@ -97,15 +97,15 @@ Nombre,Modo de carga,<Directorio>,Archivo,<Archivo de Imagen>
 
 Donde cada uno de los campos entre ',' son de la siguiente manera:
 
-*`Nombre`*: Nombre a mostrar en la interfaz (máximo de 22 caracteres)
+*`Nombre`*: Nombre a mostrar en la interfaz (máximo de 22 caracteres, las comas `,` no están permitidas)
 
 *`Modo de carga`*: Un número indicando cómo cargar el archivo de programa. Véase la tabla a continuación
 
-*`Directorio`*: (Opcional) Subdirectorio donde se encuentran `Archivo` y `Archivo de Imagen` (máximo de 64 caracteres)
+*`Directorio`*: (Opcional) Subdirectorio donde se encuentran `Archivo` y `Archivo de Imagen` (máximo de 64 caracteres, las comas `,` no están permitidas)
 
-*`Archivo`*: Nombre del archivo a ejecutar (máximo 64 caracteres). Si se elige el modo 8 (DSK con arranque personalizado), debe contener el nombre, tanto del archivo DSK, como el del archivo a ejecutar de dentro de la imagen de disco, separados por `:` (por ejemplo: `Bounder.dsk:BOUNDER.BAS`)
+*`Archivo`*: Nombre del archivo a ejecutar (máximo 64 caracteres, las comas `,` no están permitidas). Si se elige el modo 8 (DSK con arranque personalizado), debe contener el nombre, tanto del archivo DSK, como el del archivo a ejecutar de dentro de la imagen de disco, separados por `:` (por ejemplo: `Bounder.dsk:BOUNDER.BAS`)
 
-*`Archivo de imagen`*: (Opcional) Nombre (máximo 64 caracteres) de una imagen de pantalla completa para mostrar por debajo del listado de programas. Puede ser en el formato SCR, SLR, SHC, SL2 o BMP. En el caso de BMP, este ha de ser de 256x192 píxeles, 256 colores, usando la paleta de color de Next y sin información del espacio de color.
+*`Archivo de imagen`*: (Opcional) Nombre (máximo 64 caracteres, las comas `,` no están permitidas) de una imagen de pantalla completa para mostrar por debajo del listado de programas. Puede ser en el formato SCR, SLR, SHC, SL2 o BMP. En el caso de BMP, este ha de ser de 256x192 píxeles, 256 colores, usando la paleta de color de Next y sin información del espacio de color.
 
 <<<
 
