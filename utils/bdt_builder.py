@@ -89,8 +89,8 @@ def main():
 
 def parse_args():
     """Command Line Parser"""
-    str_hlp_input = _('Input path to BDT text file')
-    str_hlp_output = _('Output directory path')
+    str_hlp_input = _('Path to directory')
+    str_hlp_output = _('BDT file path')
 
     parser = argparse.ArgumentParser(description='knloader Cache Builder')
     parser.add_argument('-v',
@@ -150,11 +150,12 @@ def scan_dir(input_dir):
         'dsk': 3,
         'p': 16,
         'tzx': 2,
-        'z3': 17,
+        'z8': 17,
         'z5': 17,
-        'z8': 17
+        'z3': 17,
+        'z80': 16
     }
-    arr_imgs = ['bmp', 'scr']
+    arr_imgs = ['bmp', 'sl2', 'scr', 'slr', 'shr', 'shc']
 
     input_dir = input_dir.resolve()
     rootlen = len(str(input_dir))

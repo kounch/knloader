@@ -1,6 +1,6 @@
 = knloader English Manual
 :author: kounch
-:revnumber: 0.7.0
+:revnumber: 0.8.0
 :doctype: book
 :email: kounch@users.noreply.github.com
 :Revision: 1.0
@@ -31,17 +31,19 @@ A ZIP file with the latest version is available following https://github.com/kou
 
 - *NextZXOS (version 1.3.2)*. Docs, downloads, etc. https://www.specnext.com/latestdistro/[here].
 
+- *Python (version 3.6 or later)*, optionally, to use the included BDT and cache creation scripts. Docs, downloads, etc. https://www.python.org/[here].
+
 == Installation
 
-Create manually `knloader.bdt` file using the text editor of your choice (see below for more instructions).
+Create `knloader.bdt` file using the text editor of your choice or the included utility script and, optionally, create cache file(s) with the included utility (see below for more instructions).
 
-Copy together `knloader.bas`, `knlauncher`, `knzml` and the new `knloader.bdt` file to any place in your SD card.
+Copy together `knloader.bas`, `knlauncher`, `knzml` and the new `knloader.bdt` or the cache file(s) to any place in your SD card.
 
 == Use
 
 Use the browser or command line to navigate to the folder where `knloader.bas`, `knlauncher`, `knzml` and `knloader.bdt` are. Load `knloader.bas`.
 
-On first run, cache files will be created from the data inside database file `knloader.bdt`. This has to be done only once, or after any changes are made to the database file.
+On first run, if they do not exist, cache files are created from the data inside database file `knloader.bdt`.
 
 [.text-center] 
 image::FirstBoot.png[pdfwidth=70%]
@@ -78,7 +80,9 @@ Press H to show some help.
 
 == Database file format
 
-The main database is stored in a text file (ANSI encoding), named `knloader.bdt`, and which has to be in the same directory where `knloader.bas` is in the SD card. At this moment, you have to create manually the database file.
+The main database is stored in a text file (ANSI encoding), named `knloader.bdt`, and which has to be in the same directory where `knloader.bas` is in the SD card. You can create manually the database file or using the included utility script `bdt_builder.py`.
+
+BDT file size is limited to 16384 bytes when the cache files are created from within the ZX Spectrum Next. This limit disappears when the cache files are created externally, for example, using the utility script `cache_builder.py`.
 
 All paths in the database file must use `/` (slash) as separator for directories. Using `\` (backslash) is not supported.
 
@@ -200,11 +204,68 @@ Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3
 
 So, using this example, when you choose `Barbarian: The Ultimat` in the user interface, the program will try to load `/all/Games/Barbarian/3DOS/BARB.BAS`, and it will also try to show the image located at `/all/Games/Barbarian/Barbarian.bmp`.
 
+== BDT Builder Script
+
+This script tries to analyze all the contents of a directory (including subdirectories), finding ZX Spectrum Next files and images, and creates a new BDT file accordingly. Python (version 3.6 or later) is needed for it to run.
+
+The script has a rudimentary intelligence and, when there are several files with the same name but different extensions (nex, snx, tap, etc.) it selects only one of them, following this priority:
+
+    nex >  snx > tap > bas > dsk > p > tzx > z8 > z5 > z3 > z80
+
+The default mode for each of these file types is as follows:
+
+[cols=2] 
+|===
+|Extension|Mode
+|`nex`|`15`
+|`snx`|`16`
+|`tap`|`1`
+|`bas`|`0`
+|`dsk`|`3`
+|`p`|`16`
+|`tzx`|`2`
+|`z8`|`17`
+|`z5`|`17`
+|`z3`|`17`
+|`z80`|`16`
+|===
+
+Also, when finding several image files with different extension, only one is selected using this priority:
+
+    bmp > sl2 > scr > slr > shr > shc
+
+Script usage: `python3 bdt_builder.py -i INPUT_PATH [-o OUTPUT_PATH]`
+
+Where `INPUT_PATH` is the path to the directory to analyze and `OUTPUT_PATH`, optionally, is the path to the new BDT file. If there is no output path argument, the BDT file is created in the current directory.
+
+After the BDT file is created, you can review and edit its contents with a text editor, and then copy it to your SD card, next to where `knloader.bas` is, or you can create cache data (using the Cache Builder Script) and copy it to the SD card.
+
+== Cache Builder Script
+
+These programs use one or more cache files inside `/tmp/knloader` in the SD card. This is necessary to speed up program execution limitations. You can let `knloader.bas` create the cache data automatically for you on first run (or using the `R` key from within the program), or you can create externally the cache using the included `cache_builder.py` script. Python (version 3.6 or later) is needed for this script to be run.
+
+One cache file is needed for each RAM memory bank (16K) that the program uses, and a maximum of 74 programs data can be stored in one bank. This means that, at most, 2590 programs can be managed with a base ZX Spectrum Next (1MiB of RAM) or 7326 when using an expanded configuration (2MiB of RAM).
+
+Script usage: `python3 cache_builder.py -i INPUT_PATH [-o OUTPUT_PATH]`
+
+Where `INPUT_PATH` is the path to the DBT file, and `OUTPUT_PATH`, optionally, is the directory path where the cache data will be created. If there is no output path argument, cache data is created in the current directory.
+
+After the cache data files are created, you have to copy them to your SD card into `/tmp/knloader`.
+
+== Autoexec NextBASIC program
+
+Also included there is a small `autoexec.bas` that you can use to autostart knloader when the ZX Spectrum Next is started.
+
+To install it, rename the file `/nextzxos/autoexec.bas` in the SD card to `/nextzxos/autoexec.bas.bak`, and then copy the file `autoexec.bas` from the `utils` folder into `/nextzxos` in the SD card. Copy also all the knloader files (`knloader.bas`, `knlauncher`, `knzml` and BDT file) to a directory named `/knloader/` in the root of the SD card.
+
+As an extra, you can use the following keys on startup to change the behaviour:
+
+- Press `A` or the main joystick button (Kempston or MD mode) to start the original `autoexec.bas` that was renamed as `autoexec.bas.bak`
+- Press Space or the secondary joystick button to start ZX Spectrum Next Browser instead of knloader
+
 == Notes
 
 These programs create a preferences file named `opts.tmp` inside the same folder where `knloader.bas` is installed.
-
-They also create a variable number of cache files inside `/tmp/knloader`. This is necessary to speed up program execution and overcome RAM limitations for large database files. However, if the database file is not changed, these will become read only on all subsequent executions.
 
 == Copyright
 

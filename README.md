@@ -22,15 +22,15 @@ A ZIP file with the latest version is available following [this link](https://gi
 
 ### Installation
 
-- Create manually `knloader.bdt` file using the text editor of your choice. See the included manual (PDF or GDE) for instructions.
+- Create `knloader.bdt` file using the text editor of your choice or the included utility script. See the included manual (PDF) for instructions. Optionally, create cache file(s) with the included utility.
 
-- Copy together `knloader.bas`, `knlauncher`, `knzml` and the new `knloader.bdt` file to any place in your SD card.
+- Copy together `knloader.bas`, `knlauncher`, `knzml` and the new `knloader.bdt` or the cache file(s) to any place in your SD card.
 
 #### Use
 
 Use the browser or command line to navigate to the folder where `knloader.bas`, `knlauncher`, `knzml` and `knloader.bdt` are. Load `knloader.bas`.
 
-On first run, cache files will be created from the data inside database file `knloader.bdt`. This has to be done only once, or after any changes are made to the database file.
+On first run, if they don't exist, cache files will be created from the data inside database file `knloader.bdt`.
 
 ![First Boot](./docs/FirstBoot.png)
 
@@ -92,15 +92,15 @@ Se puede obtener un fichero ZIP con la última versión siguiendo  [este enlace]
 
 ### Instalación
 
-- Crear manualmente un archivo `knloader.bdt` con un programa editor de texto. Veáse el manual incluído (PDF o GDE) para más instrucciones.
+- Crear un archivo `knloader.bdt` con un programa editor de texto con el script incluído. Veáse el manual (PDF) para más instrucciones. Opcionalmente, crear archivo(s) de cache usando el script correspondiente.
 
-- Copiar, juntos, `knloader.bas`, `knlauncher`, `knzml` y el nuevo archivo `knloader.bdt` al lugar que se desee de la tarjeta SD.
+- Copiar, juntos, `knloader.bas`, `knlauncher`, `knzml` y el nuevo archivo `knloader.bdt` o los datos de cache al lugar que se desee de la tarjeta SD.
 
 #### Uso
 
 Acceder usando el programa Browser, o con otro método, hasta la carpeta donde están `knloader.bas`, `knlauncher`, `knzml` y `knloader.bdt`. Cargar `knloader.bas`.
 
-En la primera ejecución, se crearán archivos de caché desde la información del archivo de datos `knloader.bdt`. Esto sólo tiene que hacerse una vez, o tras haber realizado algún cambio en el archivo de datos.
+En la primera ejecución, si no existiesen, se crearán archivos de caché desde la información del archivo de datos `knloader.bdt`.
 
 ![First Boot](./docs/FirstBoot.png)
 
