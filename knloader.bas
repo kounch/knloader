@@ -9,7 +9,7 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,14;"> knloader  v0.8 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
+  90 PRINT AT 5,14;"> knloader  v0.9 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
 
   95 ; Load Menu Items
  100 GO SUB 4900:; Load Cache To RAM
@@ -202,7 +202,7 @@
 5150 RETURN
 
 5195 ; Save Options
-5200 ON ERROR PRINT "Error saving options!!":ERROR  TO e:PRINT e:PAUSE 0:ON ERROR:STOP
+5200 ON ERROR PRINT "Error saving options!!":ERROR TO e:PRINT e:PAUSE 0:ON ERROR:STOP
 5210 DIM p(4)
 5220 LET p(1)=tinta:LET p(2)=papel:LET p(3)=%p:LET p(4)=covers
 5230 SAVE "opts.tmp"DATA p()
@@ -228,7 +228,7 @@
 6010 IF d$(1 TO 14)="No files found" THEN GO TO 6500
 6020 ON ERROR GO TO 6040:ON ERROR
 6030 MKDIR "/tmp/knloader"
-6040 ON ERROR PRINT "Cache Build Error!!":ERROR  TO e,l:PRINT e,l:PAUSE 0:ON ERROR:STOP
+6040 ON ERROR PRINT "Cache Build Error!!":ERROR TO e,l:PRINT e,l:PAUSE 0:ON ERROR:STOP
 6050 LET %n=0:LET f=0:LET %f=0:LET pag=0:PRINT AT 20,12;"BUILDING CACHE: 0%"
 6060 OPEN # 4,"knloader.bdt":DIM #4 TO %g:CLOSE # 4:BANK 12 ERASE 10:LOAD "knloader.bdt" BANK 12:IF %g>16384 THEN GO TO 6600
 6070 LET %k=13:BANK 48 ERASE 0:LET %j=0:;Current Bank, Current Base Address

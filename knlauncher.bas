@@ -8,7 +8,7 @@
   50 LET %s=%REG 7&3:RUN AT 2
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER 7:BORDER 7:INK 0:CLS
-  80 OPEN # 6,"w>22,1,1,32,4":PRINT #6;AT 0,0;">> knlauncher v0.8 >> (c) kounch 2020":CLOSE # 6
+  80 OPEN # 6,"w>22,1,1,32,4":PRINT #6;AT 0,0;">> knlauncher v0.9 >> (c) kounch 2020":CLOSE # 6
   90 LET x=USR 5808:LOAD "c:/nextzxos/usr0.bin"CODE 32768
 
  200 ; Load Options
@@ -140,8 +140,9 @@
 5390 RETURN
 
 5395 ; Get 8.3 Filename from a$ (find a$ in current dir)
-5400 IF LEN (a$)<13 THEN RETURN
-5410 DIM d$(255):OPEN # 2,"v>d$":CAT -a$:CLOSE # 2:LET a$=d$(1 TO 12)
+5400 DIM d$(255):OPEN # 2,"v>d$":CAT -a$:CLOSE # 2:LET g$=d$(1 TO 12)
+5410 LET a$="":FOR x=1 TO LEN g$:IF g$(x TO x)<>" " THEN LET a$=a$+g$(x TO x)
+5420 NEXT x
 5490 RETURN
 
 5495 ; Mode 128k obtained from tapload.bas
@@ -149,7 +150,7 @@
 5510 LET hwm=0:LET hwa=0:LET hwt=0:LET hw1=0:LET hw2=0:LET hwf=0:LET hwx=0:LET hwo=0:LET hwg=0
 5520 LET hws=0:LET hwk=0:LET hwv=1:LET hwi=1:LET hwu=1:LET hwp=1:LET mp=0:LET m4=0
 5530 REG 130,218+(32*hwm)+(4*mp)+hwt:REG 131,(32*hwu)+(20*hwi)+(9*hwv)+2
-5540 REG 132,(128*hws)+(64*hwg)+(32*hwo)+(16*hwx)+(8*hwf)+(4*hw2)+(2*hw1)+(hwa OR  NOT m4)
+5540 REG 132,(128*hws)+(64*hwg)+(32*hwo)+(16*hwx)+(8*hwf)+(4*hw2)+(2*hw1)+(hwa OR NOT m4)
 5550 REG 133,254+hwp:LET %k=hwk:REG 8,%REG 8&@11111110|k
 5560 RUN AT %s
 5570 DPOKE %$5c76,0
