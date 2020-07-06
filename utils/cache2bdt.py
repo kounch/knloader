@@ -96,7 +96,8 @@ def parse_args():
     str_hlp_input = _('Directory path where cache files are')
     str_hlp_output = _('New BDT path')
 
-    parser = argparse.ArgumentParser(description='knloader Cache Converter to BDT')
+    parser = argparse.ArgumentParser(
+        description='knloader Cache Converter to BDT')
     parser.add_argument('-v',
                         '--version',
                         action='version',

@@ -237,11 +237,9 @@ def scan_dir(input_dir, str_prefix):
                         zximg = dict_tmp[game][zxext][1]
                         zximgdir = dict_tmp[game][zxext][0]
                         if zximgdir != zxdir:
-                            if str(zximgdir).startswith(
-                                    str(zxdir)):
+                            if str(zximgdir).startswith(str(zxdir)):
                                 imgdir = Path(
-                                    str(zximgdir)
-                                    [len(str(zxdir)) + 1:])
+                                    str(zximgdir)[len(str(zxdir)) + 1:])
                                 zximg = str(Path(imgdir, zximg))
                             else:
                                 str_msg = _(
