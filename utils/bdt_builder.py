@@ -67,7 +67,7 @@ def main():
         bdt_data = sorted(sorted(bdt_data), key=lambda x: x[0].upper())
 
     if bdt_data:
-        with open(arg_data['output'], 'w') as f:
+        with open(arg_data['output'], 'w', newline="\n") as f:
             if arg_data['cpath']:
                 f.write(arg_data['cpath'])
             else:
@@ -225,6 +225,9 @@ def scan_dir(input_dir, str_prefix):
                     str_dir = str(zxdir)
                     if str_prefix:
                         str_dir = str_prefix + str_dir
+
+                    str_dir = str_dir.replace('\\', '/')
+                    zxfile = zxfile.replace('\\', '/')
                     arr_tmp = [zxname, zxmode, str_dir, zxfile]
                     break
 
@@ -232,11 +235,12 @@ def scan_dir(input_dir, str_prefix):
                 for zxext in arr_imgs:
                     if zxext in dict_tmp[game]:
                         zximg = dict_tmp[game][zxext][1]
-                        if dict_tmp[game][zxext][0] != zxdir:
-                            if str(dict_tmp[game][zxext][0]).startswith(
+                        zximgdir = dict_tmp[game][zxext][0]
+                        if zximgdir != zxdir:
+                            if str(zximgdir).startswith(
                                     str(zxdir)):
                                 imgdir = Path(
-                                    str(dict_tmp[game][zxext][0])
+                                    str(zximgdir)
                                     [len(str(zxdir)) + 1:])
                                 zximg = str(Path(imgdir, zximg))
                             else:
@@ -246,6 +250,7 @@ def scan_dir(input_dir, str_prefix):
                                 zximg = ''
 
                         if zximg:
+                            zxmig = zximg.replace('\\', '/')
                             arr_tmp.append(zximg)
                             break
 
