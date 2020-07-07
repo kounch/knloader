@@ -242,7 +242,11 @@ Modo de uso: `python3 bdt_builder.py -i RUTA [-o FICHERO] [-c RUTA_SD]`
 
 Donde `RUTA` es la ruta al directorio a analizar, `FICHERO`, opcionalmente, es la ruta al fichero BDT a crear. Si no se indica ruta al fichero, este se crea automáticamente en el directorio actual. Finalmente, `RUTA_SD`, opcionalmente también, es la ruta de la SD donde se encuentran los programas (primera línea del archivo BDT). Si no se indica un ruta de la SD, se usa `RUTA` en su lugar.
 
-Una vez que se ha creado el fichero BDT, se puede revisar y editar con un editor de texto, y luego copiarlo a la tarjeta SD, en la misma ubicación en la que se encuentre `knloader.bas`, o se pueden crear datos de cache (usando el Script de creación de Caché) y copiar estos en la tarjeta.
+Por defecto, el script considera cada nombre de archivo encontrado (sin extensión) como un programa distinto a catalorar. Sin embargo, se puede cambiar este comportamiento para usar el del directorio que lo contiene, y entonces considerar todos los ficheros adecuados de su interior como el mismo programa, sin importar qué nombre tengan. Para activar esta característica, hay que añadir `-t d` al comando, de esta manera: `python3 bdt_builder.py -i RUTA -t d [-o FICHERO] [-c RUTA_SD]`
+
+Además, el script ordena en base al nombre (lexicográficamente) todos los resultados. Si se prefiera que se ordenen los resultados en base al nombre del archivo (orden ASCII), se puede utilizar `-u` (por ej: `python3 bdt_builder.py -u -i RUTA ...`).
+
+Una vez que se ha creado el fichero BDT, se puede revisar y retocar con un editor de texto, y luego copiarlo a la tarjeta SD, en la misma ubicación en la que se encuentre `knloader.bas`, o se pueden crear datos de cache (usando el Script de creación de Caché) y copiar estos en la tarjeta.
 
 == Script de creación de Caché
 

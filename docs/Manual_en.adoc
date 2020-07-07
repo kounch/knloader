@@ -242,7 +242,11 @@ Script usage: `python3 bdt_builder.py -i INPUT_PATH [-o OUTPUT_PATH] [-c SD_PATH
 
 Where `INPUT_PATH` is the path to the directory to analyze,`OUTPUT_PATH`, optionally, is the path to the new BDT file. If there is no output path argument, the BDT file is created in the current directory. Finally, `SD_PATH`, optionally, is the path in the SD where the programs are stored (first line of the BDT file). If no SD_PATH is provided, `OUTPUT_PATH` will be used.
 
-After the BDT file is created, you can review and edit its contents with a text editor, and then copy it to your SD card, next to where `knloader.bas` is, or you can create cache data (using the Cache Builder Script) and copy it to the SD card.
+By default, the script treats each found filename (without extension) as a different program to catalog. However you can change this behaviour to use the instead the name of the containing folder, and then take all the appropriate files inside as the same program, regardless of their name. To activate this feature, you must add `-t d` to the command, like this: `python3 bdt_builder.py -i INPUT_PATH -t d [-o OUTPUT_PATH] [-c SD_PATH]`
+
+Also, the script orders by program name (lexicographically) all the results. If you want to order the results by file name (ASCII ordering), you can add the `-u` switch (e.g. `python3 bdt_builder.py -u -i INPUT_PATH ...`).
+
+After the BDT file is created, you can review and change its contents with a text editor, and then copy it to your SD card, next to where `knloader.bas` is, or you can create cache data (using the Cache Builder Script) and copy it to the SD card.
 
 == Cache Builder Script
 
