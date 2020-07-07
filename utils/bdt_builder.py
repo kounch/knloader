@@ -59,7 +59,8 @@ def main():
     str_msg = _('Start...')
     LOGGER.debug(str_msg)
 
-    bdt_data = scan_dir(arg_data['input'], arg_data['prefix'])
+    bdt_data = scan_dir(arg_data['input'], arg_data['prefix'],
+                        arg_data['detection'])
 
     if arg_data['sort']:
         str_msg = _('Sorting...')
@@ -95,6 +96,8 @@ def parse_args():
     str_hlp_input = _('Path to directory')
     str_hlp_output = _('BDT file path')
     str_hlp_cpath = _('Path in SD to directory')
+    str_hlp_detection = _('Detection mode')
+    str_hlp_unsort = _('Do not sort results')
 
     parser = argparse.ArgumentParser(description='knloader Cache Builder')
     parser.add_argument('-v',
@@ -117,6 +120,16 @@ def parse_args():
                         action='store',
                         dest='custom_path',
                         help=str_hlp_output)
+    parser.add_argument('-d',
+                        '--detection',
+                        action='store',
+                        dest='det_mode',
+                        help=str_hlp_detection)
+    parser.add_argument('-u',
+                        '--unsorted',
+                        action='store_false',
+                        dest='sort_mode',
+                        help=str_hlp_unsort)
     parser.add_argument('-p', '--prefix', action='store', dest='prefix')
 
     arguments = parser.parse_args()
@@ -134,6 +147,12 @@ def parse_args():
     c_path = ''
     if arguments.custom_path:
         c_path = arguments.custom_path
+
+    det_mode = 'f'
+    if arguments.det_mode:
+        det_mode = arguments.det_mode
+
+    sort_mode = arguments.sort_mode
 
     str_prefix = ''
     if arguments.prefix:
@@ -154,13 +173,14 @@ def parse_args():
     values['input'] = i_path
     values['output'] = o_path
     values['cpath'] = c_path
-    values['sort'] = True
+    values['detection'] = det_mode
+    values['sort'] = sort_mode
     values['prefix'] = str_prefix
 
     return values
 
 
-def scan_dir(input_dir, str_prefix):
+def scan_dir(input_dir, str_prefix, str_detection):
     """Scans directories"""
     dict_exts = {
         'nex': 15,
@@ -196,11 +216,12 @@ def scan_dir(input_dir, str_prefix):
                 str_msg = _('Invalid Char!')
                 raise IOError(str_msg)
 
-            if str(zxdir.name) != '':
-                if str(zxdir.name).upper() == '3DOS':
-                    zxname = zxdir.parent.name
-                else:
-                    zxname = zxdir.name
+            if str_detection == 'd':
+                if str(zxdir.name) != '':
+                    if str(zxdir.name).upper() == '3DOS':
+                        zxname = zxdir.parent.name
+                    else:
+                        zxname = zxdir.name
 
             if zxname not in dict_tmp:
                 dict_tmp[zxname] = {}
