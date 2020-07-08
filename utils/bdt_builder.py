@@ -34,7 +34,22 @@ except (ImportError, AttributeError):
     from pathlib2 import Path
 
 __MY_NAME__ = 'bdt_builder.py'
-__MY_VERSION__ = '0.10'
+__MY_VERSION__ = '0.11'
+
+DICT_EXTS = {
+    'nex': 15,
+    'snx': 16,
+    'tap': 1,
+    'bas': 0,
+    'dsk': 3,
+    'p': 16,
+    'tzx': 2,
+    'z8': 17,
+    'z5': 17,
+    'z3': 17,
+    'z80': 16
+}
+ARR_IMGS = ['bmp', 'sl2', 'scr', 'slr', 'shr', 'shc']
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.INFO)
@@ -69,12 +84,16 @@ def main():
 
     if bdt_data:
         with open(arg_data['output'], 'w', newline="\n") as f:
-            str_path = arg_data['input']
+            str_path = str(arg_data['input'])
             if arg_data['cpath']:
                 str_path = arg_data['cpath']
             str_path = str_path.replace('\\', '/')
+            if str_path[:-1] == '/':
+                str_path = str_path[:-1]
             if len(str_path) > 1 and str_path[1] == ':':
                 str_path = str_path[2:]
+            if not str_path:
+                str_path = '/'
             f.write('{0}\r\n'.format(str_path))
             writer = csv.writer(f)
             writer.writerows(bdt_data)
@@ -100,6 +119,9 @@ def parse_args():
     str_hlp_cpath = _('Path in SD to directory')
     str_hlp_detection = _('Detection mode')
     str_hlp_unsort = _('Do not sort results')
+    str_hlp_tapmode = _('TAP loading mode')
+    str_hlp_tzxmode = _('TZX loading mode')
+    str_hlp_basmode = _('BAS loading mode')
 
     parser = argparse.ArgumentParser(description='knloader Cache Builder')
     parser.add_argument('-v',
@@ -132,6 +154,18 @@ def parse_args():
                         action='store_false',
                         dest='sort_mode',
                         help=str_hlp_unsort)
+    parser.add_argument('--tap',
+                        action='store',
+                        dest='tap_mode',
+                        help=str_hlp_tapmode)
+    parser.add_argument('--tzx',
+                        action='store',
+                        dest='tzx_mode',
+                        help=str_hlp_tzxmode)
+    parser.add_argument('--bas',
+                        action='store',
+                        dest='bas_mode',
+                        help=str_hlp_basmode)
     parser.add_argument('-p', '--prefix', action='store', dest='prefix')
 
     arguments = parser.parse_args()
@@ -155,6 +189,15 @@ def parse_args():
         det_mode = arguments.det_mode
 
     sort_mode = arguments.sort_mode
+
+    if arguments.tap_mode:
+        DICT_EXTS['tap'] = int(arguments.tap_mode)
+
+    if arguments.tzx_mode:
+        DICT_EXTS['tzx'] = int(arguments.tzx_mode)
+
+    if arguments.bas_mode:
+        DICT_EXTS['bas'] = int(arguments.bas_mode)
 
     str_prefix = ''
     if arguments.prefix:
@@ -184,21 +227,6 @@ def parse_args():
 
 def scan_dir(input_dir, str_prefix, str_detection):
     """Scans directories"""
-    dict_exts = {
-        'nex': 15,
-        'snx': 16,
-        'tap': 1,
-        'bas': 0,
-        'dsk': 3,
-        'p': 16,
-        'tzx': 2,
-        'z8': 17,
-        'z5': 17,
-        'z3': 17,
-        'z80': 16
-    }
-    arr_imgs = ['bmp', 'sl2', 'scr', 'slr', 'shr', 'shc']
-
     input_dir = input_dir.resolve()
     rootlen = len(str(input_dir))
     dict_tmp = {}
@@ -206,7 +234,7 @@ def scan_dir(input_dir, str_prefix, str_detection):
     for child in sorted(input_dir.glob('**/*.*')):
         child_path = Path(input_dir, child)
         if child_path.is_file():
-            subpath = Path(str(child_path)[rootlen + 1:])
+            subpath = Path(str(child_path)[rootlen:])
             zxname = subpath.name[:-len(subpath.suffix)]
             zxdir = subpath.parent
             zxfile = subpath.name
@@ -228,20 +256,20 @@ def scan_dir(input_dir, str_prefix, str_detection):
             if zxname not in dict_tmp:
                 dict_tmp[zxname] = {}
 
-            if zxext in dict_exts:
+            if zxext in DICT_EXTS:
                 dict_tmp[zxname][zxext] = [zxdir, zxfile]
 
-            if zxext in arr_imgs:
+            if zxext in ARR_IMGS:
                 dict_tmp[zxname][zxext] = [zxdir, zxfile]
 
     for game in dict_tmp:
         if dict_tmp[game]:
             arr_tmp = []
             zxdir = None
-            for zxext in dict_exts:
+            for zxext in DICT_EXTS:
                 if zxext in dict_tmp[game]:
                     zxname = game
-                    zxmode = dict_exts[zxext]
+                    zxmode = DICT_EXTS[zxext]
                     zxdir = dict_tmp[game][zxext][0]
                     zxfile = dict_tmp[game][zxext][1]
 
@@ -250,12 +278,14 @@ def scan_dir(input_dir, str_prefix, str_detection):
                         str_dir = str_prefix + str_dir
 
                     str_dir = str_dir.replace('\\', '/')
+                    if str_dir[0] == '/':
+                        str_dir = str_dir[1:]
                     zxfile = zxfile.replace('\\', '/')
                     arr_tmp = [zxname, zxmode, str_dir, zxfile]
                     break
 
             if arr_tmp:
-                for zxext in arr_imgs:
+                for zxext in ARR_IMGS:
                     if zxext in dict_tmp[game]:
                         zximg = dict_tmp[game][zxext][1]
                         zximgdir = dict_tmp[game][zxext][0]
