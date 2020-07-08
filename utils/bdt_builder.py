@@ -69,11 +69,13 @@ def main():
 
     if bdt_data:
         with open(arg_data['output'], 'w', newline="\n") as f:
+            str_path = arg_data['input']
             if arg_data['cpath']:
-                f.write(arg_data['cpath'])
-            else:
-                f.write(str(arg_data['input']))
-            f.write('\r\n')
+                str_path = arg_data['cpath']
+            str_path = str_path.replace('\\', '/')
+            if len(str_path) > 1 and str_path[1] == ':':
+                str_path = str_path[2:]
+            f.write('{0}\r\n'.format(str_path))
             writer = csv.writer(f)
             writer.writerows(bdt_data)
 
