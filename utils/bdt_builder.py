@@ -34,7 +34,7 @@ except (ImportError, AttributeError):
     from pathlib2 import Path
 
 __MY_NAME__ = 'bdt_builder.py'
-__MY_VERSION__ = '0.11'
+__MY_VERSION__ = '0.12'
 
 DICT_EXTS = {
     'nex': 15,
@@ -242,25 +242,23 @@ def scan_dir(input_dir, str_prefix, str_detection):
 
             if ',' in str(child_path):
                 str_msg = _('Invalid character in path: {0}')
-                LOGGER.error(str_msg.format(str(child_path)))
-                str_msg = _('Invalid Char!')
-                raise IOError(str_msg)
+                LOGGER.warning(str_msg.format(str(child_path)))
+            else:
+                if str_detection == 'd':
+                    if str(zxdir.name) != '':
+                        if str(zxdir.name).upper() == '3DOS':
+                            zxname = zxdir.parent.name
+                        else:
+                            zxname = zxdir.name
 
-            if str_detection == 'd':
-                if str(zxdir.name) != '':
-                    if str(zxdir.name).upper() == '3DOS':
-                        zxname = zxdir.parent.name
-                    else:
-                        zxname = zxdir.name
+                if zxname not in dict_tmp:
+                    dict_tmp[zxname] = {}
 
-            if zxname not in dict_tmp:
-                dict_tmp[zxname] = {}
+                if zxext in DICT_EXTS:
+                    dict_tmp[zxname][zxext] = [zxdir, zxfile]
 
-            if zxext in DICT_EXTS:
-                dict_tmp[zxname][zxext] = [zxdir, zxfile]
-
-            if zxext in ARR_IMGS:
-                dict_tmp[zxname][zxext] = [zxdir, zxfile]
+                if zxext in ARR_IMGS:
+                    dict_tmp[zxname][zxext] = [zxdir, zxfile]
 
     for game in dict_tmp:
         if dict_tmp[game]:
