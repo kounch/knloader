@@ -1,6 +1,6 @@
 = knloader English Manual
 :author: kounch
-:revnumber: 0.10.0
+:revnumber: 0.11.0
 :doctype: book
 :email: kounch@users.noreply.github.com
 :Revision: 1.0
@@ -238,13 +238,15 @@ Also, when finding several image files with different extension, only one is sel
 
     bmp > sl2 > scr > slr > shr > shc
 
-Script usage: `python3 bdt_builder.py -i INPUT_PATH [-o OUTPUT_PATH] [-c SD_PATH]`
+Script usage: `python3 bdt_builder.py -i INPUT_PATH [-o OUTPUT_PATH] [-c SD_PATH] [--tap NUMBER] [--tzx NUMBER] [--bas NUMBER]`
 
 Where `INPUT_PATH` is the path to the directory to analyze,`OUTPUT_PATH`, optionally, is the path to the new BDT file. If there is no output path argument, the BDT file is created in the current directory. Finally, `SD_PATH`, optionally, is the path in the SD where the programs are stored (first line of the BDT file). If no SD_PATH is provided, `OUTPUT_PATH` will be used.
 
 By default, the script treats each found filename (without extension) as a different program to catalog. However you can change this behaviour to use the instead the name of the containing folder, and then take all the appropriate files inside as the same program, regardless of their name. To activate this feature, you must add `-t d` to the command, like this: `python3 bdt_builder.py -i INPUT_PATH -t d [-o OUTPUT_PATH] [-c SD_PATH]`
 
 Also, the script orders by program name (lexicographically) all the results. If you want to order the results by file name (ASCII ordering), you can add the `-u` switch (e.g. `python3 bdt_builder.py -u -i INPUT_PATH ...`).
+
+You can change the default loading mode for `tap`, `tzx` or `bas` extensions, using `--tap NUMBER`, `--tzx NUMBER` or `--bas NUMBER`, using the desired mode number. For example, to change loading mode for tap files to USR 0: `python3 bdt_builder.py -i INPUT_PATH --tap 4 ...`
 
 After the BDT file is created, you can review and change its contents with a text editor, and then copy it to your SD card, next to where `knloader.bas` is, or you can create cache data (using the Cache Builder Script) and copy it to the SD card.
 

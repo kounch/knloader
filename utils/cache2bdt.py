@@ -35,7 +35,7 @@ except (ImportError, AttributeError):
     from pathlib2 import Path
 
 __MY_NAME__ = 'cache2bdt.py'
-__MY_VERSION__ = '0.10'
+__MY_VERSION__ = '0.11'
 
 __MAXNAME_L__ = 23
 __MAXPATH_L__ = 65
