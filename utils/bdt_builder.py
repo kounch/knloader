@@ -92,6 +92,8 @@ def main():
                 str_path = str_path[:-1]
             if len(str_path) > 1 and str_path[1] == ':':
                 str_path = str_path[2:]
+            if str_path == '.':
+                str_path = ''
             if not str_path:
                 str_path = '/'
             f.write('{0}\r\n'.format(str_path))
@@ -278,6 +280,8 @@ def scan_dir(input_dir, str_prefix, str_detection):
                     str_dir = str_dir.replace('\\', '/')
                     if str_dir[0] == '/':
                         str_dir = str_dir[1:]
+                    if str_dir == '.':
+                        str_dir = ''
                     zxfile = zxfile.replace('\\', '/')
                     arr_tmp = [zxname, zxmode, str_dir, zxfile]
                     break
