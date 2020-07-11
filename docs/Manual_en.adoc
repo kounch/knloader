@@ -74,7 +74,7 @@ Press C or the joystick secondary button (in MD mode) to hide/show images.
 [.text-center] 
 image::CoverOn.png[pdfwidth=70%]
 
-Press X to exit the program.
+Press X or the third joystick button to exit the program.
 
 Press H to show some help.
 
