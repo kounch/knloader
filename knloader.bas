@@ -74,8 +74,8 @@
  910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2020"
  920 PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
  930 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:":PRINT AT 18,1;x$(pos)
- 940 LET a$=x$(pos):GO SUB 5300:LET l$=a$:LET a$=w$(pos):GO SUB 5300
- 950 IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
+ 940 LET a$=x$(pos):GO SUB 5300:LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
+ 950 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$=a$(1 TO LEN a$-1)
  960 LET c$=y$:IF y$(LEN y$ TO LEN y$)<>"/" THEN LET c$=y$+"/"
  970 IF a$<>" " THEN LET c$=c$+a$
  980 LET a$=l$:GO SUB 5400:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
@@ -84,8 +84,9 @@
  995 ; Save Loader Options
 1000 LET mode=o(pos)
 1010 LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
-1020 LET c$=a$
-1030 LET a$=x$(pos):GO SUB 5300
+1020 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$=a$(1 TO LEN a$-1)
+1030 LET c$=a$
+1040 LET a$=x$(pos):GO SUB 5300
 
 1050 DIM o(1):DIM o$(3,maxpath)
 1060 LET o(1)=mode
@@ -172,15 +173,16 @@
 
 4495 ; Image Data (Cover)
 4500 LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
-4510 LET c$=y$:IF y$(LEN y$ TO LEN y$)<>"/" THEN LET c$=y$+"/"
-4520 LET c$=c$+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
-4530 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
-4540 IF l$="SCR" OR l$="scr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6;CHR$ 3
-4550 IF l$="SLR" OR l$="slr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,0:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
-4560 IF l$="SHR" OR l$="shr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,1:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
-4570 IF l$="SHC" OR l$="shc" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,2:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
-4580 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
-4590 RETURN
+4510 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$=a$(1 TO LEN a$-1)
+4520 LET c$=y$:IF y$(LEN y$ TO LEN y$)<>"/" THEN LET c$=y$+"/"
+4530 LET c$=c$+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
+4540 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
+4550 IF l$="SCR" OR l$="scr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6;CHR$ 3
+4560 IF l$="SLR" OR l$="slr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,0:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
+4570 IF l$="SHR" OR l$="shr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,1:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
+4580 IF l$="SHC" OR l$="shc" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,2:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
+4590 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
+4600 RETURN
 
 4895 ; Load Cache from Disk
 4900 ON ERROR GO SUB 6000:ON ERROR
