@@ -1,0 +1,4 @@
+'PRINT "ERROR: Unknown Mode"'='PRINT "ERROR: Modo Desconocido"'
+'1,1;INK 6;PAPER 2;" Error: Can''t connect with Pi "'='1,1;INK 6;PAPER 2;"  Error: Sin conexion con Pi  "'
+'4,1;"Please, wait for a few seconds"'='4,0;"Por favor, espere unos segundos"'
+'6,2;"Then press any key to retry"'='6,1;"y luego pulse para reintentar"'
