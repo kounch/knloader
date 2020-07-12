@@ -9,7 +9,7 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,14;"> knloader  v0.12 <":PRINT AT 8,16;"© kounch  2020":PRINT AT 15,15;"Press H for help"
+  90 PRINT AT 5,13;"> knloader  v0.12 <":PRINT AT 8,15;"© kounch  2020":PRINT AT 15,14;"Press H for help"
 
   95 ; Load Menu Items
  100 GO SUB 4900:; Load Cache To RAM
@@ -285,7 +285,7 @@
 6600 CLS:PRINT AT 2,2;INK 6;PAPER 2;" ERROR: BDT File is Too Big "
 6610 PRINT AT 5,1;"The file ";INK 6;"knloader.bdt";INK papel;" is too"
 6620 PRINT AT 6,0;"large: ";INK 2;%g;" bytes"
-6630 PRINT AT 8,1;"The maximum is 16384 bytes." 
+6630 PRINT AT 8,1;"The maximum is 16384 bytes."
 6640 PRINT AT 11,1;"Please use a smaller file or"
 6650 PRINT AT 12,0;"build the cache with an external"
 6660 PRINT AT 13,0;"program."

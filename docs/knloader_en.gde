@@ -115,8 +115,9 @@ https://www.specnext.com/latestdistro/
 Create manually @{i}knloader.bdt@{ui} file using the text editor of your choice (see
 below for more instructions).
 
-Copy together @{i}knloader.bas@{ui}, @{i}knlauncher@{ui}, @{i}knzml@{ui} and the new @{i}knloader.bdt@{ui}
-file to any place in your SD card.
+Copy together @{i}knloader.bas@{ui}, @{i}knlauncher@{ui}, @{i}knzml@{ui} from one of
+the distribution language folders (@{i}en@{ui} for english, @{i}es@{ui} for spanish, etc.),
+and the new @{i}knloader.bdt@{ui} file,to any place in your SD card.
 
 @-------------------------------------------------------------------------------
 @node USE

@@ -37,7 +37,7 @@ Se puede obtener un fichero ZIP con la última versión siguiendo https://github
 
 Crear un archivo `knloader.bdt` con un programa editor de texto o con el script incluido y, opcionalmente, crear datos de caché (leer a continuación para más instrucciones).
 
-Copiar, juntos, `knloader.bas`, `knlauncher`, `knzml` y el nuevo archivo `knloader.bdt` o los datos de caché al lugar que se desee de la tarjeta SD.
+Copiar, juntos, `knloader.bas`, `knlauncher`, `knzml`, desde una de las carpetas de idioma de la distribución (`en` en inglés, `es` para castellano, etc.), y el nuevo archivo `knloader.bdt` o los datos de caché al lugar que se desee de la tarjeta SD.
 
 == Uso
 
@@ -266,7 +266,7 @@ Una vez que los ficheros de caché se han creado, ha de copiarlos a la tarjeta S
 
 También se incluye un pequeño programa `autoexec.bas` que se puede utilizar para que se inicie knloader de forma automática cada vez que se encienda el ZX Spectrum Next.
 
-Para utilizarlo, renombre el fichero `/nextzxos/autoexec.bas` de la tarjeta SD a `/nextzxos/autoexec.bas.bak`, y luego copie el fichero `autoexec.bas` del direcotrio `utils` a `/nextzxos` en la tarjeta SD. Copie también todos los ficheros de knloader (`knloader.bas`, `knlauncher`, `knzml` and BDT file) en un directorio llamado `/knloader/` en la raíz de la SD.
+Para utilizarlo, renombre el fichero `/nextzxos/autoexec.bas` de la tarjeta SD a `/nextzxos/autoexec.bas.bak`, y luego copie el fichero `autoexec.bas` del direcotrio `utils` a `/nextzxos` en la tarjeta SD. Copie también todos los ficheros de knloader (`knloader.bas`, `knlauncher`, `knzml` and BDT file), desde una de las carpetas de idioma de la distribución (`en` en inglés, `es` para castellano, etc.), en un directorio llamado `/knloader/` en la raíz de la SD.
 
 Como extra, puede usar las siguientes teclas en el inicio para cambiar el comportamiento del arranque:
 

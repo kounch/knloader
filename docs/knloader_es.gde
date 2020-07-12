@@ -117,8 +117,10 @@ https://www.specnext.com/latestdistro/
 Crear manualmente un archivo @{i}knloader.bdt@{ui} con un programa editor de
 texto (leer a continuación para más instrucciones).
 
-Copiar, juntos, @{i}knloader.bas@{ui}, @{i}knlauncher@{ui}, @{i}knzml@{ui} y el nuevo
-archivo @{i}knloader.bdt@{ui} al lugar que se desee de la tarjeta SD.
+Copiar, juntos, @{i}knloader.bas@{ui}, @{i}knlauncher@{ui}, @{i}knzml@{ui}, desde
+una de las carpetas de idioma de la distribución (@{i}en@{ui} en inglés, @{i}es@{ui} para
+castellano, etc.), y el nuevo archivo @{i}knloader.bdt@{ui} al lugar que se desee
+de la tarjeta SD.
 
 @-------------------------------------------------------------------------------
 @node USE

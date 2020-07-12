@@ -24,7 +24,7 @@ A ZIP file with the latest version is available following [this link](https://gi
 
 - Create `knloader.bdt` file using the text editor of your choice or the included utility script. See the included manual (PDF) for instructions. Optionally, create cache file(s) with the included utility.
 
-- Copy together `knloader.bas`, `knlauncher`, `knzml` and the new `knloader.bdt` or the cache file(s) to any place in your SD card.
+- Copy together `knloader.bas`, `knlauncher`, `knzml`, from one of the distribution language folders (`en` for english, `es` for spanish, etc.), and the new `knloader.bdt` or the cache file(s) to any place in your SD card.
 
 #### Use
 
@@ -98,7 +98,7 @@ Se puede obtener un fichero ZIP con la última versión siguiendo  [este enlace]
 
 - Crear un archivo `knloader.bdt` con un programa editor de texto con el script incluído. Veáse el manual (PDF) para más instrucciones. Opcionalmente, crear archivo(s) de cache usando el script correspondiente.
 
-- Copiar, juntos, `knloader.bas`, `knlauncher`, `knzml` y el nuevo archivo `knloader.bdt` o los datos de cache al lugar que se desee de la tarjeta SD.
+- Copiar, juntos, `knloader.bas`, `knlauncher`, `knzml`, desde una de las carpetas de idioma de la distribución (`en` en inglés, `es` para castellano, etc.), y el nuevo archivo `knloader.bdt` o los datos de cache al lugar que se desee de la tarjeta SD.
 
 #### Uso
 
