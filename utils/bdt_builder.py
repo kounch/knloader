@@ -34,7 +34,7 @@ except (ImportError, AttributeError):
     from pathlib2 import Path
 
 __MY_NAME__ = 'bdt_builder.py'
-__MY_VERSION__ = '0.12'
+__MY_VERSION__ = '1.0'
 
 DICT_EXTS = {
     'nex': 15,

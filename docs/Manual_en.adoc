@@ -1,6 +1,6 @@
 = knloader English Manual
 :author: kounch
-:revnumber: 0.12.0
+:revnumber: 1.0.0
 :doctype: book
 :email: kounch@users.noreply.github.com
 :Revision: 1.0

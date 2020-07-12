@@ -18,7 +18,7 @@
 '9,1;"Press C or joystick secondary to hide/show images"'='9,1;"C o segundo disparo para mostrar/ocultar imagenes"'
 '13,1;"Press X to exit"'='13,1;"Pulse X para salir"'
 '15,1;"Press H to show this help"'='15,1;"Pulse H para ver esta ayuda"'
-'19,5;"Press any key or button to close this window"'='19,5;"Pulse cualquier tecla o boton para cerrar la ayuda"'
+'19,5;"Press any key or button to close this window"'='19,4;"Pulse cualquier tecla o boton para cerrar la ayuda"'
 'm$="3DOS (Next)"'='m$="3DOS (Next)"'
 'm$="TAP"'='m$="TAP"'
 'm$="TZX (fast)"'='m$="TZX (rapido)"'

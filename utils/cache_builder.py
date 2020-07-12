@@ -33,7 +33,7 @@ except (ImportError, AttributeError):
     from pathlib2 import Path
 
 __MY_NAME__ = 'cache_builder.py'
-__MY_VERSION__ = '0.12'
+__MY_VERSION__ = '1.0'
 
 __MAXNAME_L__ = 23
 __MAXPATH_L__ = 65
