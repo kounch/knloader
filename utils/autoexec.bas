@@ -9,7 +9,7 @@
   60 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN GO TO 80
   70 LOAD "C:":CD "/knloader":LOAD "knloader.bas"
   80 IF K$=" " OR J=32 THEN ERASE
-  90 IF K$<>"t" AND K$<>"T" THEN GO TO 130
+  90 IF K$<>"t" AND K$<>"T" AND J<>64 THEN GO TO 130
  100 CLS:PRINT AT 6,12;"NTP..."
  110 .nxtp time.nxtel.org 12300 -z=RomanceStandardTime
  120 PRINT AT 6,12;"  OK! ":GO TO 50
