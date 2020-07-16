@@ -196,6 +196,6 @@
 5995 ; Error with Pi
 6000 CLS:PRINT AT 1,1;INK 6;PAPER 2;" Error: Can't connect with Pi "
 6010 LET %r=%r-1:IF %r>0 THEN PRINT AT 4,1;"Please, wait for a few seconds":PRINT AT 6,2;"Then press any key to retry"
-6020 LET J=IN 31:LET K$=INKEY$:IF K$="" AND J=0 THEN GO TO 6020
+6020 LET J=IN 31:LET K$=INKEY$:IF K$="" AND (J=0 OR J=255) THEN GO TO 6020
 6030 IF %r>0 THEN GO TO 5610
 6040 STOP
