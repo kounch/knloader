@@ -7,7 +7,7 @@
 
   50 LET %s=%REG 7&3:RUN AT 2
   60 CLS:ON ERROR RUN AT %s:ERASE
-  70 LET J=IN 31:LET K$=INKEY$:IF J<>0 OR K$<>"" THEN GO TO 90
+  70 LET J=IN 31:LET K$=INKEY$:IF (J<>0 AND J<>255) OR K$<>"" THEN GO TO 90
   80 LOAD "C:":CD "/knloader":RUN AT %s:LOAD "knloader.bas"
   90 IF K$=" " OR J=32 THEN RUN AT %s:ERASE
  100 IF K$<>"t" AND K$<>"T" AND J<>64 THEN GO TO 140
