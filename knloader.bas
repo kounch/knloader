@@ -76,7 +76,7 @@
  920 PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
  930 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:":PRINT AT 18,1;x$(pos)
  940 LET a$=x$(pos):GO SUB 5300:LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
- 950 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$=a$(1 TO LEN a$-1)
+ 950 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
  960 LET c$=y$:IF y$(LEN y$ TO LEN y$)<>"/" THEN LET c$=y$+"/"
  970 IF a$<>" " THEN LET c$=c$+a$
  980 LET a$=l$:GO SUB 5400:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
@@ -85,7 +85,7 @@
  995 ; Save Loader Options
 1000 LET mode=o(pos)
 1010 LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
-1020 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$=a$(1 TO LEN a$-1)
+1020 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
 1030 LET c$=a$
 1040 LET a$=x$(pos):GO SUB 5300
 
@@ -174,7 +174,7 @@
 
 4495 ; Image Data (Cover)
 4500 LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
-4510 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$=a$(1 TO LEN a$-1)
+4510 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
 4520 LET c$=y$:IF y$(LEN y$ TO LEN y$)<>"/" THEN LET c$=y$+"/"
 4530 LET c$=c$+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
 4540 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
