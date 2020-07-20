@@ -5,7 +5,7 @@
   30 ; it and/or modify it under the terms of the
   40 ; GNU General Public License
 
-  50 LET %s=%REG 7&3:RUN AT 3
+  50 LET %s=%REG 7&3:RUN AT 3:LET %q=%REG 2&3
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
@@ -13,8 +13,8 @@
 
   95 ; Load Menu Items
  100 GO SUB 4900:; Load Cache To RAM
- 110 GO SUB 5000:; Load From Cache
- 120 GO SUB 5100:; Load Options
+ 110 GO SUB 5000:; Load Options
+ 120 GO SUB 5100:; Load From Cache
 
  195 ; Draw Menu Text
  200 PAPER tinta:BORDER tinta:INK papel:CLS:OPEN # 6,"w>0,0,24,12,4"
@@ -45,28 +45,27 @@
  530 IF K$="6" OR K$=CHR$(10) OR J=4 THEN GO TO 795
  540 IF K$="7" OR K$=CHR$(11) OR J=8 THEN GO TO 845
  550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:PRINT AT 10,12;"ERASING...":ERASE "/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
- 560 IF K$="X" OR K$="x" OR J=64 THEN FOR %a=0 TO 15:CLOSE # %a:NEXT %a:RUN AT %s:ERASE
+ 560 IF K$="X" OR K$="x" OR J=64 THEN GO SUB 5200:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:RUN AT %s:ERASE
  570 IF K$="C" OR K$="c" OR J=32 THEN LET prev=pos:LET covers=1-covers:GO TO 1400
- 580 IF K$="O" OR K$="o" THEN REM Save Options>>>NOT IMPLEMENTED<<<
- 590 IF K$="E" OR K$="e" THEN REM Edit Options>>>NOT IMPLEMENTED<<<
- 600 IF K$="H" OR K$="h" THEN LET prev=pos:GO TO 1500
+ 580 IF K$="A" OR K$="a" THEN LET autosave=1-autosave:GO SUB 5200:GO TO 1700
+ 590 IF K$="H" OR K$="h" THEN LET prev=pos:GO TO 1500
  690 GO TO 320
 
  695 ; Input LEFT
- 700 LET prv=pos:IF pag>0 THEN LET pag=pag-1:LET pos=1:GO SUB 5000:GO TO 210
+ 700 LET prv=pos:IF pag>0 THEN LET pag=pag-1:LET pos=1:GO SUB 5100:GO TO 210
  750 GO TO 320
  755 ; Input RIGHT
- 760 LET prv=pos:IF pag<maxpag THEN LET pag=pag+1:LET pos=1:GO SUB 5000:GO TO 210
+ 760 LET prv=pos:IF pag<maxpag THEN LET pag=pag+1:LET pos=1:GO SUB 5100:GO TO 210
  790 GO TO 320
  795 ; Input DOWN
  800 LET prv=pos
- 810 IF pag<maxpag AND pos=22 THEN LET pag=pag+1:LET pos=1:GO SUB 5000:GO TO 210
+ 810 IF pag<maxpag AND pos=22 THEN LET pag=pag+1:LET pos=1:GO SUB 5100:GO TO 210
  820 IF pag<maxpag AND pos<22 THEN LET pos=pos+1
  830 IF pag=maxpag AND pos<maxpos THEN LET pos=pos+1
  840 GO TO 310
  845 ; Input UP
  850 LET prv=pos
- 860 IF pag>0 AND pos=1 THEN LET pag=pag-1:LET pos=22:GO SUB 5000:GO TO 210
+ 860 IF pag>0 AND pos=1 THEN LET pag=pag-1:LET pos=22:GO SUB 5100:GO TO 210
  870 IF pos>1 THEN LET pos=pos-1
  880 GO TO 310
 
@@ -96,9 +95,9 @@
 1090 LET o$(3)=a$
 1100 SAVE "m:klo.tmp"DATA o()
 1110 SAVE "m:kls.tmp"DATA o$()
-1145 ; Launch Program
 
-1150 BORDER tinta:RUN AT %s:CLEAR:LOAD "knlauncher"
+1140 GO SUB 5200:;Save Options 
+1150 BORDER tinta:RUN AT %s:CLEAR:LOAD "knlauncher":; Launch Program
 1190 STOP
 
 1295 ; File to load not found
@@ -125,12 +124,20 @@
 1540 PRINT #5;AT 5,1;"ENTER, 0 or joystick button to launch selected program"
 1550 PRINT #5;AT 7,1;"Press R to rebuild the cache from DBT file"
 1560 PRINT #5;AT 9,1;"Press C or joystick secondary to hide/show images"
-1570 PRINT #5;AT 13,1;"Press X to exit"
-1580 PRINT #5;AT 15,1;"Press H to show this help"
-1590 PRINT #5;AT 19,5;"Press any key or button to close this window"
-1600 LET J=IN 31:LET K$=INKEY$:IF (J<>0 AND J<>255) OR K$<>"" THEN GO TO 1600
-1610 LET J=IN 31:LET K$=INKEY$:IF (J=0 OR J=255) AND K$="" THEN GO TO 1610
-1620 CLOSE # 5:GO TO 210
+1570 PRINT #5;AT 11,1;"Press A to enable/disable auto save"
+1580 PRINT #5;AT 14,1;"Press X to exit"
+1590 PRINT #5;AT 16,1;"Press H to show this help"
+1600 PRINT #5;AT 19,5;"Press any key or button to close this window"
+1610 LET J=IN 31:LET K$=INKEY$:IF (J<>0 AND J<>255) OR K$<>"" THEN GO TO 1610
+1620 LET J=IN 31:LET K$=INKEY$:IF (J=0 OR J=255) AND K$="" THEN GO TO 1620
+1630 CLOSE # 5:GO TO 210
+
+1695 ; Show Autosave Status
+1700 LET a$="ON ":IF autosave=0 THEN LET a$="OFF"
+1710 PRINT AT 6,14;"               "
+1720 PRINT AT 7,14;" Autosave: ";a$;" "
+1730 PRINT AT 8,14;"               "
+1740 PAUSE 30:GO TO 210
 
 3095 ; SUBROUTINES
 3096 ;-------------
@@ -195,24 +202,27 @@
 4960 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
 4970 RETURN
 
-4995 ; Load from RAM Cache
-5000 LET %n=pag:LET %j=%(22*n)MOD 74*219:LET %k=13+INT(22*pag/74):LET a=22:IF pag=maxpag THEN LET a=maxpos
-5010 FOR p=1 TO a:LET z$(p)=BANK %k PEEK$(%j,~0):LET o(p)=%BANK k PEEK (j+23):LET w$(p)=BANK %k PEEK$(%(j+24),~0)
-5020 LET x$(p)=BANK %k PEEK$(%(j+89),~0):LET b$(p)=BANK %k PEEK$(%(j+154),~0):LET %j=%j+219:IF %j>16205 THEN LET %k=%k+1:LET %j=0
-5030 NEXT p:IF a<22 THEN FOR p=a+1 TO 22:LET z$(p)="":NEXT p
-5060 RETURN
+4995 ; Load Options
+5000 ON ERROR GO SUB 5200:ON ERROR
+5010 DIM p(7)
+5020 LOAD "opts.tmp"DATA p()
+5030 LET tinta=p(1):LET papel=p(2):LET %p=p(3):LET autosave=p(4)
+5040 IF %q=2 THEN GO TO 5070:;Hard Reset
+5050 IF autosave=1 THEN LET covers=p(5):LET pos=p(6):LET pag=p(7)
+5060 IF pag>=maxpag AND pos>maxpos THEN LET pag=0:LET pos=1
+5070 RETURN
 
-5095 ; Load Options
-5100 ON ERROR GO SUB 5200:ON ERROR
-5110 DIM p(4)
-5120 LOAD "opts.tmp"DATA p()
-5130 LET tinta=p(1):LET papel=p(2):LET %p=p(3):covers=p(4)
-5150 RETURN
+5095 ; Load from RAM Cache
+5100 LET %n=pag:LET %j=%(22*n)MOD 74*219:LET %k=13+INT(22*pag/74):LET a=22:IF pag=maxpag THEN LET a=maxpos
+5110 FOR p=1 TO a:LET z$(p)=BANK %k PEEK$(%j,~0):LET o(p)=%BANK k PEEK (j+23):LET w$(p)=BANK %k PEEK$(%(j+24),~0)
+5120 LET x$(p)=BANK %k PEEK$(%(j+89),~0):LET b$(p)=BANK %k PEEK$(%(j+154),~0):LET %j=%j+219:IF %j>16205 THEN LET %k=%k+1:LET %j=0
+5130 NEXT p:IF a<22 THEN FOR p=a+1 TO 22:LET z$(p)="":NEXT p
+5160 RETURN
 
 5195 ; Save Options
 5200 ON ERROR PRINT "Error saving options!!":ERROR TO e:PRINT e:PAUSE 0:ON ERROR:STOP
-5210 DIM p(4)
-5220 LET p(1)=tinta:LET p(2)=papel:LET p(3)=%p:LET p(4)=covers
+5210 DIM p(7)
+5220 LET p(1)=tinta:LET p(2)=papel:LET p(3)=%p:LET p(4)=autosave:LET p(5)=covers:LET p(6)=pos:LET p(7)=pag
 5230 SAVE "opts.tmp"DATA p()
 5240 RETURN
 
@@ -297,7 +307,7 @@
 6995 ; Default Config
 7000 ON ERROR RUN AT %s:ERASE
 7010 LET tinta=0:LET papel=7:LET %p=8:LET pos=1:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
-7020 LET covers=1:DIM d$(255):OPEN # 2,"v>d$":PWD #2:CLOSE # 2
+7020 LET covers=1:LET autosave=0:DIM d$(255):OPEN # 2,"v>d$":PWD #2:CLOSE # 2
 7030 LET a$=d$:GO SUB 5300:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
 7040 DIM d$(255):OPEN # 2,"v>d$":.NEXTVER -v:CLOSE # 2:LET a=VAL(d$):GO SUB 5300:PRINT a
 7050 IF a>2.05 THEN RETURN

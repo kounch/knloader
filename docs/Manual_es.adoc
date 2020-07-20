@@ -74,6 +74,8 @@ Pulsar C o el botón secundario del joystick (en modo MD ) para ocultar o mostra
 [.text-center] 
 image::CoverOn.png[pdfwidth=70%]
 
+Pulsar A para activar o desactivar el guardado automático del programa seleccionado y la opción de ocultar o mostrar imágenes.
+
 Pulsar X o el tercer botón del joystick para salir del programa.
 
 Pulsar H para mostrar una pequeña ayuda (en inglés).
