@@ -40,34 +40,32 @@
 
  495 ; Menu Control Input
  500 IF K$="0" OR K$=CHR$(13) OR J=16 THEN GO TO 895
- 510 IF K$="5" OR K$=CHR$(8) OR J=2 THEN GO TO 695
- 520 IF K$="8" OR K$=CHR$(9) OR J=1 THEN GO TO 755
- 530 IF K$="6" OR K$=CHR$(10) OR J=4 THEN GO TO 795
- 540 IF K$="7" OR K$=CHR$(11) OR J=8 THEN GO TO 845
+ 510 IF K$="5" OR K$=CHR$(8) OR J=2 THEN LET prv=pos:GO TO 700
+ 520 IF K$="8" OR K$=CHR$(9) OR J=1 THEN LET prv=pos:GO TO 750
+ 530 IF K$="6" OR K$=CHR$(10) OR J=4 THEN LET prv=pos:GO TO 800
+ 540 IF K$="7" OR K$=CHR$(11) OR J=8 THEN LET prv=pos:GO TO 850
  550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:PRINT AT 10,12;"ERASING...":ERASE "/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
  560 IF K$="X" OR K$="x" OR J=64 THEN GO SUB 5200:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:RUN AT %s:ERASE
- 570 IF K$="C" OR K$="c" OR J=32 THEN LET prev=pos:LET covers=1-covers:GO TO 1400
+ 570 IF K$="C" OR K$="c" OR J=32 THEN LET prv=pos:LET covers=1-covers:GO TO 1400
  580 IF K$="A" OR K$="a" THEN LET autosave=1-autosave:GO SUB 5200:GO TO 1700
- 590 IF K$="H" OR K$="h" THEN LET prev=pos:GO TO 1500
+ 590 IF K$="H" OR K$="h" THEN LET prv=pos:GO TO 1500
  690 GO TO 320
 
  695 ; Input LEFT
- 700 LET prv=pos:IF pag>0 THEN LET pag=pag-1:LET pos=1:GO SUB 5100:GO TO 210
- 750 GO TO 320
- 755 ; Input RIGHT
- 760 LET prv=pos:IF pag<maxpag THEN LET pag=pag+1:LET pos=1:GO SUB 5100:GO TO 210
- 790 GO TO 320
+ 700 IF pag>0 THEN LET pag=pag-1:LET pos=1:GO SUB 5100:GO TO 210
+ 710 GO TO 320
+ 745 ; Input RIGHT
+ 750 IF pag<maxpag THEN LET pag=pag+1:LET pos=1:GO SUB 5100:GO TO 210
+ 760 GO TO 320
  795 ; Input DOWN
- 800 LET prv=pos
- 810 IF pag<maxpag AND pos=22 THEN LET pag=pag+1:LET pos=1:GO SUB 5100:GO TO 210
- 820 IF pag<maxpag AND pos<22 THEN LET pos=pos+1
- 830 IF pag=maxpag AND pos<maxpos THEN LET pos=pos+1
- 840 GO TO 310
+ 800 IF pag<maxpag AND pos=22 THEN LET pag=pag+1:LET pos=1:GO SUB 5100:GO TO 210
+ 810 IF pag<maxpag AND pos<22 THEN LET pos=pos+1
+ 820 IF pag=maxpag AND pos<maxpos THEN LET pos=pos+1
+ 830 GO TO 310
  845 ; Input UP
- 850 LET prv=pos
- 860 IF pag>0 AND pos=1 THEN LET pag=pag-1:LET pos=22:GO SUB 5100:GO TO 210
- 870 IF pos>1 THEN LET pos=pos-1
- 880 GO TO 310
+ 850 IF pag>0 AND pos=1 THEN LET pag=pag-1:LET pos=22:GO SUB 5100:GO TO 210
+ 860 IF pos>1 THEN LET pos=pos-1
+ 870 GO TO 310
 
  895 ; Prepare to Launch Program
  900 CLOSE # 6:CLS:BORDER 1:ON ERROR GO TO 1300:ON ERROR
@@ -107,7 +105,7 @@
 1330 PRINT AT 9,5;INK 6;PAPER 2;"                      "
 1340 LET J=IN 31:LET K$=INKEY$:IF (J<>0 AND J<>255) OR K$<>"" THEN GO TO 1340
 1350 LET J=IN 31:LET K$=INKEY$:IF (J=0 OR J=255) AND K$="" THEN GO TO 1350
-1360 LET prev=pos:CLS:GO TO 200
+1360 LET prv=pos:CLS:GO TO 200
 
 1395 ; Show Cover Status
 1400 LET a$="ON ":IF covers=0 THEN LET a$="OFF"
