@@ -194,11 +194,12 @@
 4900 ON ERROR GO SUB 6000:ON ERROR
 4910 LOAD"/tmp/knloader/cache13"BANK 13
 4920 LET maxpag=%BANK 13 DPEEK 16252:LET maxpos=%BANK 13 PEEK 16254
-4930 LET y$=BANK 13 PEEK$(16255,~0)
-4940 IF y$(LEN y$ TO LEN y$)="/" AND LEN y$>1 THEN LET y$=y$(1 TO LEN y$-1)
-4950 LET bnk=13+INT((maxpag*22+maxpos)/74):IF bnk>13 THEN FOR p=14 TO bnk:LOAD"/tmp/knloader/cache"+STR$ p BANK p:NEXT p
-4960 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
-4970 RETURN
+4930 LET p=PEEK 23401:IF maxpag>p THEN GO TO 6700
+4940 LET y$=BANK 13 PEEK$(16255,~0)
+4950 IF y$(LEN y$ TO LEN y$)="/" AND LEN y$>1 THEN LET y$=y$(1 TO LEN y$-1)
+4960 LET bnk=13+INT((maxpag*22+maxpos)/74):IF bnk>13 THEN FOR p=14 TO bnk:LOAD"/tmp/knloader/cache"+STR$ p BANK p:NEXT p
+4970 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
+4980 RETURN
 
 4995 ; Load Options
 5000 ON ERROR GO SUB 5200:ON ERROR
@@ -301,6 +302,17 @@
 6670 PRINT AT 15,1;" Read the user guide for more"
 6680 PRINT AT 16,0;"information."
 6690 PAUSE 0:STOP
+
+6695 ; Not enough RAM
+6700 CLS:PRINT AT 2,3;INK 6;PAPER 2;" ERROR: Not enough memory "
+6710 PRINT AT 5,1;"Too much cache data for current"
+6720 PRINT AT 6,0;"configuration. ";INK 6;maxpag;INK papel;" memory banks"
+6730 PRINT AT 7,0;"are needed, but the maximum"
+6740 PRINT AT 8,0;"is ";p;"."
+6750 PRINT AT 11,1;"Please use a smaller cache or,"
+6760 PRINT AT 12,0;"if possible, expand the physical"
+6770 PRINT AT 13,0;"RAM."
+6790 PAUSE 0:STOP
 
 6995 ; Default Config
 7000 ON ERROR RUN AT %s:ERASE
