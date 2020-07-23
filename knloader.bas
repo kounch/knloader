@@ -20,8 +20,8 @@
  200 PAPER tinta:BORDER tinta:INK papel:CLS:OPEN # 6,"w>0,0,24,12,4"
  210 PRINT #6;INK tinta;PAPER papel;CHR$ 14:; Clear Widow
  250 FOR %c=1 TO 22:LET c=%c:PRINT #6;INVERSE 0;OVER 0;AT c,1;z$(c):NEXT %c
- 295 ; Menu Input Control and Delay Logic
 
+ 295 ; Menu Input Control and Delay Logic
  300 LET prv=1:LET %k=0:LET J=0:LET K$="":LET %d=1
  310 PRINT #6;AT prv,0;OVER 1;"                        ":PRINT #6;AT pos,0;OVER 1;INVERSE 1;"                        "
  320 LET J=IN 31:LET K$=INKEY$:IF J=255 THEN LET J=0
@@ -79,13 +79,12 @@
  980 LET a$=l$:GO SUB 5400:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
  990 IF d$(1 TO 14)="No files found" THEN GO TO 1300
 
- 995 ; Save Loader Options
+ 995 ; Save Launcher Options
 1000 LET mode=o(pos)
 1010 LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
 1020 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
 1030 LET c$=a$
 1040 LET a$=x$(pos):GO SUB 5300
-
 1050 DIM o(1):DIM o$(3,maxpath)
 1060 LET o(1)=mode
 1070 LET o$(1)=y$
@@ -94,7 +93,7 @@
 1100 SAVE "m:klo.tmp"DATA o()
 1110 SAVE "m:kls.tmp"DATA o$()
 
-1140 GO SUB 5200:;Save Options 
+1140 GO SUB 5200:;Save Loader Options 
 1150 BORDER tinta:RUN AT %s:CLEAR:LOAD "knlauncher":; Launch Program
 1190 STOP
 
@@ -178,17 +177,18 @@
 4490 CLOSE # 5:RETURN
 
 4495 ; Image Data (Cover)
-4500 LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
-4510 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
-4520 LET c$=y$:IF y$(LEN y$ TO LEN y$)<>"/" THEN LET c$=y$+"/"
-4530 LET c$=c$+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
-4540 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
-4550 IF l$="SCR" OR l$="scr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6;CHR$ 3
-4560 IF l$="SLR" OR l$="slr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,0:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
-4570 IF l$="SHR" OR l$="shr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,1:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
-4580 IF l$="SHC" OR l$="shc" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,2:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
-4590 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
-4600 RETURN
+4500 ON ERROR GO TO 4400:ON ERROR
+4510 LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
+4520 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
+4530 LET c$=y$:IF y$(LEN y$ TO LEN y$)<>"/" THEN LET c$=y$+"/"
+4540 LET c$=c$+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
+4550 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
+4560 IF l$="SCR" OR l$="scr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6;CHR$ 3
+4570 IF l$="SLR" OR l$="slr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,0:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
+4580 IF l$="SHR" OR l$="shr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,1:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
+4590 IF l$="SHC" OR l$="shc" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,2:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
+4600 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
+4610 RETURN
 
 4895 ; Load Cache from Disk
 4900 ON ERROR GO SUB 6000:ON ERROR
