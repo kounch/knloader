@@ -202,6 +202,8 @@ one of these:
     20 - TZX (48K - Fast)
     21 - TAP (48K - Pi Audio)
     22 - TZX (48K)
+    23 - TAP (LOAD "" CODE)
+    24 - TZX (LOAD "" CODE - Fast)
 
 @{b}Directory@{ub}: Subdirectory where file (optionally) and image file are
 located (maximum 64 characters, no commas @{b},@{ub} allowed)

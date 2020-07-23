@@ -164,6 +164,8 @@
 4210 IF mode=20 THEN LET m$="TZX (48K - Fast)"
 4220 IF mode=21 THEN LET m$="TAP (PI Audio - 48K)"
 4230 IF mode=22 THEN LET m$="TZX (48K)"
+4240 IF mode=23 THEN LET m$="TAP (LOAD "" CODE)"
+4250 IF mode=24 THEN LET m$="TZX (LOAD "" CODE - Fast)"
 4390 IF a$<>" " AND covers=1 THEN GO TO 4500
 
 4395 ; Text Data

@@ -136,6 +136,8 @@ Donde cada uno de los campos entre ',' son de la siguiente manera:
     20 - TZX (48K - rápido)
     21 - TAP (48K - Pi Audio)
     22 - TZX (48K)
+    23 - TAP (LOAD "" CODE)
+    24 - TZX (LOAD "" CODE - rápido)
 
 [NOTE]
 ====

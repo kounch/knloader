@@ -216,6 +216,8 @@ programa. Debe ser uno de estos:
     20 - TZX (48K - rápido)
     21 - TAP (48K - Pi Audio)
     22 - TZX (48K)
+    23 - TAP (LOAD "" CODE)
+    24 - TZX (LOAD "" CODE - rápido)
 
 @{b}Directorio@{ub}: (Opcional) Subdirectorio donde se encuentran Archivo y
 Archivo de Imagen (máximo de 64 caracteres, no se permiten comas @{b},@{ub})
