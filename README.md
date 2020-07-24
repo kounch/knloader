@@ -70,7 +70,8 @@ At the moment, the loading mode can be one of these (TZX and Pi audio modes requ
     19 - TAP (48K)
     20 - TZX (48K - Fast)
     21 - TAP (48K - Pi Audio)
-    22 - TZX (48K)
+    23 - TAP (LOAD "" CODE)
+    24 - TZX (LOAD "" CODE - Fast)
 
 - **What formats are supported for the images?**
 
@@ -141,6 +142,12 @@ En este momento, el modo de carga puede ser uno de los siguientes (los modos TZX
     16 - Snapshot
     17 - Programa de Z-Machine (Next)
     18 - 3DOS
+    19 - TAP (48K)
+    20 - TZX (48K - rápido)
+    21 - TAP (48K - Pi Audio)
+    22 - TZX (48K)
+    23 - TAP (LOAD "" CODE)
+    24 - TZX (LOAD "" CODE - rápido)
 
 - **¿Qué formatos pueden tener las imágenes?**
 
