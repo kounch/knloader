@@ -140,7 +140,7 @@
 3096 ;-------------
 
 3995 ; Cover Data
-4000 LET mode=o(pos):LET a$=b$(pos):GO SUB 5300
+4000 LET mode=o(pos):LET a$=b$(pos):LET m$="Unknown":GO SUB 5300
 4010 IF mode=0 THEN LET m$="3DOS (Next)"
 4020 IF mode=1 THEN LET m$="TAP"
 4030 IF mode=2 THEN LET m$="TZX (fast)"
