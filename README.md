@@ -72,6 +72,14 @@ At the moment, the loading mode can be one of these (TZX and Pi audio modes requ
     21 - TAP (48K - Pi Audio)
     23 - TAP (LOAD "" CODE)
     24 - TZX (LOAD "" CODE - Fast)
+    25 - TAP (LOAD "" CODE - USR 0)
+    26 - TZX (LOAD "" CODE - USR0 - Fast)
+    27 - TAP (LOAD "" CODE - USR 0 - PI Audio)
+    28 - TZX (LOAD "" CODE - USR 0)
+    29 - TAP (LOAD "" CODE - 48K)
+    30 - TZX (LOAD "" CODE - 48K - Fast)
+    31 - TAP (LOAD "" CODE - PI Audio - 48K)
+    32 - TZX (LOAD "" CODE - 48K)
 
 - **What formats are supported for the images?**
 
