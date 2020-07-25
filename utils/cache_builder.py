@@ -75,8 +75,10 @@ def main():
     b_bank = b''
     i_bank = 0
     i_games = 0
+    i_count = 1
     for line in content:
         arr_line = line.split(',')
+        i_count += 1
         if arr_line and len(arr_line) > 3:
             i_games += 1
             LOGGER.debug('{0} . {1}'.format(len(arr_banks), arr_line))
@@ -114,8 +116,8 @@ def main():
                     LOGGER.error(str_msg)
                     raise Exception(str_msg)
         else:
-            str_msg = _('Bad Line: {0}')
-            LOGGER.warning(str_msg.format(line))
+            str_msg = _('Bad Line (number {0}): {1}')
+            LOGGER.warning(str_msg.format(i_count, line))
 
     if i_bank > 0:
         if i_bank < 16207:
