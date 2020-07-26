@@ -46,24 +46,24 @@ Use the browser or command line to navigate to the folder where `knloader.bas`, 
 On first run, if they do not exist, cache files are created from the data inside database file `knloader.bdt`.
 
 [.text-center] 
-image::FirstBoot.png[pdfwidth=70%]
+image::../../docs/img/FirstBoot.png[pdfwidth=70%]
 
 The main interface shows a list of the programs found in the database file.
 
 [.text-center] 
-image::CoverOff.png[pdfwidth=70%]
+image::../../docs/img/CoverOff.png[pdfwidth=70%]
 
 <<<
 
 You can use the cursor keys or a joystick (Kempston or MD) to move and select the program that you want to load. Then, press `ENTER`, `0` or the joystick button to launch.
 
 [.text-center] 
-image::LoadDetails.png[pdfwidth=70%]
+image::../../docs/img/LoadDetails.png[pdfwidth=70%]
 
 After a brief period of time, the program should load using the desired mode.
 
 [.text-center] 
-image::knlauncher.png[pdfwidth=70%]
+image::../../docs/img/knlauncher.png[pdfwidth=70%]
 
 <<<
 
@@ -72,7 +72,7 @@ If you have made a change to the database file, press R to rebuild the cache.
 Press C or the joystick secondary button (in MD mode) to hide/show images.
 
 [.text-center] 
-image::CoverOn.png[pdfwidth=70%]
+image::../../docs/img/CoverOn.png[pdfwidth=70%]
 
 Press A to enable/disable automatic save of the currently selected program position and the selection to show or hide images.
 

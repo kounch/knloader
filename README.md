@@ -2,7 +2,7 @@
 
 Game Launcher for ZX Spectrum Next
 
-[![Demo Video](./img/Demo.gif)](./img/Demo.mp4 "Demo")
+[![Demo Video](./docs/img/Demo.gif)](./docs/img/Demo.mp4 "Demo")
 
 Do you have a ZX Spectrum Next, but you are tired to remember which is the best option to launch your programs? knloader to the rescue!
 
@@ -32,11 +32,11 @@ Use the browser or command line to navigate to the folder where `knloader.bas`, 
 
 On first run, if they don't exist, cache files will be created from the data inside database file `knloader.bdt`.
 
-![First Boot](./docs/FirstBoot.png)
+![First Boot](./docs/img/FirstBoot.png)
 
 The main interface shows a list of the programs found in the database file.
 
-![First Boot](./docs/CoverOff.png)
+![First Boot](./docs/img/CoverOff.png)
 
 You can use the cursor keys or a joystick (Kempston or MD) to move and select the program that you want to load. Then, press `ENTER`, `0` or the joystick button to launch.
 
@@ -115,11 +115,11 @@ Acceder usando el programa Browser, o con otro método, hasta la carpeta donde e
 
 En la primera ejecución, si no existiesen, se crearán archivos de caché desde la información del archivo de datos `knloader.bdt`.
 
-![First Boot](./docs/FirstBoot.png)
+![First Boot](./docs/img/FirstBoot.png)
 
 La interfaz principal muestra una lista de los programas encontrados en el archivo de datos.
 
-![First Boot](./docs/CoverOff.png)
+![First Boot](./docs/img/CoverOff.png)
 
 Se pueden utilizar las teclas de cursor o un joystick compatible (modo Kempston o MD) para moverse y elegir el programa a cargar. Entonces, pulsar `ENTER`, `0` o el botón del joystick para ejecutarlo.
 
