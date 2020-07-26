@@ -17,7 +17,7 @@
 
 ¿Tiene usted un ZX Spectrum Next, pero está cansado de tener que recordar cuál es la mejor opción para lanzar sus programas? Entonces knloader puede ser la solución.
 
-Este es un conjunto de programas NextBASIC que se pueden configurar para recordar, y entonces utilizar, el método preferido para lanzar otros programas (Modo Next/+3e, Modo 128K, USR 0, etc.). Como extra, además se pueden utilizar imágenes (como carátulas de cassette o pantallas de carga).
+Este es un conjunto de programas NextBASIC que se pueden configurar para recordar, y entonces utilizar, el método preferido para lanzar otros programas (Modo Next/+3e, Modo 128K, USR 0, etc.). Como extra, además se pueden utilizar imágenes (como carátulas de juegos o pantallas de carga).
 
 Estos programas no reemplazan el programa Browser incorporado, ni ofrecen otra función que no sea lanzar otros programas.
 
