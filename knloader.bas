@@ -9,7 +9,7 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:PAPER op:BORDER ob:INK oi:RUN AT %s:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,13;"> knloader  v1.0 <":PRINT AT 8,15;"© kounch  2020":PRINT AT 15,14;"Press H for help"
+  90 PRINT AT 5,13;"> knloader  v1.0.1 <":PRINT AT 8,15;"© kounch  2020":PRINT AT 15,14;"Press H for help"
 
   95 ; Load Menu Items
  100 GO SUB 4900:; Load Cache To RAM
