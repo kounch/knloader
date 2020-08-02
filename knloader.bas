@@ -6,7 +6,7 @@
   40 ; GNU General Public License
 
   50 LET %s=%REG 7&3:RUN AT 3:LET %q=%REG 2&3
-  60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
+  60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:PAPER op:BORDER ob:INK oi:RUN AT %s:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
   90 PRINT AT 5,13;"> knloader  v1.0 <":PRINT AT 8,15;"© kounch  2020":PRINT AT 15,14;"Press H for help"
@@ -45,7 +45,7 @@
  530 IF K$="6" OR K$=CHR$(10) OR J=4 THEN LET prv=pos:GO TO 800
  540 IF K$="7" OR K$=CHR$(11) OR J=8 THEN LET prv=pos:GO TO 850
  550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:PRINT AT 10,12;"ERASING...":ERASE "/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
- 560 IF K$="X" OR K$="x" OR J=64 THEN GO SUB 5200:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:RUN AT %s:ERASE
+ 560 IF K$="X" OR K$="x" OR J=64 THEN GO SUB 5200:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:PAPER op:BORDER ob:INK oi:RUN AT %s:ERASE
  570 IF K$="C" OR K$="c" OR J=32 THEN LET prv=pos:LET covers=1-covers:GO TO 1400
  580 IF K$="A" OR K$="a" THEN LET autosave=1-autosave:GO SUB 5200:GO TO 1700
  590 IF K$="H" OR K$="h" THEN LET prv=pos:GO TO 1500
@@ -299,7 +299,7 @@
 6540 PRINT AT 8,0;"installed."
 6550 PRINT AT 12,1;" Please read the installation"
 6560 PRINT AT 13,0;"guide for more information."
-6590 PAUSE 0:STOP
+6590 PAUSE 0:PAPER op:BORDER ob:INK oi:RUN AT %s:STOP
 
 6595 ; Database Too Big
 6600 CLS:PRINT AT 2,2;INK 6;PAPER 2;" ERROR: BDT File is Too Big "
@@ -311,7 +311,7 @@
 6660 PRINT AT 13,0;"program."
 6670 PRINT AT 15,1;" Read the user guide for more"
 6680 PRINT AT 16,0;"information."
-6690 PAUSE 0:STOP
+6690 PAUSE 0:PAPER op:BORDER ob:INK oi:RUN AT %s:STOP
 
 6695 ; Not enough RAM
 6700 CLS:PRINT AT 2,3;INK 6;PAPER 2;" ERROR: Not enough memory "
@@ -322,11 +322,11 @@
 6750 PRINT AT 11,1;"Please use a smaller cache or,"
 6760 PRINT AT 12,0;"if possible, expand the physical"
 6770 PRINT AT 13,0;"RAM."
-6790 PAUSE 0:STOP
+6790 PAUSE 0:PAPER op:BORDER ob:INK oi:RUN AT %s:STOP
 
 6995 ; Default Config
 7000 ON ERROR RUN AT %s:ERASE
-7010 LET tinta=0:LET papel=7:LET %p=8:LET pos=1:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
+7010 LET tinta=0:LET papel=7:LET ob=7:LET op=7:LET oi=0:LET %p=8:LET pos=1:LET pag=0:LET maxpag=0:LET maxpos=1:LET maxpath=64
 7020 LET covers=1:LET autosave=0:DIM d$(255):OPEN # 2,"v>d$":PWD #2:CLOSE # 2
 7030 LET a$=d$:GO SUB 5300:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
 7040 DIM d$(255):OPEN # 2,"v>d$":.NEXTVER -v:CLOSE # 2:LET a=VAL(d$):GO SUB 5300:PRINT a
@@ -335,4 +335,4 @@
 7070 PRINT AT 8,1;"Please upgrade the distribution"
 7080 PRINT AT 9,0;"in your SD Card to version ";BRIGHT 1;"1.3.2"
 7090 PRINT AT 10,0;"or later."
-7100 PAUSE 0:STOP
+7100 PAUSE 0:PAPER op:BORDER ob:INK oi:RUN AT %s:STOP
