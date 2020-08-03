@@ -446,7 +446,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">kounch</span><br>
 <span id="email" class="email"><a href="mailto:kounch@users.noreply.github.com">kounch@users.noreply.github.com</a></span><br>
-<span id="revnumber">version 1.0.0</span>
+<span id="revnumber">version 1.0.1</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Índice</div>
@@ -604,7 +604,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Todas las rutas que se indiquen deben usar <code>/</code> como separador para indicar directorios. El uso de <code>\</code> no está soportado.</p>
 </div>
 <div class="paragraph">
-<p>La primera linea del archivo ha de ser la ruta principal de la SD desde la que empezar a buscar programas (por ejemplo: <code>/Juegos</code>). No debe exceder los 128 caracteres de longitud.</p>
+<p>La primera linea del archivo ha de ser la ruta principal de la SD desde la que empezar a buscar programas (por ejemplo: <code>/Juegos</code> o <code>D:/</code>). No debe exceder los 128 caracteres de longitud.</p>
 </div>
 <div class="paragraph">
 <p>A partir de la segunda, cada línea debe ser según el siguiente formato:</p>
@@ -746,7 +746,7 @@ Astronut,16,../Next/,Astronut.snx</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>/all/Games
+<pre class="highlight"><code>C:/all/Games
 Albatrossity,1,,Albatrossity.tap
 Alter Ego,4,Alter Ego,Alter Ego.tap
 Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
@@ -894,7 +894,7 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 <p>También se incluye un pequeño programa <code>autoexec.bas</code> que se puede utilizar para que se inicie knloader de forma automática cada vez que se encienda el ZX Spectrum Next.</p>
 </div>
 <div class="paragraph">
-<p>Para utilizarlo, renombre el fichero <code>/nextzxos/autoexec.bas</code> de la tarjeta SD a <code>/nextzxos/autoexec.bas.bak</code>, y luego copie el fichero <code>autoexec.bas</code> del direcotrio <code>utils</code> a <code>/nextzxos</code> en la tarjeta SD. Copie también todos los ficheros de knloader (<code>knloader.bas</code>, <code>knlauncher</code>, <code>knzml</code> and BDT file), desde una de las carpetas de idioma de la distribución (<code>en</code> en inglés, <code>es</code> para castellano, etc.), en un directorio llamado <code>/knloader/</code> en la raíz de la SD.</p>
+<p>Para utilizarlo, renombre el fichero <code>/nextzxos/autoexec.bas</code> de la tarjeta SD a <code>/nextzxos/autoexec.old</code>, y luego copie el fichero <code>autoexec.bas</code> del direcotrio <code>utils</code> a <code>/nextzxos</code> en la tarjeta SD. Copie también todos los ficheros de knloader (<code>knloader.bas</code>, <code>knlauncher</code>, <code>knzml</code> and BDT file), desde una de las carpetas de idioma de la distribución (<code>en</code> en inglés, <code>es</code> para castellano, etc.), en un directorio llamado <code>/knloader/</code> en la raíz de la SD.</p>
 </div>
 <div class="paragraph">
 <p>Como extra, puede usar las siguientes teclas en el inicio para cambiar el comportamiento del arranque:</p>
@@ -942,8 +942,8 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.0<br>
-Last updated 2020-07-26 08:28:30 +0200
+Version 1.0.1<br>
+Last updated 2020-08-03 14:42:11 +0200
 </div>
 </div>
 </body>

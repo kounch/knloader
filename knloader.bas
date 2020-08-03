@@ -44,7 +44,7 @@
  520 IF K$="8" OR K$=CHR$(9) OR J=1 THEN LET prv=pos:GO TO 750
  530 IF K$="6" OR K$=CHR$(10) OR J=4 THEN LET prv=pos:GO TO 800
  540 IF K$="7" OR K$=CHR$(11) OR J=8 THEN LET prv=pos:GO TO 850
- 550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:PRINT AT 10,12;"ERASING...":ERASE "/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
+ 550 IF K$="R" OR K$="r" THEN CLOSE # 6:CLS:PRINT AT 10,12;"ERASING...":ERASE "C:/tmp/knloader/*.*":RUN AT %s:CLEAR:RUN
  560 IF K$="X" OR K$="x" OR J=64 THEN GO SUB 5200:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:PAPER op:BORDER ob:INK oi:RUN AT %s:ERASE
  570 IF K$="C" OR K$="c" OR J=32 THEN LET prv=pos:LET covers=1-covers:GO TO 1400
  580 IF K$="A" OR K$="a" THEN LET autosave=1-autosave:GO SUB 5200:GO TO 1700
@@ -69,14 +69,14 @@
 
  895 ; Prepare to Launch Program
  900 CLOSE # 6:CLS:BORDER 1:ON ERROR GO TO 1300:ON ERROR
- 910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2020"
- 920 PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
- 930 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:":PRINT AT 18,1;x$(pos)
- 940 LET a$=x$(pos):GO SUB 5300:LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
- 950 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
- 960 LET c$=y$:IF y$(LEN y$ TO LEN y$)<>"/" THEN LET c$=y$+"/"
+ 910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2020":PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
+ 920 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:":PRINT AT 18,1;x$(pos)
+ 930 LET a$=x$(pos):GO SUB 5300:LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
+ 940 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
+ 950 LET c$=y$:LET v$="C:":IF c$(2 TO 2)=":" THEN LET v$=c$(1 TO 2):LET c$=c$(3 TO LEN c$)
+ 960 IF c$(LEN c$ TO LEN c$)<>"/" THEN LET c$=c$+"/"
  970 IF a$<>" " THEN LET c$=c$+a$
- 980 LET a$=l$:GO SUB 5400:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
+ 980 LET a$=l$:GO SUB 5400:LOAD v$:CD c$:DIM d$(255):OPEN # 2,"v>d$":CAT a$:CLOSE # 2:LOAD q$:CD p$
  990 IF d$(1 TO 14)="No files found" THEN GO TO 1300
 
  995 ; Save Launcher Options
@@ -187,10 +187,11 @@
 4490 CLOSE # 5:RETURN
 
 4495 ; Image Data (Cover)
-4500 ON ERROR GO TO 4400:ON ERROR
+4500 ON ERROR LOAD q$:GO TO 4400:ON ERROR
 4510 LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
 4520 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
-4530 LET c$=y$:IF y$(LEN y$ TO LEN y$)<>"/" THEN LET c$=y$+"/"
+4530 LET c$=y$:LET v$="C:":IF c$(2 TO 2)=":" THEN LET v$=c$(1 TO 2):LET c$=c$(3 TO LEN c$)
+4535 LOAD v$:IF c$(LEN c$ TO LEN c$)<>"/" THEN LET c$=c$+"/"
 4540 LET c$=c$+a$+"/"+l$:LET l$=l$((LEN l$-2) TO LEN l$):LET a$=c$
 4550 IF l$="BMP" OR l$="bmp" THEN PRINT #6;CHR$ 2;:LAYER 2,0:.$ bmpload a$:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
 4560 IF l$="SCR" OR l$="scr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 0:LOAD a$ SCREEN$:PRINT #6;CHR$ 3
@@ -198,16 +199,16 @@
 4580 IF l$="SHR" OR l$="shr" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,1:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
 4590 IF l$="SHC" OR l$="shc" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LAYER 1,2:LOAD a$ LAYER:LAYER 0:PRINT #6;CHR$ 3
 4600 IF l$="SL2" OR l$="sl2" THEN PRINT #6;CHR$ 2;:LAYER 2,0:LOAD a$ LAYER:LAYER 2,1:LAYER 0:PRINT #6;CHR$ 3
-4610 RETURN
+4610 LOAD q$:RETURN
 
 4895 ; Load Cache from Disk
 4900 ON ERROR GO SUB 6000:ON ERROR
-4910 LOAD"/tmp/knloader/cache13"BANK 13
+4910 LOAD"C:/tmp/knloader/cache13"BANK 13
 4920 LET maxpag=%BANK 13 DPEEK 16252:LET maxpos=%BANK 13 PEEK 16254
 4930 LET y$=BANK 13 PEEK$(16255,~0)
 4940 IF y$(LEN y$ TO LEN y$)="/" AND LEN y$>1 THEN LET y$=y$(1 TO LEN y$-1)
 4950 LET bnk=13+INT((maxpag*22+maxpos)/74):LET p=PEEK 23401:IF bnk>p THEN GO TO 6700
-4960 IF bnk>13 THEN FOR p=14 TO bnk:LOAD"/tmp/knloader/cache"+STR$ p BANK p:NEXT p
+4960 IF bnk>13 THEN FOR p=14 TO bnk:LOAD"C:/tmp/knloader/cache"+STR$ p BANK p:NEXT p
 4970 DIM z$(22,22):DIM o(22):DIM w$(22,maxpath):DIM x$(22,maxpath):DIM b$(22,maxpath)
 4980 RETURN
 
@@ -254,7 +255,7 @@
 6000 DIM d$(40):OPEN # 2,"v>d$":CAT "knloader.bdt":CLOSE # 2
 6010 IF d$(1 TO 14)="No files found" THEN GO TO 6500
 6020 ON ERROR GO TO 6040:ON ERROR
-6030 MKDIR "/tmp/knloader"
+6030 MKDIR "C:/tmp/knloader"
 6040 ON ERROR PRINT "Cache Build Error!!":ERROR TO e,l:PRINT e,l:PAUSE 0:ON ERROR:STOP
 6050 LET %n=0:LET f=0:LET %f=0:LET pag=0:PRINT AT 20,12;"BUILDING CACHE: 0%"
 6060 OPEN # 4,"knloader.bdt":DIM #4 TO %g:CLOSE # 4:BANK 12 ERASE 10:LOAD "knloader.bdt" BANK 12:IF %g>16384 THEN GO TO 6600
@@ -279,17 +280,17 @@
 6250 IF lp=5 THEN BANK 14 POKE %(j+154),l$
 6260 LET %j=%j+219:IF %j<16206 THEN GO TO 6300
 6270 IF %k=13 THEN BANK 14 COPY TO 13:GO TO 6290
-6280 LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK 14
+6280 LET bnk=%k:SAVE"C:/tmp/knloader/cache"+STR$ bnk BANK 14
 6290 LET %k=%k+1:LET %j=0:BANK 14 ERASE 0
 6300 IF %f>=g THEN GO TO 6330
 6310 LET %n=%n+1:IF %n<23 THEN GO TO 6080
 6320 IF %n<23 THEN LET a$=BANK 14 PEEK$(%j,~0):IF a$="" THEN LET %n=%n-1
 6330 PRINT AT 20,12;"BUILDING CACHE:";%(10*f/g*10);"%":IF %f<g THEN LET pag=pag+1:LET %n=1:GO TO 6080
 6340 PRINT AT 20,12;"                       ":LET maxpag=pag:LET maxpos=%n:IF maxpos=23 THEN LET maxpos=22
-6350 IF %k>13 THEN LET bnk=%k:SAVE"/tmp/knloader/cache"+STR$ bnk BANK 14
+6350 IF %k>13 THEN LET bnk=%k:SAVE"C:/tmp/knloader/cache"+STR$ bnk BANK 14
 6360 IF %k=13 THEN BANK 14 COPY TO 13
 6370 BANK 13 DPOKE 16252,maxpag:BANK 13 POKE 16254,maxpos:IF CODE y$(LEN y$ TO LEN y$)=13 THEN LET y$=y$(1 TO LEN y$-1)
-6380 BANK 13 POKE 16255,y$:SAVE"/tmp/knloader/cache13" BANK 13:BANK 13 CLEAR:BANK 14 CLEAR:LET pag=0:LET pos=1:BANK 12 CLEAR:RETURN
+6380 BANK 13 POKE 16255,y$:SAVE"C:/tmp/knloader/cache13" BANK 13:BANK 13 CLEAR:BANK 14 CLEAR:LET pag=0:LET pos=1:BANK 12 CLEAR:RETURN
 
 6495 ; Database Not Found
 6500 CLS:PRINT AT 2,2;INK 6;PAPER 2;" ERROR:  Database Not Found "

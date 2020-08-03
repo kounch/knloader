@@ -1,6 +1,6 @@
 = knloader English Manual
 :author: kounch
-:revnumber: 1.0.0
+:revnumber: 1.0.1
 :doctype: book
 :email: kounch@users.noreply.github.com
 :Revision: 1.0
@@ -88,7 +88,7 @@ BDT file size is limited to 16384 bytes when the cache files are created from wi
 
 All paths in the database file must use `/` (slash) as separator for directories. Using `\` (backslash) is not supported.
 
-The first line has to be the base path where to start looking for programs (for example: `/games`). It's length cannot exceed 128 characters.
+The first line has to be the base path where to start looking for programs (for example: `/games` or `D:/`). It's length cannot exceed 128 characters.
 
 Starting from line 2, each line must have the following format:
 
@@ -204,7 +204,7 @@ This is an example of a small database file:
 
 [source]
 ----
-/all/Games
+C:/all/Games
 Albatrossity,1,,Albatrossity.tap
 Alter Ego,4,Alter Ego,Alter Ego.tap
 Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
@@ -278,7 +278,7 @@ After the cache data files are created, you have to copy them to your SD card in
 
 Also included there is a small `autoexec.bas` that you can use to autostart knloader when the ZX Spectrum Next is started.
 
-To install it, rename the file `/nextzxos/autoexec.bas` in the SD card to `/nextzxos/autoexec.bas.bak`, and then copy the file `autoexec.bas` from the `utils` folder into `/nextzxos` in the SD card. Copy also all the knloader files (`knloader.bas`, `knlauncher`, `knzml` and BDT file), from one of the distribution language folders (`en` for english, `es` for spanish, etc.), to a directory named `/knloader/` in the root of the SD card.
+To install it, rename the file `/nextzxos/autoexec.bas` in the SD card to `/nextzxos/autoexec.old`, and then copy the file `autoexec.bas` from the `utils` folder into `/nextzxos` in the SD card. Copy also all the knloader files (`knloader.bas`, `knlauncher`, `knzml` and BDT file), from one of the distribution language folders (`en` for english, `es` for spanish, etc.), to a directory named `/knloader/` in the root of the SD card.
 
 As an extra, you can use the following keys on startup to change the behaviour:
 

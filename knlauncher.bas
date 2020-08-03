@@ -17,12 +17,12 @@
  230 LOAD "m:klo.tmp"DATA o()
  240 LOAD "m:kls.tmp"DATA o$()
  250 mode=o(1)
- 260 LET a$=o$(1):GO SUB 5200:LET y$=a$
+ 260 LET a$=o$(1):GO SUB 5200:LET y$=a$:LET v$="C:":IF y$(2 TO 2)=":" THEN LET v$=y$(1 TO 2):LET y$=y$(3 TO LEN y$)
  270 LET a$=o$(2):GO SUB 5200:LET c$=a$
  280 LET a$=o$(3):GO SUB 5200
  290 IF y$(LEN y$ TO LEN y$)<>"/" THEN LET y$=y$+"/"
  300 IF c$<>" " THEN LET y$=y$+c$
- 310 CD y$
+ 310 LOAD v$:CD y$
 
  320 PRINT AT 1,1;a$
 

@@ -1,6 +1,6 @@
 = Manual de knloader
 :author: kounch
-:revnumber: 1.0.0
+:revnumber: 1.0.1
 :doctype: book
 :email: kounch@users.noreply.github.com
 :Revision: 1.0
@@ -88,7 +88,7 @@ El fichero BDT tiene un tamaño máximo de 16384 bytes si los archivos de cache 
 
 Todas las rutas que se indiquen deben usar `/` como separador para indicar directorios. El uso de `\` no está soportado.
 
-La primera linea del archivo ha de ser la ruta principal de la SD desde la que empezar a buscar programas (por ejemplo: `/Juegos`). No debe exceder los 128 caracteres de longitud.
+La primera linea del archivo ha de ser la ruta principal de la SD desde la que empezar a buscar programas (por ejemplo: `/Juegos` o `D:/`). No debe exceder los 128 caracteres de longitud.
 
 A partir de la segunda, cada línea debe ser según el siguiente formato:
 
@@ -204,7 +204,7 @@ Ejemplo de archivo de datos:
 
 [source]
 ----
-/all/Games
+C:/all/Games
 Albatrossity,1,,Albatrossity.tap
 Alter Ego,4,Alter Ego,Alter Ego.tap
 Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
@@ -278,7 +278,7 @@ Una vez que los ficheros de caché se han creado, ha de copiarlos a la tarjeta S
 
 También se incluye un pequeño programa `autoexec.bas` que se puede utilizar para que se inicie knloader de forma automática cada vez que se encienda el ZX Spectrum Next.
 
-Para utilizarlo, renombre el fichero `/nextzxos/autoexec.bas` de la tarjeta SD a `/nextzxos/autoexec.bas.bak`, y luego copie el fichero `autoexec.bas` del direcotrio `utils` a `/nextzxos` en la tarjeta SD. Copie también todos los ficheros de knloader (`knloader.bas`, `knlauncher`, `knzml` and BDT file), desde una de las carpetas de idioma de la distribución (`en` en inglés, `es` para castellano, etc.), en un directorio llamado `/knloader/` en la raíz de la SD.
+Para utilizarlo, renombre el fichero `/nextzxos/autoexec.bas` de la tarjeta SD a `/nextzxos/autoexec.old`, y luego copie el fichero `autoexec.bas` del direcotrio `utils` a `/nextzxos` en la tarjeta SD. Copie también todos los ficheros de knloader (`knloader.bas`, `knlauncher`, `knzml` and BDT file), desde una de las carpetas de idioma de la distribución (`en` en inglés, `es` para castellano, etc.), en un directorio llamado `/knloader/` en la raíz de la SD.
 
 Como extra, puede usar las siguientes teclas en el inicio para cambiar el comportamiento del arranque:
 

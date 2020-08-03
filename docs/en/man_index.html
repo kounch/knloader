@@ -446,7 +446,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">kounch</span><br>
 <span id="email" class="email"><a href="mailto:kounch@users.noreply.github.com">kounch@users.noreply.github.com</a></span><br>
-<span id="revnumber">version 1.0.0</span>
+<span id="revnumber">version 1.0.1</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Index</div>
@@ -604,7 +604,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>All paths in the database file must use <code>/</code> (slash) as separator for directories. Using <code>\</code> (backslash) is not supported.</p>
 </div>
 <div class="paragraph">
-<p>The first line has to be the base path where to start looking for programs (for example: <code>/games</code>). It&#8217;s length cannot exceed 128 characters.</p>
+<p>The first line has to be the base path where to start looking for programs (for example: <code>/games</code> or <code>D:/</code>). It&#8217;s length cannot exceed 128 characters.</p>
 </div>
 <div class="paragraph">
 <p>Starting from line 2, each line must have the following format:</p>
@@ -746,7 +746,7 @@ Astronut,16,../Next/,Astronut.snx</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>/all/Games
+<pre class="highlight"><code>C:/all/Games
 Albatrossity,1,,Albatrossity.tap
 Alter Ego,4,Alter Ego,Alter Ego.tap
 Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
@@ -894,7 +894,7 @@ Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3</code
 <p>Also included there is a small <code>autoexec.bas</code> that you can use to autostart knloader when the ZX Spectrum Next is started.</p>
 </div>
 <div class="paragraph">
-<p>To install it, rename the file <code>/nextzxos/autoexec.bas</code> in the SD card to <code>/nextzxos/autoexec.bas.bak</code>, and then copy the file <code>autoexec.bas</code> from the <code>utils</code> folder into <code>/nextzxos</code> in the SD card. Copy also all the knloader files (<code>knloader.bas</code>, <code>knlauncher</code>, <code>knzml</code> and BDT file), from one of the distribution language folders (<code>en</code> for english, <code>es</code> for spanish, etc.), to a directory named <code>/knloader/</code> in the root of the SD card.</p>
+<p>To install it, rename the file <code>/nextzxos/autoexec.bas</code> in the SD card to <code>/nextzxos/autoexec.old</code>, and then copy the file <code>autoexec.bas</code> from the <code>utils</code> folder into <code>/nextzxos</code> in the SD card. Copy also all the knloader files (<code>knloader.bas</code>, <code>knlauncher</code>, <code>knzml</code> and BDT file), from one of the distribution language folders (<code>en</code> for english, <code>es</code> for spanish, etc.), to a directory named <code>/knloader/</code> in the root of the SD card.</p>
 </div>
 <div class="paragraph">
 <p>As an extra, you can use the following keys on startup to change the behaviour:</p>
@@ -942,8 +942,8 @@ Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3</code
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.0<br>
-Last updated 2020-07-26 08:28:30 +0200
+Version 1.0.1<br>
+Last updated 2020-08-03 14:40:44 +0200
 </div>
 </div>
 </body>

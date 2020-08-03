@@ -1,8 +1,8 @@
 @title knloader Manual
 @author kounch
-@version 1.0
+@version 1.0.1
 @copyright Copyright (C)2020 kounch
-@date 2020/05/31
+@date 2020/08/03
 
 @index INDEX
 
@@ -167,7 +167,7 @@ All paths in the database file must use @{i}/@{ui} (slash) as separator for dire
 Using @{i}\@{ui} (backslash) is not supported.
 
 The first line has to be the base path where to start looking for programs
-(for example: /games). It's length cannot exceed 128 characters.
+(for example: /games or D:/). It's length cannot exceed 128 characters.
 
 Starting from line 2, each line must have the following format:
 
