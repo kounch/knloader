@@ -9,9 +9,9 @@
   60 CLS:ON ERROR RUN AT %s:ERASE
   70 LET J=IN 31:LET K$=INKEY$:IF (J<>0 AND J<>255) OR K$<>"" THEN GO TO 120
   80 ON ERROR GO TO 100:ON ERROR
-  90 LOAD "C:":CD "/Aplicaciones/knloader":RUN AT %s:LOAD "knloader.bas"
+  90 LOAD "C:":CD "/knloader":RUN AT %s:LOAD "knloader.bas"
  100 ON ERROR RUN AT %s:ERASE
- 110 LOAD "D:":CD "/Aplicaciones/knloader":RUN AT %s:LOAD "knloader.bas"
+ 110 LOAD "D:":CD "/knloader":RUN AT %s:LOAD "knloader.bas"
  120 IF K$=" " OR J=32 THEN RUN AT %s:ERASE
  130 IF K$<>"t" AND K$<>"T" AND J<>64 THEN GO TO 170
  140 CLS:PRINT AT 6,12;"NTP..."
