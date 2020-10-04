@@ -27,14 +27,10 @@ import argparse
 import logging
 import gettext
 import csv
-
-try:
-    from pathlib import Path
-except (ImportError, AttributeError):
-    from pathlib2 import Path
+from pathlib import Path
 
 __MY_NAME__ = 'bdt_builder.py'
-__MY_VERSION__ = '1.0'
+__MY_VERSION__ = '2.0'
 
 DICT_EXTS = {
     'nex': 15,
@@ -75,7 +71,7 @@ def main():
     LOGGER.debug(str_msg)
 
     bdt_data = scan_dir(arg_data['input'], arg_data['prefix'],
-                        arg_data['detection'])
+                        arg_data['detection'], arg_data['shortnames'])
 
     if arg_data['sort']:
         str_msg = _('Sorting...')
@@ -121,6 +117,7 @@ def parse_args():
     str_hlp_cpath = _('Path in SD to directory')
     str_hlp_detection = _('Detection mode')
     str_hlp_unsort = _('Do not sort results')
+    str_hlp_short = _('Use short (8.3) DOS names')
     str_hlp_tapmode = _('TAP loading mode')
     str_hlp_tzxmode = _('TZX loading mode')
     str_hlp_basmode = _('BAS loading mode')
@@ -145,7 +142,7 @@ def parse_args():
                         '--custom',
                         action='store',
                         dest='custom_path',
-                        help=str_hlp_output)
+                        help=str_hlp_cpath)
     parser.add_argument('-d',
                         '--detection',
                         action='store',
@@ -156,6 +153,11 @@ def parse_args():
                         action='store_false',
                         dest='sort_mode',
                         help=str_hlp_unsort)
+    parser.add_argument('-s',
+                        '--short',
+                        action='store_true',
+                        dest='short_filenames',
+                        help=str_hlp_short)
     parser.add_argument('--tap',
                         action='store',
                         dest='tap_mode',
@@ -192,6 +194,8 @@ def parse_args():
 
     sort_mode = arguments.sort_mode
 
+    shortnames = arguments.short_filenames
+
     if arguments.tap_mode:
         DICT_EXTS['tap'] = int(arguments.tap_mode)
 
@@ -222,22 +226,30 @@ def parse_args():
     values['cpath'] = c_path
     values['detection'] = det_mode
     values['sort'] = sort_mode
+    values['shortnames'] = shortnames
     values['prefix'] = str_prefix
 
     return values
 
 
-def scan_dir(input_dir, str_prefix, str_detection):
+def scan_dir(input_dir, str_prefix, str_detection, b_sfn=False):
     """Scans directories"""
     input_dir = input_dir.resolve()
     rootlen = len(str(input_dir))
     dict_tmp = {}
     arr_result = []
+
     for child in sorted(input_dir.glob('**/*.*')):
-        child_path = Path(input_dir, child)
+        orig_path = Path(input_dir, child)
+        child_path = orig_path
+        if (b_sfn):
+            child_path = shorten_path(input_dir, orig_path)
+
         if child_path.is_file():
+            orig_subpath = Path(str(orig_path)[rootlen:])
             subpath = Path(str(child_path)[rootlen:])
-            zxname = subpath.name[:-len(subpath.suffix)]
+            zxname = orig_subpath.name[:-len(subpath.suffix)]
+            orig_zxdir = orig_subpath.parent
             zxdir = subpath.parent
             zxfile = subpath.name
             zxext = subpath.suffix[1:].lower()
@@ -249,9 +261,12 @@ def scan_dir(input_dir, str_prefix, str_detection):
                 if str_detection == 'd':
                     if str(zxdir.name) != '':
                         if str(zxdir.name).upper() == '3DOS':
-                            zxname = zxdir.parent.name
+                            zxname = orig_zxdir.parent.name
                         else:
-                            zxname = zxdir.name
+                            zxname = orig_zxdir.name
+
+                if len(zxname) > 21:
+                    zxname = zxname[:21]
 
                 if zxname not in dict_tmp:
                     dict_tmp[zxname] = {}
@@ -310,6 +325,84 @@ def scan_dir(input_dir, str_prefix, str_detection):
                 arr_result.append(arr_tmp)
 
     return arr_result
+
+
+def shorten_path(root_dir, lfn_path):
+    """Convert subpath to 8.3 names"""
+    i = 0
+    for i in range(1, len(root_dir.parts)):
+        if lfn_path.parts[i] != root_dir.parts[i]:
+            LOGGER.error("Inconsistency error")
+            return lfn_path
+
+    lfn_subpath = lfn_path.parts[i + 1:]
+    final_path = root_dir
+    for lfn_element in lfn_subpath:
+        tmp_path = Path(final_path, lfn_element)
+        tmp_path = shorten_element(tmp_path)
+        final_path = Path(final_path, tmp_path.name)
+
+    return final_path
+
+
+def shorten_element(lfn_path):
+    """Convert file or dir name to 8.3 (brute force)"""
+    s_remove = ' "/[]:;=,.'
+    s_replace = '+'
+    b_convert = False
+    s_name = lfn_path.stem
+    s_extension = lfn_path.suffix
+
+    if s_name[0] == '.':
+        s_name = s_name[1:]
+        b_convert = True
+
+    for c_remove in s_remove:
+        if c_remove in s_name:
+            s_name = s_name.replace(c_remove, '')
+            b_convert = True
+
+    for c_replace in s_replace:
+        if c_replace in s_name:
+            s_name = s_name.replace(c_replace, '_')
+            b_convert = True
+
+    if len(s_extension) > 4:
+        s_extension = s_extension[:4]
+        b_convert = True
+
+    short_paths = shorten_name(s_name[:6], s_extension)
+    short_paths += shorten_name(s_name[:5], s_extension)
+
+    short_path = lfn_path
+    for n_name in short_paths:
+        test_path = Path(lfn_path.parent, n_name)
+
+        if test_path.exists():
+            short_path = test_path
+            break
+        else:
+            LOGGER.debug("Not found: {0}".format(short_path))
+
+    if b_convert:
+        LOGGER.debug('Converted: {0}'.format(short_path))
+        if short_path == lfn_path:
+            LOGGER.error("Not found: {0}".format(lfn_path))
+
+    return short_path
+
+
+def shorten_name(n_name, s_extension):
+    """Builds a list of candidate short 8.3 names with index"""
+    l_names = []
+    for i_index in range(1, 6):
+        t_name = '{0}~{1}'.format(n_name, i_index)
+        if s_extension:
+            t_name += s_extension
+        t_name = t_name.upper()
+        l_names.append(t_name)
+
+    return l_names
 
 
 if __name__ == '__main__':
