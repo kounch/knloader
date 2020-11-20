@@ -4,11 +4,11 @@ Game Launcher for ZX Spectrum Next
 
 [![Demo Video](./docs/img/Demo.gif)](./docs/img/Demo.mp4 "Demo")
 
-Do you have a ZX Spectrum Next, but you are tired to remember which is the best option to launch your programs? knloader to the rescue!
+Do you have a ZX Spectrum Next, but have trouble remembering which is the best option to launch your programs? knloader to the rescue!
 
 This a set of NextBASIC programs which you can configure to remember, and then use, your preferred way to launch other programs (Next/+3e Mode, 128K mode, USR 0, etc.). As a bonus, you can put some images (like game covers or loading screens).
 
-This program is not a replacement for the incoportaded Browser, nor offers any other function than to launch other programs.
+These programs aren't a replacement for the incorporated Browser, nor offer any other function than to launch other programs.
 
 ---
 

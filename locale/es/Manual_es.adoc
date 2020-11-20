@@ -1,6 +1,6 @@
 = Manual de knloader
 :author: kounch
-:revnumber: 1.0.1
+:revnumber: 1.0.2
 :doctype: book
 :email: kounch@users.noreply.github.com
 :Revision: 1.0
@@ -47,24 +47,24 @@ Acceder usando el programa Browser, o con otro método, hasta la carpeta donde e
 En la primera ejecución, si no existieran, se crearán archivos de caché desde la información del archivo de datos `knloader.bdt`.
 
 [.text-center] 
-image::../../docs/img/FirstBoot.png[pdfwidth=70%]
+image:../../docs/img/FirstBoot.png[pdfwidth=70%]
 
 La interfaz principal muestra una lista de los programas encontrados en el archivo de datos.
 
 [.text-center] 
-image::../../docs/img/CoverOff.png[pdfwidth=70%]
+image:../../docs/img/CoverOff.png[pdfwidth=70%]
 
 <<<
 
 Se pueden utilizar las teclas de cursor o un joystick compatible (modo Kempston o MD) para moverse y elegir el programa a cargar. Entonces, pulsar `ENTER`, `0` o el botón del joystick para ejecutarlo.
 
 [.text-center] 
-image::../../docs/img/LoadDetails.png[pdfwidth=70%]
+image:../../docs/img/LoadDetails.png[pdfwidth=70%]
 
 Después de unos instantes, el programa debería cargarse usando el modo deseado.
 
 [.text-center] 
-image::../../docs/img/knlauncher.png[pdfwidth=70%]
+image:../../docs/img/knlauncher.png[pdfwidth=70%]
 
 <<<
 
@@ -73,7 +73,7 @@ Si se han introducido cambios en el archivo de datos, pulsar R para reconstruir 
 Pulsar C o el botón secundario del joystick (en modo MD ) para ocultar o mostrar las imágenes.
 
 [.text-center] 
-image::../../docs/img/CoverOn.png[pdfwidth=70%]
+image:../../docs/img/CoverOn.png[pdfwidth=70%]
 
 Pulsar A para activar o desactivar el guardado automático del programa seleccionado y la opción de ocultar o mostrar imágenes.
 

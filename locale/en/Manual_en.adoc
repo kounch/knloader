@@ -1,6 +1,6 @@
 = knloader English Manual
 :author: kounch
-:revnumber: 1.0.1
+:revnumber: 1.0.2
 :doctype: book
 :email: kounch@users.noreply.github.com
 :Revision: 1.0
@@ -16,11 +16,11 @@
 
 == Description
 
-Do you have a ZX Spectrum Next, but you are tired to remember which is the best option to launch your programs? knloader to the rescue!
+Do you have a ZX Spectrum Next, but have trouble remembering which is the best option to launch your programs? knloader to the rescue!
 
 This a set of NextBASIC programs which you can configure to remember, and then use, your preferred way to launch other programs (Next/+3e Mode, 128K mode, USR 0, etc.). As a bonus, you can put some images (like game covers or loading screens).
 
-These programs aren't a replacement for the incoportaded Browser, nor offer any other function than to launch other programs.
+These programs aren't a replacement for the incorporated Browser, nor offer any other function than to launch other programs.
 
 == Requirements
 
@@ -47,24 +47,24 @@ Use the browser or command line to navigate to the folder where `knloader.bas`, 
 On first run, if they do not exist, cache files are created from the data inside database file `knloader.bdt`.
 
 [.text-center] 
-image::../../docs/img/FirstBoot.png[pdfwidth=70%]
+image:../../docs/img/FirstBoot.png[pdfwidth=70%]
 
 The main interface shows a list of the programs found in the database file.
 
 [.text-center] 
-image::../../docs/img/CoverOff.png[pdfwidth=70%]
+image:../../docs/img/CoverOff.png[pdfwidth=70%]
 
 <<<
 
 You can use the cursor keys or a joystick (Kempston or MD) to move and select the program that you want to load. Then, press `ENTER`, `0` or the joystick button to launch.
 
 [.text-center] 
-image::../../docs/img/LoadDetails.png[pdfwidth=70%]
+image:../../docs/img/LoadDetails.png[pdfwidth=70%]
 
 After a brief period of time, the program should load using the desired mode.
 
 [.text-center] 
-image::../../docs/img/knlauncher.png[pdfwidth=70%]
+image:../../docs/img/knlauncher.png[pdfwidth=70%]
 
 <<<
 
@@ -73,7 +73,7 @@ If you have made a change to the database file, press R to rebuild the cache.
 Press C or the joystick secondary button (in MD mode) to hide/show images.
 
 [.text-center] 
-image::../../docs/img/CoverOn.png[pdfwidth=70%]
+image:../../docs/img/CoverOn.png[pdfwidth=70%]
 
 Press A to enable/disable automatic save of the currently selected program position and the selection to show or hide images.
 
