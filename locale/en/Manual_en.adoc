@@ -7,6 +7,7 @@
 :description: English Manual for knloader
 :keywords: Manual, English, knloader, ZX Spectrum Next, BASIC, Launcher
 :icons: font 
+:source-highlighter: rouge
 :toc: left
 :toc-title: Index
 :toclevels: 4
