@@ -1,6 +1,6 @@
 #program knlauncher
 #autostart
-  10 ; knlauncher - Copyright (c) 2020 @kounch
+  10 ; knlauncher - Copyright (c) 2020-2021 @kounch
   20 ; This program is free software, you can redistribute
   30 ; it and/or modify it under the terms of the
   40 ; GNU General Public License
@@ -8,7 +8,7 @@
   50 LET %s=%REG 7&3:RUN AT 2
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER 7:BORDER 7:INK 0:CLS
-  80 OPEN # 6,"w>22,1,1,32,4":PRINT #6;AT 0,0;">> knlauncher v1.0.2 >> (c) kounch 2020":CLOSE # 6
+  80 OPEN # 6,"w>22,1,1,32,4":PRINT #6;AT 0,0;">> knlauncher v1.1.0 >> (c) kounch 2021":CLOSE # 6
   90 LET x=USR 5808:LOAD "c:/nextzxos/usr0.bin"CODE 32768
 
  200 ; Load Options
@@ -60,7 +60,20 @@
  660 IF mode=30 THEN LET %s=2:LET t$="tzx":GO TO 2900:;TZX (LOAD CODE - 48K - Fast)"
  670 IF mode=31 THEN LET t$="tap":GO TO 2900:;TAP (LOAD CODE - PI Audio - 48K)"
  680 IF mode=32 THEN LET t$="tzx":GO TO 2900:;TZX (LOAD CODE - 48K)"
- 700 PRINT "ERROR: Unknown Mode":PAUSE 0:STOP
+ 690 IF mode=33 THEN LET %s=2:LET t$="pzx":GO TO 1200:;PZX (Fast)
+ 700 IF mode=34 THEN LET %s=2:LET t$="pzx":GO TO 1500:;PZX (USR0 - Fast)
+ 710 IF mode=35 THEN LET %s=2:LET t$="pzx":GO TO 1700:;PZX (Next - Fast)
+ 720 IF mode=36 THEN LET t$="pzx":GO TO 1200:;PZX
+ 730 IF mode=37 THEN LET t$="pzx":GO TO 1500:;PZX (USR 0)
+ 740 IF mode=38 THEN LET t$="pzx":GO TO 1700:;PZX (Next)
+ 750 IF mode=39 THEN LET %s=2:LET t$="pzx":GO TO 2300:;PZX (48K - Fast)
+ 760 IF mode=40 THEN LET t$="pzx":GO TO 2300:;PZX (48K)
+ 770 IF mode=41 THEN LET %s=2:LET t$="pzx":GO TO 2500:;PZX LOAD "" CODE (128K)
+ 780 IF mode=42 THEN LET %s=2:LET t$="pzx":GO TO 2700:;PZX (LOAD CODE - USR0 - Fast)
+ 790 IF mode=43 THEN LET t$="pzx":GO TO 2700:;PZX (LOAD CODE - USR 0)
+ 800 IF mode=44 THEN LET %s=2:LET t$="pzx":GO TO 2900:;PZX (LOAD CODE - 48K - Fast)"
+ 810 IF mode=45 THEN LET t$="pzx":GO TO 2900:;PZX (LOAD CODE - 48K)"
+ 900 PRINT "ERROR: Unknown Mode":PAUSE 0:STOP
 
 1000 ; Mode 3DOS (Next)
 1010 GO SUB 5400:DIM o$(1,LEN a$):LET o$(1)=a$:SAVE "m:kl99.tmp"DATA o$()
@@ -156,7 +169,7 @@
 2630 LET m4=0:GO SUB 5500:CLEAR:SPECTRUM:POKE 32768,1:LET x=USR 32769
 2690 STOP
 
-2700 ; Mode PI Audio LOAD "" CODE  (USR 0) obtained from tapload.bas and tzxload.bas
+2700 ; Mode PI Audio LOAD "" CODE (USR 0) obtained from tapload.bas and tzxload.bas
 2710 GO SUB 5400:GO SUB 5600:LET m4=0:GO SUB 5500
 2720 CLEAR:SPECTRUM:POKE 32768,1:LET x=USR 32769
 2790 STOP
@@ -212,20 +225,22 @@
 5640 .$ pisend a$
 5650 IF t$="tzx" THEN PAUSE 100:LET g$="-c printf ""\x14\x57\x03\xAE\x06\x08\x00\x00\x02\x00\x00\xFF\xFF"" > /ram/tzxfix.bin ; cat """+a$+""" /ram/tzxfix.bin > /ram/file.tzx"
 5660 IF t$="tap" THEN PAUSE 100:LET g$="-c printf ""\x02\x00\xAA\x55"" > /ram/tapfix.bin ; cat """+a$+""" /ram/tapfix.bin > /ram/file.tap"
-5670 .$ pisend g$
-5680 PAUSE 50
-5690 LET g$="-c tape2wav /ram/file."+t$+" /ram/out.wav"
-5700 .$ pisend g$
-5710 PAUSE 200
-5720 LET v=%REG 17:RESTORE 5800
-5730 FOR x=0 TO v:READ hertz:NEXT x
-5740 LET ss=%1<< s:IF ss=8 THEN LET ss=6.57
-5750 LET g$="-c play -r"+STR$ (ss*hertz)+" /ram/out.wav"
-5760 PAUSE 100
-5770 .$ pisend g$
-5780 REG 162,211
-5790 RETURN
-5800 DATA 44100,45000,46406,47250,48825,50400,51975,42525
+5670 IF t$="pzx" THEN PAUSE 100:LET g$="-c cp """+a$+""" /ram/file.pzx"
+5680 .$ pisend g$
+5690 PAUSE 50
+5700 IF t$="tzx" OR t$="tap" THEN LET g$="-c tape2wav /ram/file."+t$+" /ram/out.wav"
+5710 IF t$="pzx" THEN LET g$="-c pzx2wav -o /ram/out.wav /ram/file."+t$
+5720 .$ pisend g$
+5730 PAUSE 200
+5740 LET v=%REG 17:RESTORE 5820
+5750 FOR x=0 TO v:READ hertz:NEXT x
+5760 LET ss=%1<< s:IF ss=8 THEN LET ss=6.57
+5770 LET g$="-c play -r"+STR$ (ss*hertz)+" /ram/out.wav"
+5780 PAUSE 100
+5790 .$ pisend g$
+5800 REG 162,211
+5810 RETURN
+5820 DATA 44100,45000,46406,47250,48825,50400,51975,42525
 
 5995 ; Error with Pi
 6000 CLS:PRINT AT 1,1;INK 6;PAPER 2;" Error: Can't connect with Pi "

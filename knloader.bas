@@ -1,6 +1,6 @@
 #program knloader
 #autostart
-  10 ; knloader - Copyright (c) 2020 @kounch
+  10 ; knloader - Copyright (c) 2020-2021 @kounch
   20 ; This program is free software, you can redistribute
   30 ; it and/or modify it under the terms of the
   40 ; GNU General Public License
@@ -9,7 +9,7 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:PAPER op:BORDER ob:INK oi:RUN AT %s:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,13;"> knloader  v1.0.2 <":PRINT AT 8,15;"© kounch  2020":PRINT AT 15,14;"Press H for help"
+  90 PRINT AT 5,13;"> knloader  v1.1.0 <":PRINT AT 8,15;"© kounch  2021":PRINT AT 15,14;"Press H for help"
 
   95 ; Load Menu Items
  100 GO SUB 4900:; Load Cache To RAM
@@ -18,7 +18,7 @@
 
  195 ; Draw Menu Text
  200 PAPER tinta:BORDER tinta:INK papel:CLS:OPEN # 6,"w>0,0,24,12,4"
- 210 PRINT #6;INK tinta;PAPER papel;CHR$ 14:; Clear Widow
+ 210 PRINT #6;INK tinta;PAPER papel;CHR$ 14:; Clear Window
  250 FOR %c=1 TO 22:LET c=%c:PRINT #6;INVERSE 0;OVER 0;AT c,1;z$(c):NEXT %c
 
  295 ; Menu Input Control and Delay Logic
@@ -69,7 +69,7 @@
 
  895 ; Prepare to Launch Program
  900 CLOSE # 6:CLS:BORDER 1:ON ERROR GO TO 1300:ON ERROR
- 910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2020":PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
+ 910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2021":PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
  920 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:":PRINT AT 18,1;x$(pos)
  930 LET a$=x$(pos):GO SUB 5300:LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
  940 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "
@@ -141,39 +141,53 @@
 
 3995 ; Cover Data
 4000 LET mode=o(pos):LET a$=b$(pos):LET m$="Unknown":GO SUB 5300
-4010 IF mode=0 THEN LET m$="3DOS (Next)"
-4020 IF mode=1 THEN LET m$="TAP"
-4030 IF mode=2 THEN LET m$="TZX (fast)"
-4040 IF mode=3 THEN LET m$="DSK (AUTOBOOT)"
-4050 IF mode=4 THEN LET m$="TAP (USR 0)"
-4060 IF mode=5 THEN LET m$="TZX (USR0 - Fast)"
-4070 IF mode=6 THEN LET m$="TAP (Next)"
-4080 IF mode=7 THEN LET m$="TZX (Next - Fast)"
-4090 IF mode=8 THEN LET m$="DSK (Custom Boot)"
-4100 IF mode=9 THEN LET m$="TAP (PI Audio)"
-4110 IF mode=10 THEN LET m$="TZX"
-4120 IF mode=11 THEN LET m$="TAP (USR 0 - PI Audio)"
-4130 IF mode=12 THEN LET m$="TZX (USR 0)"
-4140 IF mode=13 THEN LET m$="TAP (PI Audio - Next)"
-4150 IF mode=14 THEN LET m$="TZX (Next)"
-4160 IF mode=15 THEN LET m$="NEX"
-4170 IF mode=16 THEN LET m$="Snapshot"
-4180 IF mode=17 THEN LET m$="Z-Machine Program"
-4190 IF mode=18 THEN LET m$="3DOS (128K)"
-4200 IF mode=19 THEN LET m$="TAP (48K)"
-4210 IF mode=20 THEN LET m$="TZX (48K - Fast)"
-4220 IF mode=21 THEN LET m$="TAP (PI Audio - 48K)"
-4230 IF mode=22 THEN LET m$="TZX (48K)"
-4240 IF mode=23 THEN LET m$="TAP (LOAD CODE)"
-4250 IF mode=24 THEN LET m$="TZX (LOAD CODE - Fast)"
-4260 IF mode=25 THEN LET m$="TAP (LOAD CODE - USR 0)"
-4270 IF mode=26 THEN LET m$="TZX (LOAD CODE - USR0 - Fast)"
-4280 IF mode=27 THEN LET m$="TAP (LOAD CODE - USR 0 - PI Audio)"
-4290 IF mode=28 THEN LET m$="TZX (LOAD CODE - USR 0)"
-4300 IF mode=29 THEN LET m$="TAP (LOAD CODE - 48K)"
-4310 IF mode=30 THEN LET m$="TZX (LOAD CODE - 48K - Fast)"
-4320 IF mode=31 THEN LET m$="TAP (LOAD CODE - PI Audio - 48K)"
-4330 IF mode=32 THEN LET m$="TZX (LOAD CODE - 48K)"
+4005 IF mode=0 THEN LET m$="3DOS (Next)"
+4010 IF mode=1 THEN LET m$="TAP"
+4015 IF mode=2 THEN LET m$="TZX (fast)"
+4020 IF mode=3 THEN LET m$="DSK (AUTOBOOT)"
+4025 IF mode=4 THEN LET m$="TAP (USR 0)"
+4030 IF mode=5 THEN LET m$="TZX (USR0 - Fast)"
+4035 IF mode=6 THEN LET m$="TAP (Next)"
+4040 IF mode=7 THEN LET m$="TZX (Next - Fast)"
+4045 IF mode=8 THEN LET m$="DSK (Custom Boot)"
+4050 IF mode=9 THEN LET m$="TAP (PI Audio)"
+4055 IF mode=10 THEN LET m$="TZX"
+4060 IF mode=11 THEN LET m$="TAP (USR 0 - PI Audio)"
+4065 IF mode=12 THEN LET m$="TZX (USR 0)"
+4070 IF mode=13 THEN LET m$="TAP (PI Audio - Next)"
+4075 IF mode=14 THEN LET m$="TZX (Next)"
+4080 IF mode=15 THEN LET m$="NEX"
+4085 IF mode=16 THEN LET m$="Snapshot"
+4090 IF mode=17 THEN LET m$="Z-Machine Program"
+4095 IF mode=18 THEN LET m$="3DOS (128K)"
+4100 IF mode=19 THEN LET m$="TAP (48K)"
+4105 IF mode=20 THEN LET m$="TZX (48K - Fast)"
+4110 IF mode=21 THEN LET m$="TAP (PI Audio - 48K)"
+4115 IF mode=22 THEN LET m$="TZX (48K)"
+4120 IF mode=23 THEN LET m$="TAP (LOAD CODE)"
+4125 IF mode=24 THEN LET m$="TZX (LOAD CODE - Fast)"
+4130 IF mode=25 THEN LET m$="TAP (LOAD CODE - USR 0)"
+4135 IF mode=26 THEN LET m$="TZX (LOAD CODE - USR0 - Fast)"
+4140 IF mode=27 THEN LET m$="TAP (LOAD CODE - USR 0 - PI Audio)"
+4145 IF mode=28 THEN LET m$="TZX (LOAD CODE - USR 0)"
+4150 IF mode=29 THEN LET m$="TAP (LOAD CODE - 48K)"
+4155 IF mode=30 THEN LET m$="TZX (LOAD CODE - 48K - Fast)"
+4160 IF mode=31 THEN LET m$="TAP (LOAD CODE - PI Audio - 48K)"
+4165 IF mode=32 THEN LET m$="TZX (LOAD CODE - 48K)"
+4170 IF mode=33 THEN LET m$="PZX (fast)"
+4175 IF mode=34 THEN LET m$="PZX (USR0 - Fast)"
+4180 IF mode=35 THEN LET m$="PZX (Next - Fast)"
+4195 IF mode=36 THEN LET m$="PZX"
+4200 IF mode=37 THEN LET m$="PZX (USR 0)"
+4205 IF mode=38 THEN LET m$="PZX (Next)"
+4210 IF mode=39 THEN LET m$="PZX (48K - Fast)"
+4215 IF mode=40 THEN LET m$="PZX (48K)"
+4220 IF mode=41 THEN LET m$="PZX (LOAD CODE - Fast)"
+4225 IF mode=42 THEN LET m$="PZX (LOAD CODE - USR0 - Fast)"
+4230 IF mode=43 THEN LET m$="PZX (LOAD CODE - USR 0)"
+4235 IF mode=44 THEN LET m$="PZX (LOAD CODE - 48K - Fast)"
+4240 IF mode=45 THEN LET m$="PZX (LOAD CODE - 48K)"
+
 4390 IF a$<>" " AND covers=1 THEN GO TO 4500
 
 4395 ; Text Data

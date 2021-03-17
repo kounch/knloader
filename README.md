@@ -46,7 +46,7 @@ You can use the cursor keys or a joystick (Kempston or MD) to move and select th
 
 - **How many loading modes are there?**
 
-At the moment, the loading mode can be one of these (TZX and Pi audio modes require an accelerated Next to function properly):
+At the moment, the loading mode can be one of these (TZX, PZX and Pi audio modes require an accelerated Next to function properly):
 
     0  - 3DOS (Next)
     1  - TAP
@@ -70,6 +70,7 @@ At the moment, the loading mode can be one of these (TZX and Pi audio modes requ
     19 - TAP (48K)
     20 - TZX (48K - Fast)
     21 - TAP (48K - Pi Audio)
+    22 - TZX (48K)
     23 - TAP (LOAD "" CODE)
     24 - TZX (LOAD "" CODE - Fast)
     25 - TAP (LOAD "" CODE - USR 0)
@@ -80,8 +81,25 @@ At the moment, the loading mode can be one of these (TZX and Pi audio modes requ
     30 - TZX (LOAD "" CODE - 48K - Fast)
     31 - TAP (LOAD "" CODE - PI Audio - 48K)
     32 - TZX (LOAD "" CODE - 48K)
+    33 - PZX (fast)
+    34 - PZX (USR0 - Fast)
+    35 - PZX (Next - Fast)
+    36 - PZX
+    37 - PZX (USR 0)
+    38 - PZX (Next)
+    39 - PZX (48K - Fast)
+    40 - TZX (48K)
+    41 - PZX (LOAD "" CODE - Fast)
+    42 - PZX (LOAD "" CODE - USR0 - Fast)
+    43 - PZX (LOAD "" CODE - USR 0)
+    44 - PZX (LOAD "" CODE - 48K - Fast)
+    45 - PZX (LOAD "" CODE - 48K)
 
-- **What formats are supported for the images?**
+- **What do i need to load PZX files?**
+
+In order to load PZX files you need two things; an accelerated Next, and running `pzxinstall.bas`. This program will copy `pzx2wav` (part of [PZX Tools](http://zxds.raxoft.cz/pzx.html)) to your accelerated Raspberry Pi. See the manual for more extended instructions.
+
+- **What formats are supported for the image files?**
 
 The file must be a full ZX Spectrum Next screen image file. It can be in SCR, SLR, SHC, SL2 or BMP format.
 
@@ -129,7 +147,7 @@ Se pueden utilizar las teclas de cursor o un joystick compatible (modo Kempston 
 
 - **¿Cuántos modos de carga hay?**
 
-En este momento, el modo de carga puede ser uno de los siguientes (los modos TZX y Pi Audio requieren un ZX Spectrum Next Accelerated para funcionar correctamente):
+En este momento, el modo de carga puede ser uno de los siguientes (los modos TZX, PZX y Pi Audio requieren un ZX Spectrum Next Accelerated para funcionar correctamente):
 
     0  - 3DOS (Next)
     1  - TAP
@@ -156,6 +174,31 @@ En este momento, el modo de carga puede ser uno de los siguientes (los modos TZX
     22 - TZX (48K)
     23 - TAP (LOAD "" CODE)
     24 - TZX (LOAD "" CODE - rápido)
+    25 - TAP (LOAD "" CODE - USR 0)
+    26 - TZX (LOAD "" CODE - USR0 - rápido)
+    27 - TAP (LOAD "" CODE - USR 0 - PI Audio)
+    28 - TZX (LOAD "" CODE - USR 0)
+    29 - TAP (LOAD "" CODE - 48K)
+    30 - TZX (LOAD "" CODE - 48K - rápido)
+    31 - TAP (LOAD "" CODE - PI Audio - 48K)
+    32 - TZX (LOAD "" CODE - 48K)
+    33 - PZX (rápido)
+    34 - PZX (USR0 - rápido)
+    35 - PZX (Next - rápido)
+    36 - PZX
+    37 - PZX (USR 0)
+    38 - PZX (Next)
+    39 - PZX (48K - rápido)
+    40 - PZX (48K)
+    41 - PZX (LOAD "" CODE - rápido)
+    42 - PZX (LOAD "" CODE - USR0 - rápido)
+    43 - PZX (LOAD "" CODE - USR 0)
+    44 - PZX (LOAD "" CODE - 48K - rápido)
+    45 - PZX (LOAD "" CODE - 48K)
+
+- **¿Qué se necesita para poder cargar archivos PZX?**
+
+Para poder cargar ficheros PZX se necesitan dos cosas; un Next Accelerated, y ejecutar una vez `pzxinstall.bas`. Este programar copiará a la Raspberry Pi `pzx2wav` (que forma parte de [PZX Tools](http://zxds.raxoft.cz/pzx.html)). Vea el manual para instrucciones más detalladas.
 
 - **¿Qué formatos pueden tener las imágenes?**
 
@@ -173,7 +216,9 @@ Para las demás operaciones, se crean ficheros temporales en el disco RAM.
 
 ## Copyright
 
-Copyright (c) 2020 kounch
+Copyright (c) 2020-2021 kounch
+
+PZX->WAV convertor Copyright (C) 2007 Patrik Rak
 
 Some of the code used to launch programs has been adapted from the official NextZXOS distribution (especifically from `browser.cfg`, `tapload.bas` and `tzxload.bas`).
 
