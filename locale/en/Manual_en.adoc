@@ -1,9 +1,9 @@
 = knloader English Manual
 :author: kounch
-:revnumber: 1.0.2
+:revnumber: 1.1.0
 :doctype: book
 :email: kounch@users.noreply.github.com
-:Revision: 1.0
+:Revision: 1.1
 :description: English Manual for knloader
 :keywords: Manual, English, knloader, ZX Spectrum Next, BASIC, Launcher
 :icons: font 
@@ -39,6 +39,43 @@ A ZIP file with the latest version is available following https://github.com/kou
 Create `knloader.bdt` file using the text editor of your choice or the included utility script and, optionally, create cache file(s) with the included utility (see below for more instructions).
 
 Copy together `knloader.bas`, `knlauncher`, `knzml`, from one of the distribution language folders (`en` for english, `es` for spanish, etc.), and the new `knloader.bdt` or the cache file(s) to any place in your SD card.
+
+=== PZX support
+
+Starting with version 1.1.0, you can use PZX files with knloader, but this requires to install one file ( `pzx2wav` http://zxds.raxoft.cz/pzx.html[from PZX Utilites]) to the Raspberry Pi Accelerator microSD card, inside one of the https://gitlab.com/thesmog358/tbblue/-/blob/master/rpi/linux/docs/CLI.txt[custom command paths].
+
+To make this task easier, a NextBASIC installer is included, which can install and uninstall `pzx2wav` to `/NextPi/nextpi` in the microSD card of the Pi Accelerator. This installation has to be made only once, since it is persistant between reboots.
+
+Copy together `pzxinstall.bas` and `pzx2wav` to any place in the ZX Spectrum Next SD card. Then launch `pzxinstall.bas` with the browser and follow the on screen instructions.
+
+Once installed, you can remove `pzxinstall.bas` and `pzx2wav` from the SD card.
+
+[NOTE]
+====
+`pzxinstall.bas` can also remove (uninstall) `/NextPi/nextpi/pzx2wav` from the Accelerator microSD card if needed.
+====
+
+[TIP]
+====
+Once `pzx2wav` is installed, you can also extend the ZX Spectrum Next default browser to load PZX files.
+
+All you have to do is duplicate the file `c:/neztzxos/tzxload.bas` to `c:/nextzxos/pzxload.bas` and then replace the following lines with this code:
+
+[source,basic]
+----
+480 PAUSE 100:LET g$="-c cp """"+f$+"""" /ram/file.pzx"
+490 .$ pisend g$
+493 PAUSE 50
+495 LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"
+----
+
+Finally, edit  `c:/neztzxos/browser.cfg` and add this line:
+
+[source]
+----
+PZX:clear 65367:load "c:/nextzxos/pzxload.bas":let f$="|":goto 5
+----
+====
 
 == Use
 
@@ -129,9 +166,9 @@ Where each of the fields between ',' are as follows:
     12 - TZX (USR 0)
     13 - TAP (PI Audio - Next)
     14 - TZX (Next)
-    15 - NEX (Next)
-    16 - Snapshot
-    17 - Z-Machine Program (Next)
+    15 - NEX
+    16 - Snapshot (Z80, SNX, SNA, etc.)
+    17 - Z-Machine Program
     18 - 3DOS
     19 - TAP (48K)
     20 - TZX (48K - Fast)
@@ -147,12 +184,30 @@ Where each of the fields between ',' are as follows:
     30 - TZX (LOAD "" CODE - 48K - Fast)
     31 - TAP (LOAD "" CODE - PI Audio - 48K)
     32 - TZX (LOAD "" CODE - 48K)
+    33 - PZX (fast)
+    34 - PZX (USR0 - Fast)
+    35 - PZX (Next - Fast)
+    36 - PZX
+    37 - PZX (USR 0)
+    38 - PZX (Next)
+    39 - PZX (48K - Fast)
+    40 - TZX (48K)
+    41 - PZX (LOAD "" CODE - Fast)
+    42 - PZX (LOAD "" CODE - USR0 - Fast)
+    43 - PZX (LOAD "" CODE - USR 0)
+    44 - PZX (LOAD "" CODE - 48K - Fast)
+    45 - PZX (LOAD "" CODE - 48K)
+
+[WARNING]
+====
+Audio, TZX and PZX modes require an accelerated Next to work properly.
+====
 
 [NOTE]
 ====
 Unless stated otherwise (e.g. on modes 6,7), all modes set the ZX Spectrum Next in 128K mode, disabling Next special hardware.
 
-All TZX (fast) modes run at 14Mhz. Once the program is loaded, you can get back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.
+All TZX and PZX (fast) modes run at 14Mhz. Once the program is loaded, you can get back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.
 
 Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive `A:` and execute `LOAD "*"`.
 
@@ -292,7 +347,9 @@ These programs create a preferences file named `opts.tmp` inside the same folder
 
 == Copyright
 
-Copyright (c) 2020 kounch
+Copyright (c) 2020-2021 kounch
+
+PZX->WAV convertor Copyright (C) 2007 Patrik Rak
 
 Some of the code used to launch programs has been adapted from the official NextZXOS distribution (especifically from `browser.cfg`, `tapload.bas` and `tzxload.bas`).
 

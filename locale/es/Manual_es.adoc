@@ -1,9 +1,9 @@
 = Manual de knloader
 :author: kounch
-:revnumber: 1.0.2
+:revnumber: 1.1.0
 :doctype: book
 :email: kounch@users.noreply.github.com
-:Revision: 1.0
+:Revision: 1.1
 :description: Manual en castellano de knloader
 :keywords: Manual, Castellano, knloader, ZX Spectrum Next, BASIC, Lanzador
 :icons: font 
@@ -39,6 +39,43 @@ Se puede obtener un fichero ZIP con la última versión siguiendo https://github
 Crear un archivo `knloader.bdt` con un programa editor de texto o con el script incluido y, opcionalmente, crear datos de caché (leer a continuación para más instrucciones).
 
 Copiar, juntos, `knloader.bas`, `knlauncher`, `knzml`, desde una de las carpetas de idioma de la distribución (`en` en inglés, `es` para castellano, etc.), y el nuevo archivo `knloader.bdt` o los datos de caché al lugar que se desee de la tarjeta SD.
+
+=== Soporte para PZX
+
+A partir de la versión 1.1.0, se pueden cargar también ficheros PZX con knloader, pero esto requiere la instalación previa de un fichero ( `pzx2wav` http://zxds.raxoft.cz/pzx.html[de PZX Utilites]) a la tarjeta microSD de la Raspberry Pi aceleradora, dentro de alguno de los https://gitlab.com/thesmog358/tbblue/-/blob/master/rpi/linux/docs/CLI.txt[directorios para comandos personalizados].
+
+Para facilitar esta tarea, se incluye un instalador hecho con NextBASIC, que es capaz de instalar o desinstalar `pzx2wav` en `/NextPi/nextpi` en al tarjeta microSD de la Pi. Esta instalación sólo se tiene que hacer una vez, ya que es persistente entre reinicios.
+
+Copiar juntos `pzxinstall.bas` y `pzx2wav` al lugar que se desee de la tarjeta SD del ZX Spectrum Next. Ejecutar `pzxinstall.bas` con el navegador de NezxZXOS y seguir las instrucciones en la pantalla.
+
+Una vez instalado, se pueden borrar `pzxinstall.bas` y `pzx2wav` de la tarjeta SD.
+
+[NOTE]
+====
+`pzxinstall.bas` también puede, si se desea, borrar (desinstalar) `/NextPi/nextpi/pzx2wav` de la tarjeta microSD de la Pi aceleradora.
+====
+
+[TIP]
+====
+Una vez que `pzx2wav` se ha instalado, también se puede hacer que el navegador por defecto de ZX Spectrum Next cargue ficheros PZX.
+
+Lo único que hay que hacer es guardar una copia del archivo `c:/neztzxos/tzxload.bas` como `c:/nextzxos/pzxload.bas` y luego reemplazar las siguientes líneas con este código:
+
+[source,basic]
+----
+480 PAUSE 100:LET g$="-c cp """"+f$+"""" /ram/file.pzx"
+490 .$ pisend g$
+493 PAUSE 50
+495 LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"
+----
+
+Por último, modificar `c:/neztzxos/browser.cfg` añadiendo esta línea nueva:
+
+[source]
+----
+PZX:clear 65367:load "c:/nextzxos/pzxload.bas":let f$="|":goto 5
+----
+====
 
 == Uso
 
@@ -147,12 +184,30 @@ Donde cada uno de los campos entre ',' son de la siguiente manera:
     30 - TZX (LOAD "" CODE - 48K - rápido)
     31 - TAP (LOAD "" CODE - PI Audio - 48K)
     32 - TZX (LOAD "" CODE - 48K)
+    33 - PZX (rápido)
+    34 - PZX (USR0 - rápido)
+    35 - PZX (Next - rápido)
+    36 - PZX
+    37 - PZX (USR 0)
+    38 - PZX (Next)
+    39 - PZX (48K - rápido)
+    40 - PZX (48K)
+    41 - PZX (LOAD "" CODE - rápido)
+    42 - PZX (LOAD "" CODE - USR0 - rápido)
+    43 - PZX (LOAD "" CODE - USR 0)
+    44 - PZX (LOAD "" CODE - 48K - rápido)
+    45 - PZX (LOAD "" CODE - 48K)
+
+[WARNING]
+====
+Los modos audio, TZX y PZX necesitan un ZX Spectrum Next Accelerated para poder funcionar.
+====
 
 [NOTE]
 ====
 Salvo que se indique lo contrario (por ej. en los modos 6, 7), todos los modos configuran el ZX Spectrum Next en modo 128K, deshabilitando el hardware especial de  Next.
 
-Totos los modos TZX (rápido), se ejecutan a 14 MHz. Una vez que el programa haya cargado, se puede volver a la velocidad de 3,5MHz desde el menú NMI, o pulsando NMI y 8 a la vez.
+Todos los modos TZX y PZX (rápido), se ejecutan a 14 MHz. Una vez que el programa haya cargado, se puede volver a la velocidad de 3,5MHz desde el menú NMI, o pulsando NMI y 8 a la vez.
 
 El modo 3 DSK (auto arranque) monta el archivo DSK en la unidad `A:` y ejecuta `LOAD "*"`.
 
@@ -279,7 +334,7 @@ Una vez que los ficheros de caché se han creado, ha de copiarlos a la tarjeta S
 
 También se incluye un pequeño programa `autoexec.bas` que se puede utilizar para que se inicie knloader de forma automática cada vez que se encienda el ZX Spectrum Next.
 
-Para utilizarlo, renombre el fichero `/nextzxos/autoexec.bas` de la tarjeta SD a `/nextzxos/autoexec.old`, y luego copie el fichero `autoexec.bas` del direcotrio `utils` a `/nextzxos` en la tarjeta SD. Copie también todos los ficheros de knloader (`knloader.bas`, `knlauncher`, `knzml` and BDT file), desde una de las carpetas de idioma de la distribución (`en` en inglés, `es` para castellano, etc.), en un directorio llamado `/knloader/` en la raíz de la SD.
+Para utilizarlo, renombre el fichero `/nextzxos/autoexec.bas` de la tarjeta SD a `/nextzxos/autoexec.old`, y luego copie el fichero `autoexec.bas` del direcotrio `utils` a `/nextzxos` en la tarjeta SD. Copie también todos los ficheros de knloader (`knloader.bas`, `knlauncher`, `knzml` y BDT file), desde una de las carpetas de idioma de la distribución (`en` en inglés, `es` para castellano, etc.), en un directorio llamado `/knloader/` en la raíz de la SD.
 
 Como extra, puede usar las siguientes teclas en el inicio para cambiar el comportamiento del arranque:
 
@@ -292,7 +347,9 @@ Estos programas crean un archivo de preferencias llamado `opts.tmp` en la misma 
 
 == Copyright
 
-Copyright (c) 2020 kounch
+Copyright (c) 2020-2021 kounch
+
+PZX->WAV convertor Copyright (C) 2007 Patrik Rak
 
 Parte del código utilizado para lanzar programas ha sido adaptado desde la distribución oficial de NextZXOS (concretamente de `browser.cfg`, `tapload.bas` y `tzxload.bas`).
 

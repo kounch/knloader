@@ -23,7 +23,7 @@
  180 GO TO 170
  190 CLOSE # 6:BEEP 0.008,-20
  
- 195 ; Draw Disclaimer
+ 195 ; Draw Instructions
  200 BORDER 2:PAPER 1:INK 6:OPEN # 6,"w>3,1,17,30,4"
  210 PRINT #6;INK 6;PAPER 1;CHR$ 14:; Clear Window
  220 PRINT #6;AT 4,20;"Press (i) to install"
@@ -48,7 +48,7 @@
  
  450 LET %r=3:PROC uninstallonpi()
  460 ; PROC uninstallonsd()
- 470 BORDER 0:CLS:PRINT AT 10,7;"Finished Uninstall":PAUSE 0
+ 470 BORDER 0:CLS:PRINT AT 10,7;"Finished Uninstall"
  480 LET K$=INKEY$:IF K$="" THEN GO TO 430
  490 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER 7:BORDER 7:INK 0:RUN AT %s:ERASE
 

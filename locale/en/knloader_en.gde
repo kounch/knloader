@@ -1,8 +1,8 @@
 @title knloader Manual
 @author kounch
-@version 1.0.2
-@copyright Copyright (C)2020 kounch
-@date 2020/08/03
+@version 1.1.0
+@copyright Copyright (C)2020-2021 kounch
+@date 2021/03/03
 
 @index INDEX
 
@@ -12,7 +12,7 @@
 
 @{c}knloader Manual
 
-@{c}Version 1.0
+@{c}Version 1.1
 
 @{h1}
 
@@ -63,7 +63,9 @@ down and @{i}DELETE@{ui} to page up.
 @{r}knloader Manual
 @{c}@{h1}Copyright
 
-@{c}@{b}@{i}Copyright (c) 2020 kounch@{ui}@{ub}
+@{c}@{b}@{i}Copyright (c) 2020-2021 kounch@{ui}@{ub}
+
+PZX->WAV convertor Copyright (C) 2007 Patrik Rak
 
 Some of the code used to launch programs has been adapted from the official
 NextZXOS distribution (especifically from browser.cfg, tapload.bas and
@@ -118,6 +120,18 @@ below for more instructions).
 Copy together @{i}knloader.bas@{ui}, @{i}knlauncher@{ui}, @{i}knzml@{ui} from one of
 the distribution language folders (@{i}en@{ui} for english, @{i}es@{ui} for spanish, etc.),
 and the new @{i}knloader.bdt@{ui} file,to any place in your SD card.
+
+Starting with version 1.1.0, you can use PZX files with knloader, but this
+requires to install one file to the Raspberry Pi Accelerator microSD card.
+
+To make this task easier, a NextBASIC installer is included. This installation
+has to be made only once, since it is persistant between reboots.
+
+Copy together @{i}pzxinstall.bas@{ui} and @{i}pzx2wav@{ui} to any place in the ZX
+Spectrum Next SD card. Then launch @{i}pzxinstall.bas@{ui} with the browser and
+follow the on screen instructions.
+
+Once installed, you can remove @{i}pzxinstall.bas@{ui} and @{i}pzx2wav@{ui} from the SD card.
 
 @-------------------------------------------------------------------------------
 @node USE
@@ -195,7 +209,7 @@ one of these:
     13 - TAP (PI Audio - Next)
     14 - TZX (Next)
     15 - NEX
-    16 - Snapshot
+    16 - Snapshot (Z80, SNX, SNA, etc.)
     17 - Z-Machine Program
     18 - 3DOS
     19 - TAP (48K)
@@ -212,6 +226,19 @@ one of these:
     30 - TZX (LOAD "" CODE - 48K - Fast)
     31 - TAP (LOAD "" CODE - PI Audio - 48K)
     32 - TZX (LOAD "" CODE - 48K)
+    33 - PZX (fast)
+    34 - PZX (USR0 - Fast)
+    35 - PZX (Next - Fast)
+    36 - PZX
+    37 - PZX (USR 0)
+    38 - PZX (Next)
+    39 - PZX (48K - Fast)
+    40 - TZX (48K)
+    41 - PZX (LOAD "" CODE - Fast)
+    42 - PZX (LOAD "" CODE - USR0 - Fast)
+    43 - PZX (LOAD "" CODE - USR 0)
+    44 - PZX (LOAD "" CODE - 48K - Fast)
+    45 - PZX (LOAD "" CODE - 48K)
 
 @{b}Directory@{ub}: Subdirectory where file (optionally) and image file are
 located (maximum 64 characters, no commas @{b},@{ub} allowed)
@@ -225,12 +252,15 @@ both the DSK file and the file to load inside the disk image, separated by ":"
 allowed) of a full screen image file to show behind the program listing. It can
 be in SCR, SLR, SHC, SL2 or BMP format.
 
+@{b}@{i}Warning@{ui}@{ub}:
+
+* Audio, TZX and PZX modes require an accelerated Next to work properly.
 
 @{b}@{i}Notes@{ui}@{ub}:
 
 * Unless stated otherwise (e.g. on modes 6,7), all modes set the ZX Spectrum
 Next in 128K mode, disabling Next special hardware.
-* All TZX (fast) modes run at 14Mhz. Once the program is loaded, you can get
+* All TZX and PZX (fast) modes run at 14Mhz. Once the program is loaded, you can get
 back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.
 * Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive @{i}A:@{ui} and execute
 @{i}LOAD "*"@{ui}.

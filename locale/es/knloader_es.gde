@@ -1,8 +1,8 @@
 @title Manual de knloader
 @author kounch
-@version 1.0.2
-@copyright Copyright (C)2020 kounch
-@date 2020/06/13
+@version 1.1.0
+@copyright Copyright (C)2020-2021 kounch
+@date 2021/03/18
 
 @index INDEX
 
@@ -12,7 +12,7 @@
 
 @{c}Manual de knloader
 
-@{c}Versión 1.0
+@{c}Versión 1.1
 
 @{h1}
 
@@ -65,7 +65,9 @@ Usar las flechas @{i}Arriba@{ui} y @{i}Abajo@{ui} para desplazar el texto,
 @{r}Manual de knloader
 @{c}@{h1}Copyright
 
-@{c}@{b}@{i}Copyright (c) 2020 kounch@{ui}@{ub}
+@{c}@{b}@{i}Copyright (c) 2020-2021 kounch@{ui}@{ub}
+
+PZX->WAV convertor Copyright (C) 2007 Patrik Rak
 
 Parte del código utilizado para lanzar programas ha sido adaptado desde la
 distribución oficial de NextZXOS (concretamente de browser.cfg, tapload.bas
@@ -121,6 +123,19 @@ Copiar, juntos, @{i}knloader.bas@{ui}, @{i}knlauncher@{ui}, @{i}knzml@{ui}, desd
 una de las carpetas de idioma de la distribución (@{i}en@{ui} en inglés, @{i}es@{ui} para
 castellano, etc.), y el nuevo archivo @{i}knloader.bdt@{ui} al lugar que se desee
 de la tarjeta SD.
+
+A partir de la versión 1.1.0, se pueden cargar también ficheros PZX, pero esto 
+requiere la instalación previa de un fichero en la Raspberry Pi aceleradora.
+
+Para facilitar esta tarea, se incluye un instalador hecho con NextBASIC. Esta 
+instalación sólo se tiene que hacer una vez, ya que es persistente entre
+reinicios.
+
+Copiar juntos @{i}pzxinstall.bas@{ui} y @{i}pzx2wav@{ui} al lugar que se desee de la
+tarjeta SD del ZX Spectrum Next. Ejecutar @{i}pzxinstall.bas@{ui} con el navegador
+de NezxZXOS y seguir las instrucciones en la pantalla.
+
+Una vez instalado, se pueden borrar @{i}pzxinstall.bas@{ui} y @{i}pzx2wav@{ui} de la tarjeta SD.
 
 @-------------------------------------------------------------------------------
 @node USE
@@ -226,6 +241,19 @@ programa. Debe ser uno de estos:
     30 - TZX (LOAD "" CODE - 48K - rápido)
     31 - TAP (LOAD "" CODE - PI Audio - 48K)
     32 - TZX (LOAD "" CODE - 48K)
+    33 - PZX (rápido)
+    34 - PZX (USR0 - rápido)
+    35 - PZX (Next - rápido)
+    36 - PZX
+    37 - PZX (USR 0)
+    38 - PZX (Next)
+    39 - PZX (48K - rápido)
+    40 - PZX (48K)
+    41 - PZX (LOAD "" CODE - rápido)
+    42 - PZX (LOAD "" CODE - USR0 - rápido)
+    43 - PZX (LOAD "" CODE - USR 0)
+    44 - PZX (LOAD "" CODE - 48K - rápido)
+    45 - PZX (LOAD "" CODE - 48K)
 
 @{b}Directorio@{ub}: (Opcional) Subdirectorio donde se encuentran Archivo y
 Archivo de Imagen (máximo de 64 caracteres, no se permiten comas @{b},@{ub})
@@ -240,15 +268,20 @@ de dentro de la imagen de disco, separados por ":" (por ejemplo:
 comas @{b},@{ub}) de una imagen de pantalla completa para mostrar por debajo del
 listado de programas. Puede ser en el formato SCR, SLR, SHC, SL2 o BMP.
 
+@{b}@{i}Aviso@{ui}@{ub}:
+
+* Los modos audio, TZX y PZX necesitan un ZX Spectrum Next Accelerated para
+poder funcionar.
+
 @{b}@{i}Notas@{ui}@{ub}:
 
 * Salvo que se indique lo contrario (por ej. en los modos 6, 7), todos los
 modos configuran el ZX Spectrum Next en modo 128K, deshabilitando el hardware
 especial de  Next.
 
-* Totos los modos TZX (rápido), se ejecutan a 14 MHz. Una vez que el programa
-haya cargado, se puede volver a la velocidad de 3,5MHz desde el menú NMI, o
-pulsando NMI y 8 a la vez.
+* Todos los modos TZX y PZX (rápido), se ejecutan a 14 MHz. Una vez que el
+programa haya cargado, se puede volver a la velocidad de 3,5MHz desde el menú
+NMI, o pulsando NMI y 8 a la vez.
 
 * El modo 3 DSK (auto arranque) monta el archivo DSK en la unidad @{i}A:@{ui} y ejecuta
 @{i}LOAD "*"@{ui}.
