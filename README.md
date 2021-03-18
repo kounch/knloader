@@ -88,7 +88,7 @@ At the moment, the loading mode can be one of these (TZX, PZX and Pi audio modes
     37 - PZX (USR 0)
     38 - PZX (Next)
     39 - PZX (48K - Fast)
-    40 - TZX (48K)
+    40 - PZX (48K)
     41 - PZX (LOAD "" CODE - Fast)
     42 - PZX (LOAD "" CODE - USR0 - Fast)
     43 - PZX (LOAD "" CODE - USR 0)

@@ -214,8 +214,6 @@ El modo 3 DSK (auto arranque) monta el archivo DSK en la unidad `A:` y ejecuta `
 El modo 8 DSK (arranque personalizado) monta el archivo DSK en la unidad `A:` y ejecuta `LOAD "archivo"`, donde `archivo`, se obtiene desde el campo `Archivo`.
 ====
 
-<<<
-
 === Ejemplos
 
 Estas son todas líneas con un formato válido:
@@ -265,7 +263,7 @@ Albatrossity,1,,Albatrossity.tap
 Alter Ego,4,Alter Ego,Alter Ego.tap
 Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
 Amaurote,2,Amaurote,Amaurote.tzx
-Aquanoids,5,Aquanoids,Aquanoids.tzx
+Aquanoids,34,Aquanoids,Aquanoids.pzx
 Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
 Astronut,16,../Next/,Astronut.snx
 Barbarian: El Guerreo Definitivo,0,Barbarian/3DOS,BARB.BAS,../Barbarian.bmp
@@ -282,7 +280,7 @@ Este script intenta analizar el contenido de un directorio (incluidos subdirecto
 
 Tiene un poco de inteligencia y, cuando se encuentre varios archivos con el mismo nombre pero distinta extensión (nex, snx, tap, etc.), elige sólo uno de ellos, según la siguiente prioridad:
 
-    nex >  snx > tap > bas > dsk > p > tzx > z8 > z5 > z3 > z80
+    nex >  snx > tap > bas > dsk > p > tzx > pzx > z8 > z5 > z3 > z80
 
 El modo de carga por defecto para cada uno de estos tipos de archivo es el siguiente:
 
@@ -296,6 +294,7 @@ El modo de carga por defecto para cada uno de estos tipos de archivo es el sigui
 |`dsk`|`3`
 |`p`|`16`
 |`tzx`|`2`
+|`pzx`|`33`
 |`z8`|`17`
 |`z5`|`17`
 |`z3`|`17`
@@ -306,7 +305,7 @@ Así mismo, si se encuentran varios archivos de imagen pero con distinta extensi
 
     bmp > sl2 > scr > slr > shr > shc
 
-Modo de uso: `python3 bdt_builder.py -i RUTA [-o FICHERO] [-c RUTA_SD] [--tap NUMERO] [--tzx NUMERO] [--bas NUMERO]`
+Modo de uso: `python3 bdt_builder.py -i RUTA [-o FICHERO] [-c RUTA_SD] [--tap NUMERO] [--tzx NUMERO] [--pzx NUMERO] [--bas NUMERO]`
 
 Donde `RUTA` es la ruta al directorio a analizar, `FICHERO`, opcionalmente, es la ruta al fichero BDT a crear. Si no se indica ruta al fichero, este se crea automáticamente en el directorio actual. Finalmente, `RUTA_SD`, opcionalmente también, es la ruta de la SD donde se encuentran los programas (primera línea del archivo BDT). Si no se indica un ruta de la SD, se usa `RUTA` en su lugar.
 
@@ -314,7 +313,7 @@ Por defecto, el script considera cada nombre de archivo encontrado (sin extensi�
 
 Además, el script ordena en base al nombre (lexicográficamente) todos los resultados. Si se prefiera que se ordenen los resultados en base al nombre del archivo (orden ASCII), se puede utilizar `-u` (por ej: `python3 bdt_builder.py -u -i RUTA ...`).
 
-Se puede cambiar el modo de carga por defecto para las extensions `tap`, `tzx` o `bas`, usando `--tap NUMERO`, `--tzx NUMERO` o `--bas NUMERO`, con el número de modo deseado. Por ejemplo, para cambiar el modo de carga de ficheros tap a USR 0: `python3 bdt_builder.py -i RUTA --tap 4 ...`
+Se puede cambiar el modo de carga por defecto para las extensions `tap`, `tzx`, `pzx` o `bas`, usando `--tap NUMERO`, `--tzx NUMERO`, `--pzx NUMERO` o `--bas NUMERO`, con el número de modo deseado. Por ejemplo, para cambiar el modo de carga de ficheros tap a USR 0: `python3 bdt_builder.py -i RUTA --tap 4 ...`
 
 Una vez que se ha creado el fichero BDT, se puede revisar y retocar con un editor de texto, y luego copiarlo a la tarjeta SD, en la misma ubicación en la que se encuentre `knloader.bas`, o se pueden crear datos de cache (usando el Script de creación de Caché) y copiar estos en la tarjeta.
 

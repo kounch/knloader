@@ -191,7 +191,7 @@ Where each of the fields between ',' are as follows:
     37 - PZX (USR 0)
     38 - PZX (Next)
     39 - PZX (48K - Fast)
-    40 - TZX (48K)
+    40 - PZX (48K)
     41 - PZX (LOAD "" CODE - Fast)
     42 - PZX (LOAD "" CODE - USR0 - Fast)
     43 - PZX (LOAD "" CODE - USR 0)
@@ -213,8 +213,6 @@ Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive `A:` and execute `LOAD "*
 
 Mode 8 (DSK Custom Boot) will mount the DSK file at drive `A:` and execute `LOAD "diskfile"`, where `diskfile` is obtained from the `File` field.
 ====
-
-<<<
 
 === Examples
 
@@ -265,7 +263,7 @@ Albatrossity,1,,Albatrossity.tap
 Alter Ego,4,Alter Ego,Alter Ego.tap
 Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
 Amaurote,2,Amaurote,Amaurote.tzx
-Aquanoids,5,Aquanoids,Aquanoids.tzx
+Aquanoids,34,Aquanoids,Aquanoids.pzx
 Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
 Astronut,16,../Next/,Astronut.snx
 Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,../Barbarian.bmp
@@ -282,7 +280,7 @@ This script tries to analyze all the contents of a directory (including subdirec
 
 The script has a rudimentary intelligence and, when there are several files with the same name but different extensions (nex, snx, tap, etc.) it selects only one of them, following this priority:
 
-    nex >  snx > tap > bas > dsk > p > tzx > z8 > z5 > z3 > z80
+    nex >  snx > tap > bas > dsk > p > tzx > pzx > z8 > z5 > z3 > z80
 
 The default mode for each of these file types is as follows:
 
@@ -296,6 +294,7 @@ The default mode for each of these file types is as follows:
 |`dsk`|`3`
 |`p`|`16`
 |`tzx`|`2`
+|`pzx`|`33`
 |`z8`|`17`
 |`z5`|`17`
 |`z3`|`17`
@@ -306,7 +305,7 @@ Also, when finding several image files with different extension, only one is sel
 
     bmp > sl2 > scr > slr > shr > shc
 
-Script usage: `python3 bdt_builder.py -i INPUT_PATH [-o OUTPUT_PATH] [-c SD_PATH] [--tap NUMBER] [--tzx NUMBER] [--bas NUMBER]`
+Script usage: `python3 bdt_builder.py -i INPUT_PATH [-o OUTPUT_PATH] [-c SD_PATH] [--tap NUMBER] [--tzx NUMBER] [--pzx NUMBER] [--bas NUMBER]`
 
 Where `INPUT_PATH` is the path to the directory to analyze,`OUTPUT_PATH`, optionally, is the path to the new BDT file. If there is no output path argument, the BDT file is created in the current directory. Finally, `SD_PATH`, optionally, is the path in the SD where the programs are stored (first line of the BDT file). If no SD_PATH is provided, `OUTPUT_PATH` will be used.
 
@@ -314,7 +313,7 @@ By default, the script treats each found filename (without extension) as a diffe
 
 Also, the script orders by program name (lexicographically) all the results. If you want to order the results by file name (ASCII ordering), you can add the `-u` switch (e.g. `python3 bdt_builder.py -u -i INPUT_PATH ...`).
 
-You can change the default loading mode for `tap`, `tzx` or `bas` extensions, using `--tap NUMBER`, `--tzx NUMBER` or `--bas NUMBER`, using the desired mode number. For example, to change loading mode for tap files to USR 0: `python3 bdt_builder.py -i INPUT_PATH --tap 4 ...`
+You can change the default loading mode for `tap`, `tzx`, `pzx` or `bas` extensions, using `--tap NUMBER`, `--tzx NUMBER`, `--pzx NUMBER` or `--bas NUMBER`, using the desired mode number. For example, to change loading mode for tap files to USR 0: `python3 bdt_builder.py -i INPUT_PATH --tap 4 ...`
 
 After the BDT file is created, you can review and change its contents with a text editor, and then copy it to your SD card, next to where `knloader.bas` is, or you can create cache data (using the Cache Builder Script) and copy it to the SD card.
 

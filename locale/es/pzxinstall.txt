@@ -1,4 +1,4 @@
-'1,4;"> PZX Installer'='1,2;"> Instalador de PZX"'
+'1,4;"> pzx Installer'='1,2;"> Instalador de PZX'
 '2,1;"This program installs or uninstalls to NextPI the file:"'='2,1;"Este programa instala o desinstala en NextPI:"'
 '8,1;"Please, see NextPI official documentation for more info."'='8,1;"Vease la documentacion oficial de NextPI para mas detalles."'
 '15,17;"- Press any key to continue -"'='15,14;"- Pulse una tecla para continuar -"'

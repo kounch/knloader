@@ -446,7 +446,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">kounch</span><br>
 <span id="email" class="email"><a href="mailto:kounch@users.noreply.github.com">kounch@users.noreply.github.com</a></span><br>
-<span id="revnumber">version 1.0.2</span>
+<span id="revnumber">version 1.1.0</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Index</div>
@@ -458,7 +458,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_software_requirements">Software Requirements</a></li>
 </ul>
 </li>
-<li><a href="#_installation">Installation</a></li>
+<li><a href="#_installation">Installation</a>
+<ul class="sectlevel2">
+<li><a href="#_pzx_support">PZX support</a></li>
+</ul>
+</li>
 <li><a href="#_use">Use</a></li>
 <li><a href="#_database_file_format">Database file format</a>
 <ul class="sectlevel2">
@@ -526,6 +530,68 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="paragraph">
 <p>Copy together <code>knloader.bas</code>, <code>knlauncher</code>, <code>knzml</code>, from one of the distribution language folders (<code>en</code> for english, <code>es</code> for spanish, etc.), and the new <code>knloader.bdt</code> or the cache file(s) to any place in your SD card.</p>
+</div>
+<div class="sect2">
+<h3 id="_pzx_support">PZX support</h3>
+<div class="paragraph">
+<p>Starting with version 1.1.0, you can use PZX files with knloader, but this requires to install one file ( <code>pzx2wav</code> <a href="http://zxds.raxoft.cz/pzx.html">from PZX Utilites</a>) to the Raspberry Pi Accelerator microSD card, inside one of the <a href="https://gitlab.com/thesmog358/tbblue/-/blob/master/rpi/linux/docs/CLI.txt">custom command paths</a>.</p>
+</div>
+<div class="paragraph">
+<p>To make this task easier, a NextBASIC installer is included, which can install and uninstall <code>pzx2wav</code> to <code>/NextPi/nextpi</code> in the microSD card of the Pi Accelerator. This installation has to be made only once, since it is persistant between reboots.</p>
+</div>
+<div class="paragraph">
+<p>Copy together <code>pzxinstall.bas</code> and <code>pzx2wav</code> to any place in the ZX Spectrum Next SD card. Then launch <code>pzxinstall.bas</code> with the browser and follow the on screen instructions.</p>
+</div>
+<div class="paragraph">
+<p>Once installed, you can remove <code>pzxinstall.bas</code> and <code>pzx2wav</code> from the SD card.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>pzxinstall.bas</code> can also remove (uninstall) <code>/NextPi/nextpi/pzx2wav</code> from the Accelerator microSD card if needed.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Once <code>pzx2wav</code> is installed, you can also extend the ZX Spectrum Next default browser to load PZX files.</p>
+</div>
+<div class="paragraph">
+<p>All you have to do is duplicate the file <code>c:/neztzxos/tzxload.bas</code> to <code>c:/nextzxos/pzxload.bas</code> and then replace the following lines with this code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="basic">480 PAUSE 100:LET g$="-c cp """"+f$+"""" /ram/file.pzx"
+490 .$ pisend g$
+493 PAUSE 50
+495 LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, edit  <code>c:/neztzxos/browser.cfg</code> and add this line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>PZX:clear 65367:load "c:/nextzxos/pzxload.bas":let f$="|":goto 5</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -642,9 +708,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 12 - TZX (USR 0)
 13 - TAP (PI Audio - Next)
 14 - TZX (Next)
-15 - NEX (Next)
-16 - Snapshot
-17 - Z-Machine Program (Next)
+15 - NEX
+16 - Snapshot (Z80, SNX, SNA, etc.)
+17 - Z-Machine Program
 18 - 3DOS
 19 - TAP (48K)
 20 - TZX (48K - Fast)
@@ -659,8 +725,35 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 29 - TAP (LOAD "" CODE - 48K)
 30 - TZX (LOAD "" CODE - 48K - Fast)
 31 - TAP (LOAD "" CODE - PI Audio - 48K)
-32 - TZX (LOAD "" CODE - 48K)</pre>
+32 - TZX (LOAD "" CODE - 48K)
+33 - PZX (fast)
+34 - PZX (USR0 - Fast)
+35 - PZX (Next - Fast)
+36 - PZX
+37 - PZX (USR 0)
+38 - PZX (Next)
+39 - PZX (48K - Fast)
+40 - PZX (48K)
+41 - PZX (LOAD "" CODE - Fast)
+42 - PZX (LOAD "" CODE - USR0 - Fast)
+43 - PZX (LOAD "" CODE - USR 0)
+44 - PZX (LOAD "" CODE - 48K - Fast)
+45 - PZX (LOAD "" CODE - 48K)</pre>
 </div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Audio, TZX and PZX modes require an accelerated Next to work properly.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -673,7 +766,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Unless stated otherwise (e.g. on modes 6,7), all modes set the ZX Spectrum Next in 128K mode, disabling Next special hardware.</p>
 </div>
 <div class="paragraph">
-<p>All TZX (fast) modes run at 14Mhz. Once the program is loaded, you can get back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.</p>
+<p>All TZX and PZX (fast) modes run at 14Mhz. Once the program is loaded, you can get back to 3.5MHz speed using the NMI menu or pressing NMI and 8 at the same time.</p>
 </div>
 <div class="paragraph">
 <p>Mode 3 (DSK AUTOBOOT) will mount the DSK file at drive <code>A:</code> and execute <code>LOAD "*"</code>.</p>
@@ -685,7 +778,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 </table>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_examples">Examples</h3>
@@ -741,7 +833,7 @@ Albatrossity,1,,Albatrossity.tap
 Alter Ego,4,Alter Ego,Alter Ego.tap
 Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
 Amaurote,2,Amaurote,Amaurote.tzx
-Aquanoids,5,Aquanoids,Aquanoids.tzx
+Aquanoids,34,Aquanoids,Aquanoids.pzx
 Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
 Astronut,16,../Next/,Astronut.snx
 Barbarian: The Ultimate Warrior,0,Barbarian/3DOS,BARB.BAS,../Barbarian.bmp
@@ -767,7 +859,7 @@ Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3</code
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>nex &gt;  snx &gt; tap &gt; bas &gt; dsk &gt; p &gt; tzx &gt; z8 &gt; z5 &gt; z3 &gt; z80</pre>
+<pre>nex &gt;  snx &gt; tap &gt; bas &gt; dsk &gt; p &gt; tzx &gt; pzx &gt; z8 &gt; z5 &gt; z3 &gt; z80</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -812,6 +904,10 @@ Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3</code
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>2</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pzx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>33</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>z8</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>17</code></p></td>
 </tr>
@@ -838,7 +934,7 @@ Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3</code
 </div>
 </div>
 <div class="paragraph">
-<p>Script usage: <code>python3 bdt_builder.py -i INPUT_PATH [-o OUTPUT_PATH] [-c SD_PATH] [--tap NUMBER] [--tzx NUMBER] [--bas NUMBER]</code></p>
+<p>Script usage: <code>python3 bdt_builder.py -i INPUT_PATH [-o OUTPUT_PATH] [-c SD_PATH] [--tap NUMBER] [--tzx NUMBER] [--pzx NUMBER] [--bas NUMBER]</code></p>
 </div>
 <div class="paragraph">
 <p>Where <code>INPUT_PATH</code> is the path to the directory to analyze,<code>OUTPUT_PATH</code>, optionally, is the path to the new BDT file. If there is no output path argument, the BDT file is created in the current directory. Finally, <code>SD_PATH</code>, optionally, is the path in the SD where the programs are stored (first line of the BDT file). If no SD_PATH is provided, <code>OUTPUT_PATH</code> will be used.</p>
@@ -850,7 +946,7 @@ Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3</code
 <p>Also, the script orders by program name (lexicographically) all the results. If you want to order the results by file name (ASCII ordering), you can add the <code>-u</code> switch (e.g. <code>python3 bdt_builder.py -u -i INPUT_PATH &#8230;&#8203;</code>).</p>
 </div>
 <div class="paragraph">
-<p>You can change the default loading mode for <code>tap</code>, <code>tzx</code> or <code>bas</code> extensions, using <code>--tap NUMBER</code>, <code>--tzx NUMBER</code> or <code>--bas NUMBER</code>, using the desired mode number. For example, to change loading mode for tap files to USR 0: <code>python3 bdt_builder.py -i INPUT_PATH --tap 4 &#8230;&#8203;</code></p>
+<p>You can change the default loading mode for <code>tap</code>, <code>tzx</code>, <code>pzx</code> or <code>bas</code> extensions, using <code>--tap NUMBER</code>, <code>--tzx NUMBER</code>, <code>--pzx NUMBER</code> or <code>--bas NUMBER</code>, using the desired mode number. For example, to change loading mode for tap files to USR 0: <code>python3 bdt_builder.py -i INPUT_PATH --tap 4 &#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>After the BDT file is created, you can review and change its contents with a text editor, and then copy it to your SD card, next to where <code>knloader.bas</code> is, or you can create cache data (using the Cache Builder Script) and copy it to the SD card.</p>
@@ -913,7 +1009,10 @@ Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3</code
 <h2 id="_copyright">Copyright</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Copyright (c) 2020 kounch</p>
+<p>Copyright (c) 2020-2021 kounch</p>
+</div>
+<div class="paragraph">
+<p>PZX&#8594;WAV convertor Copyright &#169; 2007 Patrik Rak</p>
 </div>
 <div class="paragraph">
 <p>Some of the code used to launch programs has been adapted from the official NextZXOS distribution (especifically from <code>browser.cfg</code>, <code>tapload.bas</code> and <code>tzxload.bas</code>).</p>
@@ -932,8 +1031,8 @@ Hitchhiker's Guide to The Galaxy,17,../Z-Machine,hitchhiker-r60-s861002.z3</code
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.2<br>
-Last updated 2020-11-20 20:33:53 +0100
+Version 1.1.0<br>
+Last updated 2021-03-18 21:59:28 +0100
 </div>
 </div>
 <style>

@@ -30,7 +30,7 @@ import csv
 from pathlib import Path
 
 __MY_NAME__ = 'bdt_builder.py'
-__MY_VERSION__ = '2.0'
+__MY_VERSION__ = '2.1'
 
 DICT_EXTS = {
     'nex': 15,
@@ -40,6 +40,7 @@ DICT_EXTS = {
     'dsk': 3,
     'p': 16,
     'tzx': 2,
+    'pzx': 33,
     'z8': 17,
     'z5': 17,
     'z3': 17,
@@ -120,6 +121,7 @@ def parse_args():
     str_hlp_short = _('Use short (8.3) DOS names')
     str_hlp_tapmode = _('TAP loading mode')
     str_hlp_tzxmode = _('TZX loading mode')
+    str_hlp_pzxmode = _('PZX loading mode')
     str_hlp_basmode = _('BAS loading mode')
 
     parser = argparse.ArgumentParser(description='knloader Cache Builder')
@@ -166,6 +168,10 @@ def parse_args():
                         action='store',
                         dest='tzx_mode',
                         help=str_hlp_tzxmode)
+    parser.add_argument('--pzx',
+                        action='store',
+                        dest='pzx_mode',
+                        help=str_hlp_pzxmode)
     parser.add_argument('--bas',
                         action='store',
                         dest='bas_mode',
@@ -201,6 +207,9 @@ def parse_args():
 
     if arguments.tzx_mode:
         DICT_EXTS['tzx'] = int(arguments.tzx_mode)
+
+    if arguments.pzx_mode:
+        DICT_EXTS['pzx'] = int(arguments.pzx_mode)
 
     if arguments.bas_mode:
         DICT_EXTS['bas'] = int(arguments.bas_mode)

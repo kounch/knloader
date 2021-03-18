@@ -446,7 +446,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">kounch</span><br>
 <span id="email" class="email"><a href="mailto:kounch@users.noreply.github.com">kounch@users.noreply.github.com</a></span><br>
-<span id="revnumber">version 1.0.2</span>
+<span id="revnumber">version 1.1.0</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Índice</div>
@@ -458,7 +458,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_requisitos_de_software">Requisitos de Software</a></li>
 </ul>
 </li>
-<li><a href="#_instalación">Instalación</a></li>
+<li><a href="#_instalación">Instalación</a>
+<ul class="sectlevel2">
+<li><a href="#_soporte_para_pzx">Soporte para PZX</a></li>
+</ul>
+</li>
 <li><a href="#_uso">Uso</a></li>
 <li><a href="#_formato_del_archivo_de_datos">Formato del archivo de datos</a>
 <ul class="sectlevel2">
@@ -526,6 +530,68 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="paragraph">
 <p>Copiar, juntos, <code>knloader.bas</code>, <code>knlauncher</code>, <code>knzml</code>, desde una de las carpetas de idioma de la distribución (<code>en</code> en inglés, <code>es</code> para castellano, etc.), y el nuevo archivo <code>knloader.bdt</code> o los datos de caché al lugar que se desee de la tarjeta SD.</p>
+</div>
+<div class="sect2">
+<h3 id="_soporte_para_pzx">Soporte para PZX</h3>
+<div class="paragraph">
+<p>A partir de la versión 1.1.0, se pueden cargar también ficheros PZX con knloader, pero esto requiere la instalación previa de un fichero ( <code>pzx2wav</code> <a href="http://zxds.raxoft.cz/pzx.html">de PZX Utilites</a>) a la tarjeta microSD de la Raspberry Pi aceleradora, dentro de alguno de los <a href="https://gitlab.com/thesmog358/tbblue/-/blob/master/rpi/linux/docs/CLI.txt">directorios para comandos personalizados</a>.</p>
+</div>
+<div class="paragraph">
+<p>Para facilitar esta tarea, se incluye un instalador hecho con NextBASIC, que es capaz de instalar o desinstalar <code>pzx2wav</code> en <code>/NextPi/nextpi</code> en al tarjeta microSD de la Pi. Esta instalación sólo se tiene que hacer una vez, ya que es persistente entre reinicios.</p>
+</div>
+<div class="paragraph">
+<p>Copiar juntos <code>pzxinstall.bas</code> y <code>pzx2wav</code> al lugar que se desee de la tarjeta SD del ZX Spectrum Next. Ejecutar <code>pzxinstall.bas</code> con el navegador de NezxZXOS y seguir las instrucciones en la pantalla.</p>
+</div>
+<div class="paragraph">
+<p>Una vez instalado, se pueden borrar <code>pzxinstall.bas</code> y <code>pzx2wav</code> de la tarjeta SD.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>pzxinstall.bas</code> también puede, si se desea, borrar (desinstalar) <code>/NextPi/nextpi/pzx2wav</code> de la tarjeta microSD de la Pi aceleradora.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Una vez que <code>pzx2wav</code> se ha instalado, también se puede hacer que el navegador por defecto de ZX Spectrum Next cargue ficheros PZX.</p>
+</div>
+<div class="paragraph">
+<p>Lo único que hay que hacer es guardar una copia del archivo <code>c:/neztzxos/tzxload.bas</code> como <code>c:/nextzxos/pzxload.bas</code> y luego reemplazar las siguientes líneas con este código:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="basic">480 PAUSE 100:LET g$="-c cp """"+f$+"""" /ram/file.pzx"
+490 .$ pisend g$
+493 PAUSE 50
+495 LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Por último, modificar <code>c:/neztzxos/browser.cfg</code> añadiendo esta línea nueva:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>PZX:clear 65367:load "c:/nextzxos/pzxload.bas":let f$="|":goto 5</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -659,8 +725,35 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 29 - TAP (LOAD "" CODE - 48K)
 30 - TZX (LOAD "" CODE - 48K - rápido)
 31 - TAP (LOAD "" CODE - PI Audio - 48K)
-32 - TZX (LOAD "" CODE - 48K)</pre>
+32 - TZX (LOAD "" CODE - 48K)
+33 - PZX (rápido)
+34 - PZX (USR0 - rápido)
+35 - PZX (Next - rápido)
+36 - PZX
+37 - PZX (USR 0)
+38 - PZX (Next)
+39 - PZX (48K - rápido)
+40 - PZX (48K)
+41 - PZX (LOAD "" CODE - rápido)
+42 - PZX (LOAD "" CODE - USR0 - rápido)
+43 - PZX (LOAD "" CODE - USR 0)
+44 - PZX (LOAD "" CODE - 48K - rápido)
+45 - PZX (LOAD "" CODE - 48K)</pre>
 </div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Los modos audio, TZX y PZX necesitan un ZX Spectrum Next Accelerated para poder funcionar.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -673,7 +766,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Salvo que se indique lo contrario (por ej. en los modos 6, 7), todos los modos configuran el ZX Spectrum Next en modo 128K, deshabilitando el hardware especial de  Next.</p>
 </div>
 <div class="paragraph">
-<p>Totos los modos TZX (rápido), se ejecutan a 14 MHz. Una vez que el programa haya cargado, se puede volver a la velocidad de 3,5MHz desde el menú NMI, o pulsando NMI y 8 a la vez.</p>
+<p>Todos los modos TZX y PZX (rápido), se ejecutan a 14 MHz. Una vez que el programa haya cargado, se puede volver a la velocidad de 3,5MHz desde el menú NMI, o pulsando NMI y 8 a la vez.</p>
 </div>
 <div class="paragraph">
 <p>El modo 3 DSK (auto arranque) monta el archivo DSK en la unidad <code>A:</code> y ejecuta <code>LOAD "*"</code>.</p>
@@ -685,7 +778,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 </table>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_ejemplos">Ejemplos</h3>
@@ -741,7 +833,7 @@ Albatrossity,1,,Albatrossity.tap
 Alter Ego,4,Alter Ego,Alter Ego.tap
 Altered Beast,3,Altered Beast,Altered Beast.dsk,Altered Beast.bmp
 Amaurote,2,Amaurote,Amaurote.tzx
-Aquanoids,5,Aquanoids,Aquanoids.tzx
+Aquanoids,34,Aquanoids,Aquanoids.pzx
 Auf Wiedersehen Monty,10,Auf Wiedersehen Monty,Auf Wiedersehen Monty - 128k.tzx
 Astronut,16,../Next/,Astronut.snx
 Barbarian: El Guerreo Definitivo,0,Barbarian/3DOS,BARB.BAS,../Barbarian.bmp
@@ -767,7 +859,7 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>nex &gt;  snx &gt; tap &gt; bas &gt; dsk &gt; p &gt; tzx &gt; z8 &gt; z5 &gt; z3 &gt; z80</pre>
+<pre>nex &gt;  snx &gt; tap &gt; bas &gt; dsk &gt; p &gt; tzx &gt; pzx &gt; z8 &gt; z5 &gt; z3 &gt; z80</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -812,6 +904,10 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>2</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pzx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>33</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>z8</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>17</code></p></td>
 </tr>
@@ -838,7 +934,7 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Modo de uso: <code>python3 bdt_builder.py -i RUTA [-o FICHERO] [-c RUTA_SD] [--tap NUMERO] [--tzx NUMERO] [--bas NUMERO]</code></p>
+<p>Modo de uso: <code>python3 bdt_builder.py -i RUTA [-o FICHERO] [-c RUTA_SD] [--tap NUMERO] [--tzx NUMERO] [--pzx NUMERO] [--bas NUMERO]</code></p>
 </div>
 <div class="paragraph">
 <p>Donde <code>RUTA</code> es la ruta al directorio a analizar, <code>FICHERO</code>, opcionalmente, es la ruta al fichero BDT a crear. Si no se indica ruta al fichero, este se crea automáticamente en el directorio actual. Finalmente, <code>RUTA_SD</code>, opcionalmente también, es la ruta de la SD donde se encuentran los programas (primera línea del archivo BDT). Si no se indica un ruta de la SD, se usa <code>RUTA</code> en su lugar.</p>
@@ -850,7 +946,7 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 <p>Además, el script ordena en base al nombre (lexicográficamente) todos los resultados. Si se prefiera que se ordenen los resultados en base al nombre del archivo (orden ASCII), se puede utilizar <code>-u</code> (por ej: <code>python3 bdt_builder.py -u -i RUTA &#8230;&#8203;</code>).</p>
 </div>
 <div class="paragraph">
-<p>Se puede cambiar el modo de carga por defecto para las extensions <code>tap</code>, <code>tzx</code> o <code>bas</code>, usando <code>--tap NUMERO</code>, <code>--tzx NUMERO</code> o <code>--bas NUMERO</code>, con el número de modo deseado. Por ejemplo, para cambiar el modo de carga de ficheros tap a USR 0: <code>python3 bdt_builder.py -i RUTA --tap 4 &#8230;&#8203;</code></p>
+<p>Se puede cambiar el modo de carga por defecto para las extensions <code>tap</code>, <code>tzx</code>, <code>pzx</code> o <code>bas</code>, usando <code>--tap NUMERO</code>, <code>--tzx NUMERO</code>, <code>--pzx NUMERO</code> o <code>--bas NUMERO</code>, con el número de modo deseado. Por ejemplo, para cambiar el modo de carga de ficheros tap a USR 0: <code>python3 bdt_builder.py -i RUTA --tap 4 &#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>Una vez que se ha creado el fichero BDT, se puede revisar y retocar con un editor de texto, y luego copiarlo a la tarjeta SD, en la misma ubicación en la que se encuentre <code>knloader.bas</code>, o se pueden crear datos de cache (usando el Script de creación de Caché) y copiar estos en la tarjeta.</p>
@@ -884,7 +980,7 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 <p>También se incluye un pequeño programa <code>autoexec.bas</code> que se puede utilizar para que se inicie knloader de forma automática cada vez que se encienda el ZX Spectrum Next.</p>
 </div>
 <div class="paragraph">
-<p>Para utilizarlo, renombre el fichero <code>/nextzxos/autoexec.bas</code> de la tarjeta SD a <code>/nextzxos/autoexec.old</code>, y luego copie el fichero <code>autoexec.bas</code> del direcotrio <code>utils</code> a <code>/nextzxos</code> en la tarjeta SD. Copie también todos los ficheros de knloader (<code>knloader.bas</code>, <code>knlauncher</code>, <code>knzml</code> and BDT file), desde una de las carpetas de idioma de la distribución (<code>en</code> en inglés, <code>es</code> para castellano, etc.), en un directorio llamado <code>/knloader/</code> en la raíz de la SD.</p>
+<p>Para utilizarlo, renombre el fichero <code>/nextzxos/autoexec.bas</code> de la tarjeta SD a <code>/nextzxos/autoexec.old</code>, y luego copie el fichero <code>autoexec.bas</code> del direcotrio <code>utils</code> a <code>/nextzxos</code> en la tarjeta SD. Copie también todos los ficheros de knloader (<code>knloader.bas</code>, <code>knlauncher</code>, <code>knzml</code> y BDT file), desde una de las carpetas de idioma de la distribución (<code>en</code> en inglés, <code>es</code> para castellano, etc.), en un directorio llamado <code>/knloader/</code> en la raíz de la SD.</p>
 </div>
 <div class="paragraph">
 <p>Como extra, puede usar las siguientes teclas en el inicio para cambiar el comportamiento del arranque:</p>
@@ -913,7 +1009,10 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 <h2 id="_copyright">Copyright</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Copyright (c) 2020 kounch</p>
+<p>Copyright (c) 2020-2021 kounch</p>
+</div>
+<div class="paragraph">
+<p>PZX&#8594;WAV convertor Copyright &#169; 2007 Patrik Rak</p>
 </div>
 <div class="paragraph">
 <p>Parte del código utilizado para lanzar programas ha sido adaptado desde la distribución oficial de NextZXOS (concretamente de <code>browser.cfg</code>, <code>tapload.bas</code> y <code>tzxload.bas</code>).</p>
@@ -932,8 +1031,8 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.2<br>
-Last updated 2020-11-20 20:34:05 +0100
+Version 1.1.0<br>
+Last updated 2021-03-18 22:02:50 +0100
 </div>
 </div>
 <style>
