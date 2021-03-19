@@ -59,7 +59,7 @@
 'm$="TZX (LOAD CODE - 48K)"'='m$="TZX (LOAD CODE - 48K)"'
 'm$="PZX (fast)"'='m$="PZX (Rapido)"'
 'm$="PZX (USR0 - Fast)"'='m$="PZX (USR0 - Rapido)"'
-'m$="PZX (Next - Fast)"'=''m$="PZX (Next - Rapido)"'
+'m$="PZX (Next - Fast)"'='m$="PZX (Next - Rapido)"'
 'm$="PZX (48K - Fast)"'='m$="PZX (48K - Rapido)"'
 'm$="PZX (LOAD CODE - Fast)"'='m$="PZX (LOAD CODE - Rapido)"'
 'm$="PZX (LOAD CODE - USR0 - Fast)"'='m$="PZX (LOAD CODE - USR0 - Rapido)"'
