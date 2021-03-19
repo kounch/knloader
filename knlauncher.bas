@@ -227,20 +227,22 @@
 5660 IF t$="tap" THEN PAUSE 100:LET g$="-c printf ""\x02\x00\xAA\x55"" > /ram/tapfix.bin ; cat """+a$+""" /ram/tapfix.bin > /ram/file.tap"
 5670 IF t$="pzx" THEN PAUSE 100:LET g$="-c cp """+a$+""" /ram/file.pzx"
 5680 .$ pisend g$
-5690 PAUSE 50
-5700 IF t$="tzx" OR t$="tap" THEN LET g$="-c tape2wav /ram/file."+t$+" /ram/out.wav"
-5710 IF t$="pzx" THEN LET g$="-c pzx2wav -o /ram/out.wav /ram/file."+t$
-5720 .$ pisend g$
-5730 PAUSE 200
-5740 LET v=%REG 17:RESTORE 5820
-5750 FOR x=0 TO v:READ hertz:NEXT x
-5760 LET ss=%1<< s:IF ss=8 THEN LET ss=6.57
-5770 LET g$="-c play -r"+STR$ (ss*hertz)+" /ram/out.wav"
-5780 PAUSE 100
-5790 .$ pisend g$
-5800 REG 162,211
-5810 RETURN
-5820 DATA 44100,45000,46406,47250,48825,50400,51975,42525
+5690 PAUSE 50:LET g$="-c rm -f /ram/out.wav"
+5700 .$ pisend g$
+5710 PAUSE 10
+5720 IF t$="tzx" OR t$="tap" THEN LET g$="-c tape2wav /ram/file."+t$+" /ram/out.wav"
+5730 IF t$="pzx" THEN LET g$="-c pzx2wav -o /ram/out.wav /ram/file."+t$
+5740 .$ pisend g$
+5750 PAUSE 200
+5760 LET v=%REG 17:RESTORE 5840
+5770 FOR x=0 TO v:READ hertz:NEXT x
+5780 LET ss=%1<< s:IF ss=8 THEN LET ss=6.57
+5790 LET g$="-c play -r"+STR$ (ss*hertz)+" /ram/out.wav"
+5800 PAUSE 100
+5810 .$ pisend g$
+5820 REG 162,211
+5830 RETURN
+5840 DATA 44100,45000,46406,47250,48825,50400,51975,42525
 
 5995 ; Error with Pi
 6000 CLS:PRINT AT 1,1;INK 6;PAPER 2;" Error: Can't connect with Pi "
