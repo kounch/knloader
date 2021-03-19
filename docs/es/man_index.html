@@ -574,11 +574,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="basic">480 PAUSE 100:LET g$="-c cp """"+f$+"""" /ram/file.pzx"
+<pre class="rouge highlight"><code data-lang="basic">480 PAUSE 100:LET g$="-c cp """+f$+""" /ram/file.pzx"
 490 .$ pisend g$
 493 PAUSE 50
 495 LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Opcionalmente, se pueden modificar las líneas <code>220</code> y <code>307</code> cambiando <code>TZX</code> por <code>PZX</code>.</p>
 </div>
 <div class="paragraph">
 <p>Por último, modificar <code>c:/neztzxos/browser.cfg</code> añadiendo esta línea nueva:</p>
@@ -1032,7 +1035,7 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.1.0<br>
-Last updated 2021-03-18 22:02:50 +0100
+Last updated 2021-03-19 10:34:17 +0100
 </div>
 </div>
 <style>

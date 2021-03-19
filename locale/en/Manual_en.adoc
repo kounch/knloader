@@ -63,11 +63,13 @@ All you have to do is duplicate the file `c:/neztzxos/tzxload.bas` to `c:/nextzx
 
 [source,basic]
 ----
-480 PAUSE 100:LET g$="-c cp """"+f$+"""" /ram/file.pzx"
+480 PAUSE 100:LET g$="-c cp """+f$+""" /ram/file.pzx"
 490 .$ pisend g$
 493 PAUSE 50
 495 LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"
 ----
+
+Optionally, replace `TZX` by `PZX` at lines `220` and `307`.
 
 Finally, edit  `c:/neztzxos/browser.cfg` and add this line:
 
