@@ -22,6 +22,8 @@ This a set of NextBASIC programs which you can configure to remember, and then u
 
 These programs aren't a replacement for the incorporated Browser, nor offer any other function than to launch other programs.
 
+Official web page: https://kounch.github.io/knloader/
+
 == Requirements
 
 === Download

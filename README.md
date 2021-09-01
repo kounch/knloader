@@ -1,6 +1,6 @@
 # knloader
 
-Game Launcher for ZX Spectrum Next
+Game Launcher for ZX Spectrum Next (https://kounch.github.io/knloader/)
 
 [![Demo Video](./docs/img/Demo.gif)](./docs/img/Demo.mp4 "Demo")
 
@@ -13,6 +13,8 @@ These programs aren't a replacement for the incorporated Browser, nor offer any 
 ---
 
 ## English
+
+Official web page: https://kounch.github.io/knloader/
 
 A ZIP file with the latest version is available following [this link](https://github.com/kounch/knloader/releases/latest)
 
@@ -114,6 +116,8 @@ For all other operations, temporary files are created in the RAM disk.
 ---
 
 ## Castellano
+
+Página web oficial: https://kounch.github.io/knloader/
 
 Se puede obtener un fichero ZIP con la última versión siguiendo  [este enlace](https://github.com/kounch/knloader/releases/latest).
 

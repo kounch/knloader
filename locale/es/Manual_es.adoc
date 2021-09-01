@@ -22,6 +22,8 @@ Este es un conjunto de programas NextBASIC que se pueden configurar para recorda
 
 Estos programas no reemplazan el programa Browser incorporado, ni ofrecen otra función que no sea lanzar otros programas.
 
+Página web oficial: https://kounch.github.io/knloader/
+
 == Requisitos
 
 === Descarga
