@@ -1,6 +1,6 @@
 #program knloader
 #autostart
-  10 ; knloader - Copyright (c) 2020-2021 @kounch
+  10 ; knloader - Copyright (c) 2020-2022 @kounch
   20 ; This program is free software, you can redistribute
   30 ; it and/or modify it under the terms of the
   40 ; GNU General Public License
@@ -9,7 +9,7 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:PAPER op:BORDER ob:INK oi:RUN AT %s:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,13;"> knloader  v1.1.0 <":PRINT AT 8,15;"© kounch  2021":PRINT AT 15,14;"Press H for help"
+  90 PRINT AT 5,13;"> knloader  v1.1.0 <":PRINT AT 8,15;"© kounch  2022":PRINT AT 15,14;"Press H for help"
 
   95 ; Load Menu Items
  100 GO SUB 4900:; Load Cache To RAM
@@ -69,7 +69,7 @@
 
  895 ; Prepare to Launch Program
  900 CLOSE # 6:CLS:BORDER 1:ON ERROR GO TO 1300:ON ERROR
- 910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2021":PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
+ 910 PRINT AT 4,13;"> knloader <":PRINT AT 6,12;"© kounch 2022":PRINT AT 10,1;z$(pos):PRINT AT 12,0;"Mode: ";o(pos);" - ";m$
  920 PRINT AT 14,0;"Dir:":PRINT AT 15,1;w$(pos):PRINT AT 17,0;"File:":PRINT AT 18,1;x$(pos)
  930 LET a$=x$(pos):GO SUB 5300:LET l$=a$:LET a$=w$(pos):GO SUB 5300:IF a$(LEN a$ TO LEN a$)="/" THEN LET a$=a$(1 TO LEN a$-1)
  940 IF a$<>"" AND a$(LEN a$ TO LEN a$)="." THEN LET a$(LEN a$ TO LEN a$)="_":IF a$="_" THEN LET a$=" "

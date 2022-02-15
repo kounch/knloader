@@ -1,7 +1,7 @@
 @title Manual de knloader
 @author kounch
 @version 1.1.0
-@copyright Copyright (C)2020-2021 kounch
+@copyright Copyright (C)2020-2022 kounch
 @date 2021/03/18
 
 @index INDEX
@@ -67,7 +67,7 @@ Usar las flechas @{i}Arriba@{ui} y @{i}Abajo@{ui} para desplazar el texto,
 @{r}Manual de knloader
 @{c}@{h1}Copyright
 
-@{c}@{b}@{i}Copyright (c) 2020-2021 kounch@{ui}@{ub}
+@{c}@{b}@{i}Copyright (c) 2020-2022 kounch@{ui}@{ub}
 
 PZX->WAV convertor Copyright (C) 2007 Patrik Rak
 

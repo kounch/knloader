@@ -1,6 +1,6 @@
 #program knlauncher
 #autostart
-  10 ; knlauncher - Copyright (c) 2020-2021 @kounch
+  10 ; knlauncher - Copyright (c) 2020-2022 @kounch
   20 ; This program is free software, you can redistribute
   30 ; it and/or modify it under the terms of the
   40 ; GNU General Public License
@@ -8,7 +8,7 @@
   50 LET %s=%REG 7&3:RUN AT 2
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:RUN AT %s:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:ERASE:ON ERROR
   70 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER 7:BORDER 7:INK 0:CLS
-  80 OPEN # 6,"w>22,1,1,32,4":PRINT #6;AT 0,0;">> knlauncher v1.1.0 >> (c) kounch 2021":CLOSE # 6
+  80 OPEN # 6,"w>22,1,1,32,4":PRINT #6;AT 0,0;">> knlauncher v1.1.0 >> (c) kounch 2022":CLOSE # 6
   90 LET x=USR 5808:LOAD "c:/nextzxos/usr0.bin"CODE 32768
 
  200 ; Load Options

@@ -1,6 +1,6 @@
 #program pzxinstall
 #autostart
-  10 ; PZX Installer - Copyright (c) 2021 @kounch
+  10 ; PZX Installer - Copyright (c) 2022 @kounch
   20 ; This program is free software, you can redistribute
   30 ; it and/or modify it under the terms of the
   40 ; GNU General Public License
@@ -8,7 +8,7 @@
   50 LET %s=%REG 7&3:RUN AT 3:LET %q=%REG 2&3
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:PAPER 7:BORDER 7:INK 0:RUN AT %s:ERASE:ON ERROR
   70 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER 1:BORDER 1:INK 7:CLS
-  80 PRINT AT 1,4;"> pzx Installer v0.1.0 <":PRINT AT 21,18;"© kounch 2021"
+  80 PRINT AT 1,4;"> pzx Installer v0.1.0 <":PRINT AT 21,18;"© kounch 2022"
   
   95 ; Draw Disclaimer
  100 BORDER 0:PAPER 7:INK 0:OPEN # 6,"w>3,1,17,30,4"

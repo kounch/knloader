@@ -220,7 +220,7 @@ Para las demás operaciones, se crean ficheros temporales en el disco RAM.
 
 ## Copyright
 
-Copyright (c) 2020-2021 kounch
+Copyright (c) 2020-2022 kounch
 
 PZX->WAV convertor Copyright (C) 2007 Patrik Rak
 
