@@ -9,7 +9,7 @@
   60 ON ERROR PRINT "ERROR":ERROR TO e,l:PRINT e,l:PAUSE 0:FOR %a=0 TO 15:CLOSE # %a:NEXT %a:PAPER op:BORDER ob:INK oi:RUN AT %s:ERASE:ON ERROR
   70 GO SUB 7000:; Load Defaults
   80 LAYER CLEAR:SPRITE CLEAR:PALETTE CLEAR:PAPER tinta:BORDER tinta:INK papel:CLS
-  90 PRINT AT 5,13;"> knloader  v1.1.0 <":PRINT AT 8,15;"© kounch  2022":PRINT AT 15,14;"Press H for help"
+  90 PRINT AT 5,13;"> knloader  v1.2.0 <":PRINT AT 8,15;"© kounch  2022":PRINT AT 15,14;"Press H for help"
 
   95 ; Load Menu Items
  100 GO SUB 4900:; Load Cache To RAM
@@ -345,9 +345,9 @@
 7020 LET covers=1:LET autosave=0:DIM d$(255):OPEN # 2,"v>d$":PWD #2:CLOSE # 2
 7030 LET a$=d$:GO SUB 5300:LET p$=a$(3 TO LEN a$-1):LET q$=a$(1 TO 2):;My Path
 7040 DIM d$(255):OPEN # 2,"v>d$":.NEXTVER -v:CLOSE # 2:LET a=VAL(d$):GO SUB 5300:PRINT a
-7050 IF a>2.05 THEN RETURN
+7050 IF a>2.06 THEN RETURN
 7060 CLS:PRINT AT 5,3;INK 6;PAPER 2;" ERROR:  NextZXOS Too Old "
 7070 PRINT AT 8,1;"Please upgrade the distribution"
-7080 PRINT AT 9,0;"in your SD Card to version ";BRIGHT 1;"1.3.2"
+7080 PRINT AT 9,0;"in your SD Card to version ";BRIGHT 1;"2.07"
 7090 PRINT AT 10,0;"or later."
 7100 PAUSE 0:PAPER op:BORDER ob:INK oi:RUN AT %s:STOP
