@@ -65,19 +65,23 @@ Lo único que hay que hacer es guardar una copia del archivo `c:/neztzxos/tzxloa
 
 [source,basic]
 ----
-480 PAUSE 100:LET g$="-c cp """+f$+""" /ram/file.pzx"
-490 .$ pisend g$
-493 PAUSE 50
-495 LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"
+(...)
+ 690   PAUSE 100:LET g$="-c cp """+f$+""" /ram/file.pzx"
+ 700   .$ pisend g$
+ 710   PAUSE 50
+ 720   LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"
+(...)
+1830   IF n$<>o$ THEN g$=f$:f$=f$( TO LEN f$- LEN o$-4)+n$+".pzx": MOVE g$ TO f$
+(...)
 ----
 
-Opcionalmente, se pueden modificar las líneas `220` y `307` cambiando `TZX` por `PZX`.
+Opcionalmente, se pueden modificar las líneas `330` y `450` cambiando `TZX` por `PZX`.
 
 Por último, modificar `c:/neztzxos/browser.cfg` añadiendo esta línea nueva:
 
 [source]
 ----
-PZX:clear 65367:load "c:/nextzxos/pzxload.bas":let f$="|":goto 5
+PZX:clear 65367:load "pzxload.bas":f$="|":adj=1:goto 1
 ----
 ====
 
