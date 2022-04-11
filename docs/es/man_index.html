@@ -793,21 +793,25 @@ pre.rouge {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="basic">480 PAUSE 100:LET g$="-c cp """+f$+""" /ram/file.pzx"
-490 .$ pisend g$
-493 PAUSE 50
-495 LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"</code></pre>
+<pre class="rouge highlight"><code data-lang="basic">(...)
+ 690   PAUSE 100:LET g$="-c cp """+f$+""" /ram/file.pzx"
+ 700   .$ pisend g$
+ 710   PAUSE 50
+ 720   LET g$="-c pzx2wav -o /ram/out.wav /ram/file.pzx"
+(...)
+1830   IF n$&lt;&gt;o$ THEN g$=f$:f$=f$( TO LEN f$- LEN o$-4)+n$+".pzx": MOVE g$ TO f$
+(...)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Opcionalmente, se pueden modificar las líneas <code>220</code> y <code>307</code> cambiando <code>TZX</code> por <code>PZX</code>.</p>
+<p>Opcionalmente, se pueden modificar las líneas <code>330</code> y <code>450</code> cambiando <code>TZX</code> por <code>PZX</code>.</p>
 </div>
 <div class="paragraph">
 <p>Por último, modificar <code>c:/neztzxos/browser.cfg</code> añadiendo esta línea nueva:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>PZX:clear 65367:load "c:/nextzxos/pzxload.bas":let f$="|":goto 5</code></pre>
+<pre class="rouge highlight"><code>PZX:clear 65367:load "pzxload.bas":f$="|":adj=1:goto 1</code></pre>
 </div>
 </div>
 </td>
@@ -1254,7 +1258,7 @@ Autoestopista Galactico,17,../Z-Machine,hitchhiker-r60-s861002.z3</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.1.0<br>
-Last updated 2022-02-15 19:12:06 +0100
+Last updated 2022-04-11 15:01:36 +0200
 </div>
 </div>
 </body>
